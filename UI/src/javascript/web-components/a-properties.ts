@@ -43,6 +43,62 @@ export default class AProperties extends Component {
     private setDebugMode(): void {
         if (!this.properties.debug) return;
         document.body.classList.add('debug');
+
+        this.makePropertiesVisible();
+    }
+
+    private escapeHtml(text: string): string {
+        return text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+
+    private makePropertiesVisible(): void {
+        const elements =
+            document.querySelectorAll<HTMLElement>('[data-properties]');
+
+        elements.forEach((element) => {
+            if (
+                element.previousElementSibling?.classList.contains(
+                    'a-properties-debug',
+                )
+            ) {
+                return;
+            }
+
+            let properties = element.dataset.properties ?? '{}';
+            properties = properties.replace(/&apos;/g, "'");
+
+            let formattedProperties;
+
+            try {
+                const parsed = JSON.parse(properties);
+                formattedProperties = JSON.stringify(parsed, null, 2);
+            } catch {
+                formattedProperties = properties;
+            }
+
+            const propertiesContainer = document.createElement('div');
+            propertiesContainer.className = 'a-properties-debug';
+
+            const pre = document.createElement('pre');
+            const escaped = this.escapeHtml(formattedProperties);
+            pre.innerHTML = escaped.replace(
+                /("rules"\s*:\s*(?:"(?:\\.|[^"\\])*"|[^,\n]+))/g,
+                '<span class="a-properties-rule">$1</span>',
+            );
+            propertiesContainer.appendChild(pre);
+
+            if (element.parentElement) {
+                element.insertAdjacentElement(
+                    'beforebegin',
+                    propertiesContainer,
+                );
+            } else {
+                element.appendChild(propertiesContainer);
+            }
+        });
     }
 
     private setFloatDetailsStyle(): void {

@@ -1,10 +1,8 @@
 <div class='l-col'>
-    <ftd type="span" color="{'visible':{'colapse':true,'rules':'drugtest.containsAny('other1','other2')'}}">
-        <strong>
-            <ftd type="static" data-translate="other" data-translate-purpose="content"><!-- string --></ftd-static>
-            <span>:&#nbsp;</span>
-        </strong>
-        <ftd type="variable" data-associate-control="otherdrug"><!-- Otherdrug Value --></ftd-variable>
+    <ftd type="variable" data-associate-control="cb__drugtest"><!-- cb_drugtest Value --></ftd>
+    <ftd type="span" data-properties="{&quot;visible&quot;:{&quot;collapse&quot;:true,&quot;rules&quot;:&quot;drugtest.containsAny('other1','other2')&quot;}}">
+            <ftd type="static" data-translate="other" data-translate-purpose="content"><!-- string --></ftd>
+            <span>:&nbsp;</span>
+        <ftd type="variable" data-associate-control="otherdrug"><!-- Otherdrug Value --></ftd>
     </ftd>
-    <ftd type="variable" data-associate-control="otherdrug" color="{'invisible':{'colapse':true,'rules':'drugtest.containsAny('other1','other2')'}}"><!-- cb_drugtest Value --></ftd-variable>
 </div>

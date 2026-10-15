@@ -1,9 +1,9 @@
 <mrSubTemplate>
     <o-palette>
         <div class="palette-empty">
-            <button class="m-button-action" data-translate="add-button" data-translate-purpose="caption">
+            <m-button-action class="complexbutton-add" data-translate="add-button" data-translate-purpose="caption">
                 <!-- Add button -->
-            </button>
+            </m-button-action>
         </div>
         <div class="palette-complete">
             <div class="m-message-information" data-translate="palette-complete" data-translate-purpose="content">
@@ -19,8 +19,6 @@
 
                     column-gap: 16px;
                     row-gap: 8px;
-
-                    width: 90%;
                 }
                 .label-cbDrugTest {
                     grid-column: 1;
@@ -63,42 +61,31 @@
             </div>
 
             <div class="palette-button-row">
-                <button class="a-button-icon cancel">
+                <m-button-action class="complexbutton-cancel">
                     <!-- cancel button -->
-                    <img class="a-icon-singlestate" data-translate="Cancel-alt" data-translate-purpose="alt" src="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/static/cancel.svg" />
-                </button>
-                <button class="a-button-icon submit">
-                    <img class="a-icon-singlestate" data-translate="Save-alt" data-translate-purpose="alt" src="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/static/save.svg" />
-                </button>           
+                </m-button-action>
+                <m-button-action class="complexbutton-submit" />
+                    <!-- submit button -->
+                </m-button-action>
             </div>
         </div>
          <o-history>
             <template class="l-row-template">
                     <div class="l-col-history-ftd">
-                        <ftd type="span" color="{'visible':{'colapse':true,'rules':'drugtest.containsAny('other1','other2')'}}">
-                            <strong>
-                                <ftd type="static" data-translate="ftd-other" data-translate-purpose="content"><!-- string --></ftd>
-                                <span>: </span>
-                            </strong>
+                        <ftd type="variable" data-associate-control="cb__drugtest"><!-- cb_drugtest Value --></ftd>
+                        <ftd type="span" data-properties="{&quot;visible&quot;:{&quot;collapse&quot;:true,&quot;rules&quot;:&quot;drugtest.containsAny('other1','other2')&quot;}}">
+                                <ftd type="static" data-translate="other" data-translate-purpose="content"><!-- string --></ftd>
+                                <span>:&nbsp;</span>
                             <ftd type="variable" data-associate-control="otherdrug"><!-- Otherdrug Value --></ftd>
                         </ftd>
-                        <ftd type="variable" data-associate-control="otherdrug" color="{'invisible':{'colapse':true,'rules':'drugtest.containsAny('other1','other2')'}}"><!-- cb_drugtest Value --></ftd>
                     </div>
                     <div class="l-col-history">
-                        <div class="l-history-edit">
-                            <button class="a-button-icon edit">
-                                <img class="a-icon-singlestate" data-translate="history-button-edit" data-translate-purpose="alt" src="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/static/edit.svg" />
-                            </button>
-                            <img class="a-icon-singlestate " data-translate="history-indicator-edit" data-translate-purpose="alt" src="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/static/edit.svg" alt="Edit record" />
-                        </div>
-                        <div class="l-history-delete">
-                            <button class="a-button-icon delete">
-                                <img class="a-icon-singlestate" data-translate="history-button-delete" data-translate-purpose="alt" src="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/static/delete.svg" />
-                            </button>
-                            <button class="a-button-icon reset">
-                                <img class="a-icon-singlestate" data-translate="history-button-reset" data-translate-purpose="alt" src="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/static/reset.svg" />
-                            </button>
-                        </div>
+                        <m-button-action class="complexquestion-edit">
+                            <!-- Edit button -->
+                        </m-button-action>
+                        <m-button-action class="complexquestion-delete">
+                            <!-- Delete button -->
+                        </m-button-action>
                     </div>
                 </template>
             <div class="history-empty">

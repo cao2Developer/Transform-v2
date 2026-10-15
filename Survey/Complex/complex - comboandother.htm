@@ -1,0 +1,107 @@
+<mrSubTemplate>
+    <o-palette>
+        <div class="palette-empty">
+            <a-button-icon class="complexbutton-add" data-translate="add-button" data-translate-purpose="caption">
+                <!-- Add button -->
+            </a-button-icon>
+        </div>
+        <div class="palette-complete">
+            <div class="m-message-information" data-translate="palette-complete" data-translate-purpose="content">
+                <!-- empty content message -->
+            </div>
+        </div>
+        <div class="palette-inprogress">
+            <style>
+                .palette-inprogress {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-rows: auto auto auto;
+
+                    column-gap: 16px;
+                    row-gap: 8px;
+                }
+                .label-cbDrugTest {
+                    grid-column: 1;
+                    grid-row: 1;
+                }
+                .label-otherdrug {
+                    grid-column: 1;
+                    grid-row: 2;
+                }
+                .control-cbDrugTest {
+                    grid-column: 2;
+                    grid-row: 1;
+                }
+                .control-otherdrug {
+                    grid-column: 2;
+                    grid-row: 2;
+                }
+                .palette-button-row {
+                    grid-column: 2;
+                    grid-row: 3;
+
+                    justify-self: end;
+
+                    display: grid;
+                    grid-auto-flow: column;
+                    gap: 12px;
+                }
+            </style>
+            <div class="label-cbDrugTest" data-associate-type="label" data-associate-question="cb_drugtest">
+                <!-- drugtest label -->
+            </div>
+            <div class="control-cbDrugTest" data-associate-question="cb_drugtest" data-associate-type="control">
+                <!-- drugtest control -->
+            </div>
+            <div class="label-otherdrug" data-associate-type="label" data-associate-question="otherdrug">
+                <!-- otherdrug label -->
+            </div>
+            <div class="control-otherdrug" data-associate-question="otherdrug" data-associate-type="control">
+                <!-- otherdrug control -->
+            </div>
+
+            <div class="palette-button-row">
+                <a-button-icon class="complexbutton-cancel">
+                    <!-- cancel button -->
+                </a-button-icon>
+                <a-button-icon class="complexbutton-submit">
+                    <!-- submit button -->
+                </a-button-icon>
+            </div>
+        </div>
+         <o-history>
+            <template class="l-row-template">
+                    <div class="l-col-history-ftd">
+                        <ftd type="variable" data-associate-control="cb__drugtest"><!-- cb_drugtest Value --></ftd>
+                        <ftd type="span" data-properties="{&quot;visible&quot;:{&quot;collapse&quot;:true,&quot;rules&quot;:&quot;drugtest.containsAny('other1','other2')&quot;}}">
+                                <ftd type="static" data-translate="other" data-translate-purpose="content"><!-- string --></ftd>
+                                <span>:&#160;</span>
+                            <ftd type="variable" data-associate-control="otherdrug"><!-- Otherdrug Value --></ftd>
+                        </ftd>
+                    </div>
+                    <div class="l-col-history">
+                        <a-button-icon class="complexquestion-edit">
+                            <!-- Edit button -->
+                        </a-button-icon>
+                        <a-button-icon class="complexquestion-delete">
+                            <!-- Delete button -->
+                        </a-button-icon>
+                    </div>
+                </template>
+            <div class="history-empty">
+                <span class="a-label-history" data-translate="history-empty" data-translate-purpose="content"></span>
+            </div>
+            <div class="history-inprogress">
+                
+                <div class="l-row-header">
+                    <div class="l-col">
+                        <span class="a-label-question" data-associate-question="triggerword" data-associate-type="label"><!-- Question label --></span>
+                    </div>
+                </div>
+                <div class="l-row-history">
+                    <!-- history rows will be dynamically inserted here -->
+                </div>
+            </div>
+        </o-history>
+    </o-palette>
+</mrSubTemplate>

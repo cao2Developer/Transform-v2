@@ -133,8 +133,8 @@
             </xsl:attribute>
 
             <xsl:if test="$qType='palette-loop'">
-                <xsl:attribute name="hidden">
-                    <xsl:value-of select="true()"/>
+                <xsl:attribute name="class">
+                    <xsl:text>hidden</xsl:text>
                 </xsl:attribute>
             </xsl:if>
 

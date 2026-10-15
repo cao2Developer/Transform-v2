@@ -1,0 +1,136 @@
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Expires" content="0" />
+	<link rel="stylesheet" type="text/css" href="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/css/index.css" title="Formal" />
+
+	<title><mrPageTitle/></title>
+	<link rel="apple-touch-icon" sizes="57x57" href="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2.1/production/favicons/formal/apple-icon-57x57.png" />
+	<link rel="apple-touch-icon" sizes="60x60" href="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/favicons/formal/apple-icon-60x60.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/favicons/formal/apple-icon-72x72.png" />
+	<link rel="apple-touch-icon" sizes="76x76" href="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/favicons/formal/apple-icon-76x76.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/favicons/formal/apple-icon-114x114.png" />
+	<link rel="apple-touch-icon" sizes="120x120" href="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/favicons/formal/apple-icon-120x120.png" />
+	<link rel="apple-touch-icon" sizes="144x144" href="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/favicons/formal/apple-icon-144x144.png" />
+	<link rel="apple-touch-icon" sizes="152x152" href="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/favicons/formal/apple-icon-152x152.png" />
+	<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/favicons/formal/apple-icon-180x180.png" />
+
+	<link rel="icon" type="image/png" sizes="192x192" href="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/favicons/formal/android-icon-192x192.png" />
+
+	<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/favicons/formal/favicon-16x16.png" />
+	<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/favicons/formal/favicon-32x32.png" />
+	<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/favicons/formal/favicon-32x32.png" />
+
+	<!-- <link rel="manifest" href="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/healthcare/staging/manifest.json" /> -->
+
+	<meta name="msapplication-TileColor" content="#ffffff" />
+	<meta name="msapplication-TileImage" content="favicons/formal/ms-icon-144x144.png" />
+	<meta name="theme-color" content="#ffffff" />
+</head>
+
+<body>
+	<mrBannerText Name="PageProperties"><!-- Page Properties --> </mrBannerText>
+	<header class="header">
+		<img class="site-logo" alt="Ipsos Logo" title="Ipsos Logo" src="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/static/ipsoslogo192.png" />
+		<h1>
+			<!-- Page Header Banner -->
+			<mrBannerText Name="pageHeader"></mrBannerText>
+		</h1>
+	</header>
+	<mrPage IncludeElementIDs="true" QuestionXSL="question.xsl" LabelXSL="Label.xsl" NavigationXSL="navigation.xsl" UseTablesLayout="false" ErrorTemplate="error.htm" BannerTemplate="banner.htm" />
+
+	<main class='surroundcontent'>
+
+		<article id="question2" class="full-width-article">
+			<mrData QuestionName="Tabs">tabstrip</mrData>
+		</article>
+
+		<article id="question2" class="full-width-article">
+			<mrData QuestionName="LayoutInformation">LayoutInformation</mrData>
+		</article>
+
+		<div class="row">
+			<article id="question3">
+				<mrData QuestionName="AdultsandChildren">AdultsandChildren</mrData>
+			</article>
+			<article id="question4">
+				<mrData QuestionName="financiallydependent">financiallydependent</mrData>
+			</article>
+		</div>
+		
+		<article id="question5" class="full-width-article">
+			<mrData QuestionName="sidebysidelayout">sidebysidelayout</mrData>
+		</article>
+
+		<div class="row">
+			<article id="question6">
+				<mrData QuestionName="WhichQuestion">WhichQuestion</mrData>
+			</article>
+			<article id="question7">
+				<mrData QuestionName="Howmany1">Howmany1</mrData>
+				<mrData QuestionName="Howmany2">Howmany2</mrData>
+			</article>
+		</div>
+	</main>
+	
+	<footer class="footer">
+		<div class="m-button-group">
+			<mrNavButton Name="Next">Next</mrNavButton>
+
+			<div class="m-button-group">
+				<mrNavButton Name="Prev">Previous</mrNavButton>
+				<mrNavButton Name="Stop">Stop</mrNavButton>
+			</div>
+		</div>
+		<nav class="m-page-links" aria-label="Links to supporting documents"><a href="#">Privacy Policy</a><a href="#">Terms and Conditions</a><a href="#">Unsubscribe</a></nav>
+	</footer>
+</body>
+
+<script type="module" src="https://cdn.ipsosinteractive.com/sandbox/kevin.gray/transform/v2/staging/javascript/index.js"><!-- core code --></script>
+<style>
+  main.surroundcontent {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .full-width-article {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 16px 0;
+  }
+  .row {
+    display: flex;
+    gap: 0;
+    margin: 0;
+  }
+  .row article {
+    flex: 4 1 0;
+    margin: 16px;
+    box-sizing: border-box;
+	flex-basis:50%
+  }
+  article {
+    margin: 16px;
+    box-sizing: border-box;
+  }
+  @media (max-width: 700px) {
+    .row {
+      flex-direction: column;
+    }
+    .row article {
+      margin: 16px 0;
+	  flex-basis:50%
+    }
+    .full-width-article {
+      margin: 16px 0;
+    }
+    article {
+      margin: 16px 0;
+
+    }
+  }
+</style>
+</html>

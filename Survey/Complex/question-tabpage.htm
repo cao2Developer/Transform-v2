@@ -1,0 +1,45 @@
+<mrSubTemplate>
+	<o-question>
+		<div class="l-cover"><!-- cover --></div>
+
+		<div class='l-row'>
+			<div class="l-column">
+				<!-- Error -->
+				<mrData QuestionElement="Error" ShowErrors='All' />
+			</div>
+		</div>
+		
+		<div class='l-row'>
+			<div class="l-column">
+			<!-- Warning -->
+				<mrData QuestionElement="Banner"  Name="Warning" />
+			</div>
+		</div>
+
+		<div class='l-row'>
+			<div class="l-column">
+				<!-- Instruction -->
+				<mrData QuestionElement="Banner"  Name="Instruction" />
+			</div>
+		</div>
+
+		<div class='l-row'>
+			<div class="l-column">
+				<!-- Page Label -->
+				<mrData QuestionElement="Label" />
+				<div class="o-question-alternatives"><!-- alternative labels go here --></div>
+			</div>
+		</div>
+
+		<!-- Start Mock Response for Pages -->
+		<mrData QuestionElement="Banner" name="MockResponse" />
+		<!-- End Mock Response for Pages -->
+
+		<div class='l-row'>
+			<div class="l-column">
+				<!-- Page Questions -->
+				<mrData QuestionElement="Controls" />
+			</div>
+		</div>
+	</o-question>
+</mrSubTemplate>
