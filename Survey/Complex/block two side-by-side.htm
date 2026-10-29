@@ -1,0 +1,63 @@
+<mrSubTemplate>
+	<style>
+		.block-sidebyside
+		{
+			display: inline-grid;
+  			grid-template-columns: max-content max-content; /* Or use 'auto auto' depending on how you want columns to behave */
+  			gap: 10px;
+			grid-auto-rows: 1fr;
+			align-items: center;
+ 		}
+		.block-left-side {
+			grid-area: 1 / 1;
+		}
+		.block-right-side {
+			grid-area: 1 / 2;
+		}
+	</style>
+	<o-question data-global="false">
+		<div class="l-question">
+			<mrData QuestionElement="Banner"  Name="CustomProperties" />
+			<div class="l-cover"><!-- cover --></div>
+
+			<div class='l-row'>
+				<div class="l-column">
+					<!-- Error -->
+					<mrData QuestionElement="Error" ShowErrors='All' />
+				</div>
+			</div>
+			
+			<div class='l-row'>
+				<div class="l-column">
+					<!-- Warning -->
+					<mrData QuestionElement="Banner"  Name="Warning" />
+				</div>
+			</div>
+
+			<div class='l-row'>
+				<div class="l-column">
+					<!-- Instruction -->
+					<mrData QuestionElement="Banner"  Name="Instruction" />
+				</div>
+			</div>
+
+			<div class='l-row'>
+				<div class="block-sidebyside">
+					<div class="block-left-side">
+						<mrData Index="1" />
+					</div>
+					<div class="block-right-side">
+						<mrData Index="2" />
+					</div>
+				</div>
+			</div>
+
+			<div class='l-row'>
+				<div class="l-column">
+					<!-- Information -->
+					<mrData QuestionElement="Banner"  Name="Information" />
+				</div>
+			</div>
+		</div>
+	</o-question>
+</mrSubTemplate>
