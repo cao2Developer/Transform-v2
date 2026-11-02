@@ -10,7 +10,7 @@ New documentation for the Ipsos Transform design system. It runs as a separate S
 From `UI/`:
 
 ```bash
-npx storybook dev -c .storybook-ds -p 6007
+./node_modules/.bin/storybook dev -c .storybook-ds -p 6007 --host localhost
 ```
 
 Then open http://localhost:6007.
