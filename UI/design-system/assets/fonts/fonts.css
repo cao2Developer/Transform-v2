@@ -1,0 +1,33 @@
+/*
+ * Ipsos fonts
+ *
+ * Barlow and Barlow Semi Condensed, served from this folder.
+ * License: OFL.txt in this folder.
+ *
+ * The family names match --font-family-primary and --font-family-secondary
+ * in tokens/typography.css. Load this file once, with the tokens.
+ */
+
+@font-face {
+    font-display: swap;
+    font-family: Barlow;
+    font-style: normal;
+    font-weight: 400;
+    src: url('./Barlow-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: Barlow;
+    font-style: normal;
+    font-weight: 600;
+    src: url('./Barlow-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Barlow Semi Condensed';
+    font-style: normal;
+    font-weight: 700;
+    src: url('./BarlowSemiCondensed-Bold.woff2') format('woff2');
+}

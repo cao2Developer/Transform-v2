@@ -1,0 +1,97 @@
+/*
+ * Color tokens
+ *
+ * Base colors hold the raw values. Semantic colors point to them with var().
+ * Components use only the semantic colors.
+ */
+
+:root {
+    /* Base colors: primary */
+    --base-color-primary-blue-5: #f1f6fd;
+    --base-color-primary-blue-50: #2f469c;
+    --base-color-primary-blue-75: #002554;
+    --base-color-primary-teal-5: #effefc;
+    --base-color-primary-teal-50: #009d9c;
+    --base-color-primary-teal-75: #007a78;
+
+    /* Base colors: secondary */
+    --base-color-secondary-yellow-5: #fcf9e9;
+    --base-color-secondary-yellow-50: #f1c400;
+    --base-color-secondary-yellow-75: #89540a;
+    --base-color-secondary-orange-5: #fff5ed;
+    --base-color-secondary-orange-50: #ff671f;
+    --base-color-secondary-orange-75: #c72e07;
+    --base-color-secondary-violet-5: #fbf6fd;
+    --base-color-secondary-violet-50: #84329b;
+    --base-color-secondary-violet-75: #5c2768;
+    --base-color-secondary-grey-5: #fafafa;
+    --base-color-secondary-grey-50: #878787;
+    --base-color-secondary-grey-75: #404040;
+    --base-color-secondary-pink-5: #fbf7fc;
+    --base-color-secondary-pink-50: #e4c7ec;
+    --base-color-secondary-pink-75: #803f8c;
+    --base-color-secondary-blue-5: #eff6ff;
+    --base-color-secondary-blue-50: #bedbff;
+    --base-color-secondary-blue-75: #2262ee;
+    --base-color-secondary-red-5: #fff3f1;
+    --base-color-secondary-red-50: #fd4e36;
+    --base-color-secondary-red-75: #d92911;
+
+    /* Base colors: neutral */
+    --base-color-neutral-10: #fff;
+    --base-color-neutral-20: #fafafa;
+    --base-color-neutral-25: #f2f4f7;
+    --base-color-neutral-30: #eceff5;
+    --base-color-neutral-40: #d6ddeb;
+    --base-color-neutral-50: #b4bddb;
+    --base-color-neutral-60: #8797c8;
+    --base-color-neutral-70: #57699c;
+    --base-color-neutral-80: #324371;
+    --base-color-neutral-90: #212c4c;
+
+    /* Semantic colors: background */
+    --color-bg-brand: var(--base-color-primary-blue-50);
+    --color-bg-neutral-primary: var(--base-color-neutral-10);
+    --color-bg-neutral-secondary: var(--base-color-neutral-25);
+    --color-bg-neutral-tertiary: var(--base-color-neutral-40);
+    --color-bg-neutral-muted: var(--base-color-neutral-20);
+    --color-bg-system-success: var(--base-color-primary-teal-50);
+    --color-bg-system-success-subtle: var(--base-color-primary-teal-5);
+    --color-bg-system-error: var(--base-color-secondary-red-75);
+    --color-bg-system-error-subtle: var(--base-color-secondary-red-5);
+    --color-bg-system-warning: var(--base-color-secondary-yellow-50);
+    --color-bg-system-warning-subtle: var(--base-color-secondary-yellow-5);
+    --color-bg-system-information: var(--base-color-primary-blue-50);
+    --color-bg-system-information-subtle: var(--base-color-primary-blue-5);
+
+    /* Semantic colors: fill */
+    --color-fill-brand: var(--base-color-primary-blue-50);
+    --color-fill-neutral-inverse: var(--base-color-neutral-10);
+    --color-fill-neutral-muted: var(--base-color-neutral-60);
+    --color-fill-system-success: var(--base-color-primary-teal-50);
+    --color-fill-system-error: var(--base-color-secondary-red-75);
+    --color-fill-system-warning: var(--base-color-secondary-yellow-50);
+    --color-fill-system-information: var(--base-color-primary-blue-50);
+
+    /* Semantic colors: text */
+    --color-text-primary: var(--base-color-primary-blue-75);
+    --color-text-secondary: var(--base-color-neutral-80);
+    --color-text-tertiary: var(--base-color-neutral-70);
+    --color-text-muted: var(--base-color-neutral-60);
+    --color-text-inverse: var(--base-color-neutral-10);
+    --color-text-system-success: var(--base-color-primary-teal-75);
+    --color-text-system-error: var(--base-color-secondary-red-75);
+    --color-text-system-warning: var(--base-color-secondary-yellow-75);
+    --color-text-system-information: var(--base-color-primary-blue-50);
+
+    /* Semantic colors: border */
+    --color-border-primary: var(--base-color-primary-blue-50);
+    --color-border-secondary: var(--base-color-neutral-50);
+    --color-border-muted: var(--base-color-neutral-40);
+    --color-border-violet: var(--base-color-secondary-violet-50);
+    --color-border-system-success: var(--base-color-primary-teal-50);
+    --color-border-system-error: var(--base-color-secondary-red-75);
+    --color-border-system-warning: var(--base-color-secondary-yellow-50);
+    --color-border-system-warning-strong: var(--base-color-secondary-yellow-75);
+    --color-border-system-information: var(--base-color-primary-blue-50);
+}

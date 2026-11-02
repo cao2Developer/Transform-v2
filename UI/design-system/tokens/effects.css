@@ -1,0 +1,14 @@
+/*
+ * Effect tokens
+ *
+ * Shadows for the inactive and active states, and the highlight shadow.
+ */
+
+:root {
+    /* Shadows. The rgb() color is --base-color-neutral-90 */
+    --shadow-inactive: 0 1px 2px 0 rgb(33 44 76 / 12%);
+    --shadow-active: 0 0 12px 2px rgb(33 44 76 / 25%);
+
+    /* Highlight shadow. The rgb() color is --base-color-secondary-yellow-50 */
+    --shadow-highlight: 0 0 16px 0 rgb(241 196 0 / 50%);
+}

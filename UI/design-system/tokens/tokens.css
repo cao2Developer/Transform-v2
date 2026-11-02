@@ -1,0 +1,32 @@
+/*
+ * Ipsos design tokens
+ *
+ * This file is the entry point. It only imports the token files.
+ * Load this file, not the files it imports.
+ *
+ * Files
+ *   color.css        base colors and semantic colors
+ *   dimension.css    base units, space, radius, border width and layout
+ *   typography.css   font tokens and text styles
+ *   effects.css      shadows
+ *
+ * Base
+ *   The raw values. Color and dimension names start with --base-
+ *   (--base-color-*, --base-unit-*). The font tokens (--font-*,
+ *   --line-height, --letter-spacing-*) have no prefix.
+ *
+ * Semantic
+ *   A role for a value. The names have no layer prefix. A semantic token
+ *   usually points to a base token with var() (--color-bg-*, --space-*).
+ *
+ * Text style
+ *   Font tokens combined into one style for each text role (--text-*).
+ *
+ * Use
+ *   Components use only semantic tokens and text styles, never base tokens.
+ */
+
+@import 'color.css';
+@import 'dimension.css';
+@import 'typography.css';
+@import 'effects.css';

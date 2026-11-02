@@ -1,0 +1,56 @@
+/*
+ * Dimension tokens
+ *
+ * Base units hold the raw sizes. The other tokens point to them with var()
+ * when they can. Sizes are in rem, on a 16px base. The pixel value is in a
+ * comment.
+ *
+ * Components use only the semantic tokens, never the base units.
+ */
+
+:root {
+    /* Base units */
+    --base-unit-0: 0;
+    --base-unit-2: 0.125rem; /* 2px */
+    --base-unit-4: 0.25rem; /* 4px */
+    --base-unit-8: 0.5rem; /* 8px */
+    --base-unit-12: 0.75rem; /* 12px */
+    --base-unit-16: 1rem; /* 16px */
+    --base-unit-20: 1.25rem; /* 20px */
+    --base-unit-24: 1.5rem; /* 24px */
+    --base-unit-32: 2rem; /* 32px */
+    --base-unit-40: 2.5rem; /* 40px */
+    --base-unit-48: 3rem; /* 48px */
+    --base-unit-56: 3.5rem; /* 56px */
+    --base-unit-64: 4rem; /* 64px */
+    --base-unit-72: 4.5rem; /* 72px */
+    --base-unit-80: 5rem; /* 80px */
+    --base-unit-88: 5.5rem; /* 88px */
+    --base-unit-96: 6rem; /* 96px */
+    --base-unit-104: 6.5rem; /* 104px */
+    --base-unit-120: 7.5rem; /* 120px */
+    --base-unit-128: 8rem; /* 128px */
+
+    /* Space */
+    --space-xs: var(--base-unit-4);
+    --space-sm: var(--base-unit-8);
+    --space-md: var(--base-unit-12);
+    --space-lg: var(--base-unit-16);
+    --space-xl: var(--base-unit-24);
+
+    /* Radius */
+    --radius-none: var(--base-unit-0);
+    --radius-xs: var(--base-unit-2);
+    --radius-sm: var(--base-unit-4);
+    --radius-md: var(--base-unit-8);
+
+    /* Border width */
+    --border-width-default: var(--base-unit-2);
+    --border-width-thin: 0.0625rem; /* 1px */
+
+    /* Layout */
+    --page-max-width: 85rem; /* 1360px */
+    --page-margin: var(--base-unit-32);
+    --column-gap: var(--base-unit-32);
+    --input-width: 12.5rem; /* 200px */
+}
