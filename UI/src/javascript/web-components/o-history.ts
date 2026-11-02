@@ -101,10 +101,6 @@ export default class OHistory extends Component {
         return label?.trim() || null;
     }
 
-    public getAnswerCount(): number {
-        return this.AnswerCount;
-    }
-
     private configureEmptyMessage(): void {
         this.EmptyMessage = this.querySelector('.history-empty');
         this.InProgress = this.querySelector('.history-inprogress');
