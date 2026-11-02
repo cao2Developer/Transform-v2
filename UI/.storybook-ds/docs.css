@@ -1,0 +1,26 @@
+/*
+ * Docs Storybook backgrounds and headings
+ *
+ * The page uses --color-bg-neutral-secondary.
+ * The canvas uses --color-bg-neutral-primary.
+ * Headings use the heading text style font.
+ */
+
+.sbdocs.sbdocs-wrapper {
+    background: var(--color-bg-neutral-secondary);
+}
+
+.sbdocs .docs-story,
+.sb-show-main {
+    background: var(--color-bg-neutral-primary);
+}
+
+.sbdocs.sbdocs-title,
+.sbdocs.sbdocs-h1,
+.sbdocs.sbdocs-h2,
+.sbdocs.sbdocs-h3,
+.sbdocs.sbdocs-h4,
+.sbdocs.sbdocs-h5,
+.sbdocs.sbdocs-h6 {
+    font-family: var(--text-heading-font-family);
+}
