@@ -9,6 +9,7 @@ interface PaletteRecordCommittedDetail {
 export default class OHistory extends Component {
     public values: Array<HTMLInputElement> = [];
     private EmptyMessage: HTMLElement | null = null;
+    private InProgress: HTMLElement | null = null;
     private HistoryDestination: HTMLElement | null = null;
     private AnswerCount = 0;
     private loop: OLoop | null = null;
@@ -56,6 +57,7 @@ export default class OHistory extends Component {
 
     private updateEmptyMessage(): void {
         this.EmptyMessage?.classList.toggle('hidden', this.AnswerCount > 0);
+        this.InProgress?.classList.toggle('hidden', this.AnswerCount === 0);
     }
 
     private layoutValues(): void {
@@ -105,6 +107,7 @@ export default class OHistory extends Component {
 
     private configureEmptyMessage(): void {
         this.EmptyMessage = this.querySelector('.history-empty');
+        this.InProgress = this.querySelector('.history-inprogress');
         this.EmptyMessage?.classList.add('hidden');
 
         this.updateEmptyMessage();
