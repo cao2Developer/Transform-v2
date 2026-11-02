@@ -1,6 +1,0 @@
-/* Hide the "Name / Swatches" header row on every <ColorPalette>.
-   The header row is always the first child of .docblock-colorpalette and
-   there is no prop on <ColorPalette> to suppress it, so we hide it via CSS. */
-.docblock-colorpalette > div:first-child {
-  display: none;
-}
