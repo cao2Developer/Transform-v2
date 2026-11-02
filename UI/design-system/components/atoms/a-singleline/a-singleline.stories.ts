@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import './a-singleline.css';
-import './a-singleline.stories.css';
 
 export type SinglelineArgs = {
     variant: 'default' | 'inline';
@@ -74,7 +73,7 @@ export function singleline(
 }
 
 // A field in context: a label, the atom and the error message.
-// Long text and the self-check use this.
+// The self-check uses this.
 function field(args: SinglelineArgs, id: string): string {
     const messageId = `${id}-error`;
     const error = showsError(args);
@@ -190,20 +189,6 @@ export const States: StoryObj<StatesArgs> = {
             ? `<div class="pseudo-focus-visible-all">${input}</div>`
             : input;
     },
-};
-
-// Responsive behavior in the Skeleton section: the text stays on one line.
-const longValue =
-    'The text stays on one line and scrolls horizontally when it is longer than the field.';
-
-export const LongText: Story = {
-    name: 'Long text',
-    tags: ['!dev'],
-    render: () =>
-        field(
-            { ...defaultArgs, answered: true, value: longValue },
-            'long-text',
-        ),
 };
 
 // Self-check: throws if a rule of this component breaks.

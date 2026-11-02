@@ -26,14 +26,19 @@ A single-line text input for collecting user data in forms, surveys, and text-ba
 
 The component has two variants, Default and Inline, with no other size or style variations.
 
-- Variant:
-    - Default: primary input fields in forms.
-    - Inline: compact layouts, tables, inline editing. Class `a-singleline--inline`.
-- Answered:
-    - False: the field is empty and shows its placeholder.
-    - True: the field shows the answer.
-- Text alignment:
-    - Start (default), center or end. Set per question. Classes `a-singleline--align-center` and `a-singleline--align-end`.
+### Variant
+
+- **Default:** primary input fields in forms.
+- **Inline:** compact layouts, tables, inline editing. Class `a-singleline--inline`.
+
+### Answered
+
+- **False:** the field is empty and shows its placeholder.
+- **True:** the field shows the answer.
+
+### Text alignment
+
+- Start (default), center or end. Set per question. Classes `a-singleline--align-center` and `a-singleline--align-end`.
 
 ## States
 
@@ -46,10 +51,10 @@ The component has two variants, Default and Inline, with no other size or style 
 
 The component has four states: inactive, active, error and read only.
 
-- Inactive: the field is ready to receive input.
-- Active: the field has keyboard focus and follows the Active State pattern.
-- Error: the field shows a red border and an error icon. The error appears after the form is submitted with a missing or invalid value.
-- Read only: the field shows its value, or its placeholder when empty, but users cannot change it. It follows the Read Only State pattern.
+- **Inactive:** the field is ready to receive input.
+- **Active:** the field has keyboard focus and follows the Active State pattern.
+- **Error:** the field shows a red border and an error icon. The error appears after the form is submitted with a missing or invalid value.
+- **Read only:** the field shows its value, or its placeholder when empty, but users cannot change it. It follows the Read Only State pattern.
 
 Active can be combined with Error, and with Read only when the field receives keyboard focus. Read only is never combined with Error.
 
@@ -57,49 +62,67 @@ Active can be combined with Error, and with Read only when the field receives ke
 
 The component is a single text field. In the error state, the field shows an error icon at its end. The icon is drawn by the field itself, not by a separate component.
 
-- Dimensions and spacing:
-    - Default: 40px fixed height, 16px (`--space-lg`) horizontal padding and 2px corner radius (`--radius-xs`). The text is vertically centered.
-    - Inline: 32px fixed height and 8px (`--space-sm`) horizontal padding. The text is vertically centered. Only the bottom border is visible and there is no corner radius.
-    - The border is 2px (`--border-width-default`) in the inactive, active and error states and 1px (`--border-width-thin`) in the read only state.
-- Error icon:
-    - 16px × 16px, vertically centered.
-    - Default: 12px (`--space-md`) from the end edge of the field.
-    - Inline: 8px (`--space-sm`) from the end edge of the field.
-    - 8px (`--space-sm`) between the text and the icon. The field reserves this space, so the text never overlaps the icon.
-- Responsive behavior:
-    - The default width is 200px (`--input-width`). It can be changed per question.
-    - The text stays on one line and scrolls horizontally when it is longer than the field.
+### Dimensions and spacing
 
-<Canvas of={Stories.LongText} sourceState="none" />
+- **Default:** 40px fixed height, 16px (`--space-lg`) horizontal padding and 2px corner radius (`--radius-xs`). The text is vertically centered.
+- **Inline:** 32px fixed height and 8px (`--space-sm`) horizontal padding. The text is vertically centered. Only the bottom border is visible and there is no corner radius.
+- The border is 2px (`--border-width-default`) in the inactive, active and error states and 1px (`--border-width-thin`) in the read only state.
+
+### Error icon
+
+- 16px × 16px, vertically centered.
+- **Default:** 12px (`--space-md`) from the end edge of the field.
+- **Inline:** 8px (`--space-sm`) from the end edge of the field.
+- 8px (`--space-sm`) between the text and the icon. The field reserves this space, so the text never overlaps the icon.
+
+### Responsive behavior
+
+- The default width is 200px (`--input-width`). It can be changed per question.
+- The text stays on one line and scrolls horizontally when it is longer than the field.
 
 ## Accessibility
 
-- **Labeling:**
-    - Always pair the input with a visible `<label>` element using the `for` attribute.
-    - Use `aria-label` only when the purpose of the field is clear from the surrounding content.
-    - References:
-        - [W3C WAI Tutorials: Labeling Controls](https://www.w3.org/WAI/tutorials/forms/labels/) (WCAG 1.3.1, 3.3.2)
-- **Keyboard interaction:**
-    - Users can navigate to and from the input using `Tab` and `Shift+Tab`.
-    - The `Enter` key triggers form submission when appropriate.
-    - References:
-        - [W3C WCAG 2.2 Understanding: Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html) (WCAG 2.1.1)
-- **Read only state:**
-    - Use the native `readonly` attribute, not `disabled`, because a disabled field does not send its value with the form.
-    - The field stays in the focus order of the `Tab` key, so users can reach it, review its value and copy it.
-    - Do not add `aria-readonly="true"`, because the native `readonly` attribute already exposes the read only state.
-    - The `required` attribute has no effect on a read only field.
-    - References:
-        - [MDN: readonly HTML attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/readonly)
-        - [MDN: ARIA: aria-readonly attribute](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-readonly)
-- **Error state:**
-    - Set `aria-invalid="true"` on the field only after the form is submitted with a missing or invalid value.
-    - Link the field to its error message with `aria-describedby`, so screen readers announce the message together with the field.
-    - The error icon and the message show the error without depending on color alone.
-    - References:
-        - [MDN: ARIA: aria-invalid attribute](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-invalid)
-        - [W3C WAI Tutorials: User Notification](https://www.w3.org/WAI/tutorials/forms/notifications/) (WCAG 3.3.1)
-        - [W3C WCAG 2.2 Understanding: Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html) (WCAG 1.4.1)
+### Labeling
+
+- Always pair the input with a visible `<label>` element using the `for` attribute.
+- Use `aria-label` only when the purpose of the field is clear from the surrounding content.
+
+#### References:
+
+- [W3C WAI Tutorials: Labeling Controls](https://www.w3.org/WAI/tutorials/forms/labels/) (WCAG 1.3.1, 3.3.2)
+
+### Keyboard interaction
+
+- Users can navigate to and from the input using `Tab` and `Shift+Tab`.
+- The `Enter` key triggers form submission when appropriate.
+
+#### References:
+
+- [W3C WCAG 2.2 Understanding: Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html) (WCAG 2.1.1)
+
+### Read only state
+
+- Use the native `readonly` attribute, not `disabled`, because a disabled field does not send its value with the form.
+- The field stays in the focus order of the `Tab` key, so users can reach it, review its value and copy it.
+- Do not add `aria-readonly="true"`, because the native `readonly` attribute already exposes the read only state.
+- The `required` attribute has no effect on a read only field.
+
+#### References:
+
+- [MDN: readonly HTML attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/readonly)
+- [MDN: ARIA: aria-readonly attribute](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-readonly)
+
+### Error state
+
+- Set `aria-invalid="true"` on the field only after the form is submitted with a missing or invalid value.
+- Link the field to its error message with `aria-describedby`, so screen readers announce the message together with the field.
+- The error icon and the message show the error without depending on color alone.
+
+#### References:
+
+- [MDN: ARIA: aria-invalid attribute](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-invalid)
+- [W3C WAI Tutorials: User Notification](https://www.w3.org/WAI/tutorials/forms/notifications/) (WCAG 3.3.1)
+- [W3C WCAG 2.2 Understanding: Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html) (WCAG 1.4.1)
 
 ## HTML Structure
 
