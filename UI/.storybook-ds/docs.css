@@ -24,26 +24,32 @@
     background: var(--base-color-neutral-10);
 }
 
-/* Text */
+/*
+ * Text
+ *
+ * MDX headings, paragraphs, lists and tables are direct children of
+ * .sbdocs-content. Most of them have no sbdocs-* class, so the selectors
+ * use the child combinator (>). It also keeps these styles out of the
+ * stories inside a Canvas.
+ */
 
-.sbdocs.sbdocs-p,
-.sbdocs.sbdocs-li {
+.sbdocs.sbdocs-content > p,
+.sbdocs.sbdocs-content > ul li,
+.sbdocs.sbdocs-content > ol li,
+.sbdocs.sbdocs-content > table {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height);
     color: var(--base-color-neutral-80);
 }
 
-.sbdocs.sbdocs-title,
-.sbdocs.sbdocs-h1,
-.sbdocs.sbdocs-h2,
-.sbdocs.sbdocs-h3,
-.sbdocs.sbdocs-h4,
-.sbdocs.sbdocs-h5,
-.sbdocs.sbdocs-h6 {
+.sbdocs.sbdocs-content > :is(h1, h2, h3, h4, h5, h6) {
     font-family: var(--font-family-secondary);
     color: var(--base-color-primary-blue-75);
 }
 
-.sbdocs.sbdocs-h2 {
-    border-bottom-color: var(--base-color-neutral-40);
+.sbdocs.sbdocs-content > h2 {
+    padding-bottom: 0;
+    border-bottom: none;
 }
 
 /*
@@ -69,7 +75,15 @@
 }
 
 .sbdocs-toc--custom nav > .toc-wrapper > .toc-list {
-    border-left: 1px solid var(--base-color-neutral-40);
+    border-left-color: var(--base-color-neutral-40);
+}
+
+.sbdocs-toc--custom nav .toc-list-item {
+    display: flex;
+    align-items: center;
+    min-height: var(--base-unit-32);
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .sbdocs-toc--custom nav .toc-list-item > a {
@@ -82,12 +96,6 @@
 
 .sbdocs-toc--custom nav .toc-list-item.is-active-li::before {
     border-left-color: var(--base-color-primary-teal-50);
-}
-
-/* Controls */
-
-.docblock-argstable select option:first-child {
-    display: none;
 }
 
 /* Responsive */
