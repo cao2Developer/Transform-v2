@@ -1,0 +1,45 @@
+<h1>First v2 production release</h1>
+<p>The development team have achieved feature complete on all response types.  There are a few minor features missing some of which have been added to this release.  The team delayed the release to fit in a couple of extra features. The majority of development focus is on bug fixing.</p>
+<h2>New Features</h2>
+<h3>Tap in Cell (choice questions in tables)</h3>
+<p>In a choice question in a table, where each option is in its own cell, it is now possible to click on the cell (rather than just the control) to change the state of the control.</p>
+<h3>Grid: question separator</h3>
+<p>Grids now support separators between the grid and the previous/next questions</p>
+<h3>Property: Separator</h3>
+<p>The Property Separator is now honoured at a question level.  This is both when a stand alone question and when in a grid.  The page property Separator is already supported.</p>
+<h3>Choice: Read-only Options</h3>
+<p>Options in a choice question now recognise that they are read-only.  There state (selected, not selected) is shown but the value cannot be changed.</p>
+<h3>Show Questions</h3>
+<p>A questionname.show() is now honoured.  It makes all the questions on the page readonly.  This cannot be used in conjunction with a tabstrip as it makes the tabstrip readonly as well.</p>
+<h3>List: Option visibility</h3>
+<p>List questions (list, combobox and dropdown) now support option visibility and option invisibility rules.</p>
+<h3>List: current item highlight</h3>
+<p>When performing a rollover (desktop) or using the keyboard to move over options in a list, the current item is highlighted to differentiate it from the selected option.</p>
+<h3>Page Layout of specific questions</h3>
+<p>This requires a fix from Unicom.  The use of custom page layouts is now supported even when a tabstrip (global question) is used.  This feature was failing due to a Unicom bug.  There is a fix for the bug which should be implemented on the desktop and the servers.  This fix is going through testing (it has passed my tests) and will be rolled out the same way as all other fixes.  Once implemented a layout template can name specific questions (by name) to determine where on the page they should be positioned.</p>
+<h2>Bug Fixes</h2>
+<h3>Scale: Special codes not dismissed</h3>
+<p>When a special code was selected on a scale question, selecting a value on the scale did not dismiss the special code.</p>
+<h3>Choice: keyboard completion</h3>
+<p>When using the keyboard to set a value in the other specify the associated radio button/checkbox was not being selected or deselected</p>
+<h3>Choice: Other specify formatting</h3>
+<p>The format for an other specify was a box which was causing inconsistent option heights.  This is now an underline.</p>
+<h3>Combobox: MinCharacters causes input to collapse</h3>
+<p>When MinCharacters was set on a combobox the combobox input would collapse when the user started typing</p>
+<h3>Combobox: No keyboard actions on filter</h3>
+<p>When a filter was entered into a combobox to reduce the list of options the keyboard did not seem to navigate through options correctly.  This is because it was navigating through filtered (invisible) options.  This no longer happens.</p>
+<h3>Scale: Incorrect pre/post labelling</h3>
+<p>pre/post labels were incorrectly formatted in scale questions (they had boxes around them).</p>
+<h3>Answered: Color changed to ensure Accessibility compliance</h3>
+<p>The Ipsos Green (Teal) colour was used to show answered text/options.  It failed accessibility tests and so a slightly darker variation has been applied.</p>
+<h2>Known Issues</h2>
+<h3>The Reset to null feature</h3>
+<p>This has not yet been implemented</p>
+<h3>Showspinner Property</h3>
+<p>This has not yet been implemented</p>
+<h3>sublist separator property</h3>
+<p>This has not yet been implemented</p>
+<h3>Grids force horizontal page scrolling</h3>
+<p>Large (wide) grids for the whole page to scroll rather than just the grid question</p>
+<h3>Element Align Right</h3>
+<p>This has not yet been implemented</p>

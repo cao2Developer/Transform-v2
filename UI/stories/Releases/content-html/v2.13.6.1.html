@@ -1,0 +1,84 @@
+<h1>Part II</h1>
+<p>This is the second half of the v2.13.6 release.  It provides access to new functionality in the form of ReadWrite.</p>
+<h2>Read/Write</h2>
+<p>In the v1.96 release read/write was a special question type.  This question type was a derivative of the simple edit box.  It automatically hid the inputs used to hold data.  In v2.0 a different route has been taken.  Rather than create a specific question type we have made this functionality available to all response types.  Right now, however, only singleline and singleline-number support the functionality (other response types will be added later).  This is because these allow a replication of the original functionality.</p>
+<p>To implement create questions as normal.  If you want them to be hidden then apply a visibility rule.  Then add the custom properties for the relevant action.  Each question is handled separately so multiple questions on a single page can read/write values independently.</p>
+<h3>Write to Local Storage</h3>
+<p>These custom properties can be used to write the current response in a box to local storage.  Writing occurs when the page loads.
+the write custom property includes a property that defines the destination.  The destination is set to localstorage which is the only option currently available.  The name property is the name of the name/value pair in local storage.  The response in the question is stored as the value in that name/value pair combination.</p>
+<p>`</p>
+<details class="release-code-block" open><summary class="release-code-summary">ROUTING Code</summary><pre class="release-code-pre"><code class="release-code"> set customProperties = CreateObject()
+ set customProperties.write = CreateObject()
+ with customProperties.write
+  .destination = "LocalStorage"
+  .name = "firstname"
+ end with</code></pre></details>
+<p>`</p>
+<p>If a page with a singleline response containing the response "kevin" is loaded with this custom property then the local storage key/value pair will be created with the "kevin" response stored as the value.  If there is already a key/value pair called firstname then then current value will be overwritten.</p>
+<h3>Read from Local Storage</h3>
+<p>Reading from LocalStorage uses the new read custom property.  This is attached to the singleline question that is going to show the value.  That singleline can be either visible or invisible.  The value is read when the page loads.</p>
+<p>`</p>
+<details class="release-code-block" open><summary class="release-code-summary">ROUTING Code</summary><pre class="release-code-pre"><code class="release-code"> set customProperties = CreateObject()
+ set customProperties.read = CreateObject()
+ with customProperties.read
+  .source = "LocalStorage"
+  .name = "firstname"
+ end with
+</code></pre></details>
+<p>`</p>
+<p>In this example the read custom property is used.  It has two properties.  Source defines that information is read from localstorage.  The name is the name of the key/value pair to be read.  The value of that key/value pair is recorded as the response for the question to which the custom properties are attached.</p>
+<h3>Read User Agent</h3>
+<p>The reading of the UserAgent is similar to the reading of LocalStorage.  Firstly the source changes (to UserAgent), then the name is the part of the UserAgent string that is to be read.  this name comes from the user Agent string itself.</p>
+<p>`</p>
+<details class="release-code-block" open><summary class="release-code-summary">ROUTING Code</summary><pre class="release-code-pre"><code class="release-code"> with customProperties.read
+  .source = "UserAgent"
+  .name = "OperatingSystem"
+ end with</code></pre></details>
+<p>`</p>
+<p>In the above example the name of the OperatingSystem is extracted from the user agent string and stored as a response in the question to which these custom properties were associated.</p>
+<h2>Resolved Questions</h2>
+<p>There have been a few questions on the Development board.  I am documenting them here so that they are on an official statement.</p>
+<h3>Missing Answer error missing</h3>
+<p>This was discussed in the last meeting.  An updated question.xsl was given to Rashmi that provided a quick solution.  I have included the latest version in this release.  We are evolving the look of sub-question messages so that they fit better in the overall design.  This version, which is slightly different to the one Rashmi received also shows the error as a placeholder.</p>
+<h3>Can visibility rules include a reference to special codes</h3>
+<p>If a question needs to have its visibility defined by the selection of a special code then it is possible to write a visibility rule.  The rule utilises containsAny function to define whether the code is selected.  This means it can be used regardless of the number of special codes used.</p>
+<p>The following example has been added to the smoking question in the example mdd, so you have access to a working example:</p>
+<h4>metadata</h4>
+<details class="release-code-block" open><summary class="release-code-summary">ROUTING Code</summary><pre class="release-code-pre"><code class="release-code">    Howmany_smoked "How many cigarettes did you smoke in the last seven days"
+        style(
+            BgColor = "singleline-number:"
+        )
+        templates(
+            Question = "question 2-column.htm"
+        )
+    long [0 .. ]
+    codes(
+    {
+     nosmoking "I did not smoke any in the last seven days" DK
+    } );
+
+ NoSmoke7Reason "Please provide a primary reason why you did not smoke in the last seven days"
+         style(
+            BgColor = "choice:"
+        )
+        templates(
+            Question = "question 2-column.htm"
+        )
+ categorical[1]
+ {
+ GivingUp "I am giving up smoking",
+ Economy "I could not afford to buy cigarettes",
+ Trying "I am trying vaping",
+ Ranout "I did not have any cigarettes",
+ noidea "I don't know why" DK
+ };</code></pre></details>
+<p>In this example the NoSmoke7Reason question is only visible when the special code is selected in the HowMany_Smoked question. A containsAny function is used.  It looks for the category name for the special code.</p>
+<h4>routing</h4>
+<details class="release-code-block" open><summary class="release-code-summary">ROUTING Code</summary><pre class="release-code-pre"><code class="release-code"> currentRule = CreateVisibilityRule("Howmany_smoked.containsAny('nosmoking')")
+ set customProperties = CreateObject()
+ set customProperties.visible = CreateObject()
+ customProperties.visible.rules = currentRule
+ customProperties.visible.collapse = true
+
+ jsonProperties = JsonSerialize(customProperties)
+ NoSmoke7Reason.Style.Color = jsonProperties</code></pre></details>

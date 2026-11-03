@@ -1,0 +1,15 @@
+<h1>Mobile and Exclusivity Issues</h1>
+<p>This release looks to resolve several issues.  There is a third pending issue that may have been resolved by inference.</p>
+<h2>Issues Resolved</h2>
+<h3>Exclusive options in a grid dismiss the whole grid</h3>
+<p>When a grid contains one or more choice questions where the choice includes an exclusive option then the exclusive option was dismissing all selected options. in the grid rather than just the selected options within its question bounds.</p>
+<h3>Combo:  List position on mobile devices</h3>
+<p>When a combobox is displayed on a mobile phone the list is incorrectly positioned.  Further, scrolling will cause the position to change.  This is particularly noticeable on an iPhone.  The issue is caused when the keyboard appears and the browser automatically (not our code) repositions the current control by scrolling.  The combination of a reduction in the available space (caused by the keyboard) and the reposition of the control means that the list is shown in the wrong place.</p>
+<h3>Exclusive options in a grid are shown incorrectly</h3>
+<p>In a grid of choice questions where the question is multi-answer but there are exclusive options.  The exclusive options were incorrectly displayed.  They look like radio buttons but act like checkboxes.</p>
+<h3>Special codes don't dismiss existing values</h3>
+<p>A patch to the release was added to resolve an introduced issue where special codes were not dismissing values in their associated question.</p>
+<h3>Numeric questions in a grid have become exclusive.  Entering a value in to one question causes all other questions in the grid to lose their value.</h3>
+<h2>Possible resolution</h2>
+<h3>Comboboxes appear as different sizes in a grid</h3>
+<p>The team were not able to recreate the issue where a grid of comboboxes could result in different width controls.  This may be because we had already implemented the fix for combo on mobile devices and that had fixed the issue.  We had already seen that off screen comboboxes were not being sized in the same way as onscreen and had resolved that issue.</p>

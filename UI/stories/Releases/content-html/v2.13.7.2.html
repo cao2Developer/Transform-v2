@@ -1,0 +1,35 @@
+<h1>Pre-release updates</h1>
+<p>This release consists of pre-release updates that we have been discussing over the last few weeks.  There are no new features in this release.</p>
+<p>This release has been patched to resolve two problems.</p>
+<h2>Further Further Issues resolved</h2>
+<h3>questions inside a grid were not sizing correctly</h3>
+<p>This was caused by the grid (which had visibility rules applied, not letting the questions within it that its visibility status had changed, consequently they were not prepared properly.  This would create several sizing issues both to the question and the cell in which it is contained.</p>
+<h2>Further Issues Resolved</h2>
+<h3>Combobox : down arrow does not permanently reveal a list</h3>
+<p>when the down arrow is pressed the list appears and then immediately disappears</p>
+<h3>Combobox in Grid: width is restricted</h3>
+<p>The combobox is working with the width constraints created by the column of the grid.  It needs to push the grid wider so that items can be listed correctly.</p>
+<h3>Combobox: width of invisible items</h3>
+<p>Items which load onto the page in an invisible state do not size correctly</p>
+<h2>Issues Resolved</h2>
+<p>The following issues are resolved in this release</p>
+<h3>Grid (Choice/Boolean) - focus</h3>
+<p>Choice questions (which are actually boolean questions in grids) were not showing focus when an individual checkbox or radio button has control.  This meant the keyboard user could not tell which control would change state when they pressed the spacebar.</p>
+<h3>Dropdown - width</h3>
+<p>the width of the list does not respect the width of the available area.   if can extend beyond that area to the edge of the page.</p>
+<h3>Questions are not showing focus</h3>
+<p>There should be a focus for the current control and the current question, current question focus is not appearing</p>
+<h3>Combobox - filter not working for Japanese keyboards</h3>
+<p>Due to the way Japanese entry works filtering was not working correctly</p>
+<h3>Tab Order - full pages tab to the submit button</h3>
+<p>On Chromium-based browsers a completed page of controls would tab to the submit button at the bottom of the page rather than tab to the first control on the screen.</p>
+<h3>Lists are sometimes covered by other objects</h3>
+<p>The list from a dropdown or combobox, when visible, can be partially covered by other elements on the page, for example a slider.</p>
+<h2>Known Issues</h2>
+<p>These are issues that have been raised that are not yet resolved</p>
+<h3>Jump to Error</h3>
+<p>Officially this has not yet been resolved, nor recreated.  But changes to the tab order may have resolved it accidently.  Could you confirm</p>
+<h3>Special codes don't trigger visibility rules on first character entry</h3>
+<p>In a input/special code combination where the special code is used to drive visibility rules. the visibility rule may not run correctly when the user makes an single character entry into the input</p>
+<h3>One-size calculation does not account for hidden options</h3>
+<p>Options that are hidden in a choice question are not used to calculate the max width/height of options.  When they are made visible they may overlap with other items.</p>

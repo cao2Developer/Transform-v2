@@ -1,0 +1,12 @@
+<h1>Exclusive control in grids</h1>
+<p>This release is focused on issues where responses in a grid would dismiss other responses in the same grid.</p>
+<h2>Issues Resolved</h2>
+<h3>Radio buttons dismiss singleline-number responses</h3>
+<p>When a combination of a single-number and a radio button appear in the same iteration of a grid, selecting a radio button causes any response in the singleline-number to disappear.</p>
+<h3>Similar dismiss issues with other responses</h3>
+<p>There are issues with various response types that cause the loss of data within a single iteration.  This includes scale and slider questions.</p>
+<h3>Exclusive checkboxes not supported when there are two rows of headers</h3>
+<p>Exclusive checkboxes know they are exclusive because their header is bold.  Once this is detected the bold is removed.  On multi-row headers the bold is on the second row not the first causing it not to be detected.</p>
+<h2>Known Issues</h2>
+<h3>Sliders and special codes in a grid</h3>
+<p>Sliders and special codes do not dismiss each other correctly when they appear in a single iteration of a grid. The result is two answers to the same question, which then cannot be resolved.  This is not being fixed right now because these are not being used in a survey.  The fix will be provided in the next release.</p>

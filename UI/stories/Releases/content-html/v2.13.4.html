@@ -1,0 +1,37 @@
+<h1>Edit Layout, choice and list improvements</h1>
+<p>This is a patch release</p>
+<p>However there are changes in all sections so its going to look like a full release.  There are new server files, new and updated survey templates and new transformation files.</p>
+<h2>New Features</h2>
+<h3>Page title moved to the header</h3>
+<p>The page title for each page is now located in the header.  The title is the name of the question unless the page title has been set in the routing (IOM.Title = "").  Accessibility rules require that every page have a title that defines the page.  This needs to be a H1 title.  The size of the H1 font has been reduced slightly to allow longer titles.  If the title is too long it will wrap; if very long it will increase the header height.</p>
+<h3>Support for formatted warnings</h3>
+<p>Warnings are now shown in a gold/brown formatted block with an warning icon.  Warnings are created by populating the Warning banner for the question.</p>
+<h3>Support for row header alignment in loops</h3>
+<p>Metadata styling can be used to set the horizontal and vertical alignment of a heading in a loop.  The following is an example of an item in a defined list with alignment set.</p>
+<h3>InterviewStopped Messages support</h3>
+<p>Two new simple layout templates have been created these include a placeholder for general (unnamed) banners that allows InterviewStopped messages to be displayed at the end of the interview.</p>
+<details class="release-code-block" open><summary class="release-code-summary">METADATA Code</summary><pre class="release-code-pre"><code class="release-code">        Jake "Jake" labelstyle( Align = "Left", VerticalAlign = "Top")</code></pre></details>
+<h3>Support for row header cell widths in loops</h3>
+<p>Metadata styling can be used to set the width of a cell in in a header.  The following is an example of an item in a defined list that sets the width of the cell in which it sits.</p>
+<details class="release-code-block" open><summary class="release-code-summary">METADATA Code</summary><pre class="release-code-pre"><code class="release-code">        Jake "Jake" labelstyle ( Cell( Width = "7em" ) )</code></pre></details>
+<h4>Support for column header alignment in loops</h4>
+<p>Metadata styling can be used to set the alignment of column headers.  The following is an example of an item in a defined list used to adjust the alignment.  Due to the way that headers work alignment is slightly different for rows and columns.</p>
+<details class="release-code-block" open><summary class="release-code-summary">METADATA Code</summary><pre class="release-code-pre"><code class="release-code">        Sunday "Sunday"
+            style(
+                Align = "Right",
+                VerticalAlign = "Top",
+            )</code></pre></details>
+<h2>Issues Resolved</h2>
+<h3>Vertical size of list (combo and dropdown) is not correct</h3>
+<p>There was a continuing issue with the vertical size of a list (combo-box and dropdown).  It was caused by the hidden message that is used to display text when there are no items left in the list.  This is an improvement on the previous attempt to resolve this issue.</p>
+<h3>Instructions are not formatted correctly</h3>
+<p>Instructions are now shows in a blue formatted block with an information icon.  Instructions are created by populating the Instruction banner for the question.</p>
+<h3>Buttons apply visibility rules on page load</h3>
+<p>When buttons are used to apply visibility (ie clicking them causes other questions to appear or disappear), these rules were not applied correctly on page load.</p>
+<h3>DropUp limits size of list if insufficient space</h3>
+<p>In the previous release dropup support was introduced.  This worked when there was insufficient space below a control to display the list, however, it did not take into account that there may not be sufficient space above the control either.  It now limits the vertical size of the list when implementing dropup, so that it fits within the space available.</p>
+<h3>list controls force the width of columns in loops</h3>
+<p>List controls (combo-box, dropdown and lists) size horizontally to fit their content.  However they are not allowed to exceed the available horizontal space.  In a loop the available space is being dictated by the width of the cell.  The control were therefore too narrow.  These controls now force a cell to widen to allow them to grow to their required size.</p>
+<h2>Known Issues</h2>
+<h3>List controls may grow too wide</h3>
+<p>While list controls now force cells to be wider, they are no longer fully controlled.  It is possible for a control in a grid to be larger than the width of the page.  There is a design to resolve this, but it won't be implemented for a while.</p>
