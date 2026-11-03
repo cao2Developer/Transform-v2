@@ -20,8 +20,24 @@
     font-display: swap;
     font-family: Barlow;
     font-style: normal;
+    font-weight: 500;
+    src: url('./Barlow-Medium.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: Barlow;
+    font-style: normal;
     font-weight: 600;
     src: url('./Barlow-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Barlow Semi Condensed';
+    font-style: normal;
+    font-weight: 500;
+    src: url('./BarlowSemiCondensed-Medium.woff2') format('woff2');
 }
 
 @font-face {
