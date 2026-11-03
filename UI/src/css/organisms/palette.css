@@ -45,6 +45,11 @@ o-palette {
         }
     }
 
+    :where(.palette-actions) {
+        display: flex;
+        gap: 8px;
+    }
+
     .m-message-information {
         &::before {
             background: var(--color-bg-neutral-primary);
@@ -56,6 +61,11 @@ o-palette {
             padding: var(--space-2);
             white-space: nowrap;
         }
+    }
+
+    .unavailable {
+        display: initial;
+        visibility: hidden;
     }
 }
 
