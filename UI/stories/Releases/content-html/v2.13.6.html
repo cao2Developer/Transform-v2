@@ -1,0 +1,26 @@
+<h1>Requested Updates</h1>
+<p>This is an issue resolution update aimed at providing the base functionality required to launch projects.
+Only server files are updated in this release.  There are no changes to the transformation files or the study examples.</p>
+<h2>New Features</h2>
+<p>None</p>
+<h2>Issues Resolved</h2>
+<p>The following known issues have been resolved</p>
+<h3>Dropdown: 1st Item cannot receive focus</h3>
+<p>When using the keyboard a respondent is not able to select the first item in the list by pressing the first character of that item, any searching for a matching item skips the first item.</p>
+<h3>Reset on Load</h3>
+<p>If a question has a value but is loaded onto the page (via visibility rules) in an invisible state, if the state of the question does not change then submitting the page results in the loss of the value set.  A question should only loose its response when the respondent changes a value in another option that causes that question to become invisible.</p>
+<h3>Slider first use cannot select the middle value</h3>
+<p>The respondent is unable to select the middle value of a slider with an odd number of values.  Clicking on the track does not set the value; using the terminator buttons selects the value immediately above or below.</p>
+<h3>Buttons: keyboard can not be used to click a button</h3>
+<p>When the keyboard is used to click a button the value sets and then resets.  When the button is an auto-submit the form is then submitted without a value; this usually results in a "missing answer" error.</p>
+<h3>Choice: Checkbox options can not be toggled using the keyboard</h3>
+<p>When the keyboard is used to toggle the status of a checkbox the state automatically reverts back to its original status</p>
+<h3>Combobox: Pressing down arrow performs two actions</h3>
+<p>Pressing down arrow on a combo-box (to reveal the list) causes the current selection to change.  It should only reveal the list and not change the current selection.</p>
+<h3>Listbox: Moves when scrolling</h3>
+<p>When a list box appears on a page with other questions and has to be scrolled into view the list box moves relative to its correct position on the page causing it to no longer sit within its question.</p>
+<h2>Known Issues</h2>
+<h4>Combobox: selection may not be visible</h4>
+<p>When the respondent uses the keyboard to find a selection and enters text exactly equal to an item, that item is automatically selected.  Sometime the selection is not visible in the list, the user has to scroll to see it.</p>
+<h4>Read the User Agent String</h4>
+<p>This feature is still in development</p>

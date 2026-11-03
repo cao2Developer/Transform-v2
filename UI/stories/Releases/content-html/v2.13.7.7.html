@@ -1,0 +1,26 @@
+<h1>Multiple Errors on a Page</h1>
+<p>This release contains fixes to various issues identified by both teams.</p>
+<h2>Patch update</h2>
+<p>Due to an issue with radio button sets in grids, an updated version of question.xsl has been provided.</p>
+<h2>Patch update 2</h2>
+<p>A second patch is being released with updates to two issues:</p>
+<h3>exclusive checkboxes in grids</h3>
+<p>An issue with exclusive checkboxes in a grid was discovered where they were not dismissing other checkboxes and other checkboxes were not dismissing them.</p>
+<h3>Incorrect width when defined as a percentage</h3>
+<p>A minor issue with horizontal questions (sliders/scales) where their width is defined as a percentage of available width has been resolved as well.  These now calculate their width correctly.</p>
+<h2>Issues Resolved</h2>
+<p>The following issues have been resolved</p>
+<h3>Only one error is displayed per question</h3>
+<p>If there are multiple custom errors on a question in a grid then only the first one is displayed</p>
+<h3>Multiple errors cause question control to disappear</h3>
+<p>If there are multiple custom errors on a question in a grid then the control for the question disappears</p>
+<h3>droplists are still wrapping</h3>
+<p>We are still experiencing issues where droplists are not quite the right width.  Another batch of improvements have been implemented, but we are still seeing some inconsistencies</p>
+<h3>droplist placeholder truncated in Korean</h3>
+<p>placeholders are missing one charater as the dropdown is not quite wide enough</p>
+<h3>Non-exclusive special codes don't dismiss value</h3>
+<p>where there is a combination of special codes which are non-exclusive, choosing these options does not dismiss any entered value, nor does entering a value dismiss the special code</p>
+<h3>singleline-number does not support , for decimals when language is set to FR</h3>
+<p>as the input type we use is number only the decimal point can be used to express decimals.  Comma is not supported</p>
+<h3>Slider and Special codes</h3>
+<p>Sliders inside grids are not being dismissed by special codes.</p>

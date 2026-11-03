@@ -1,0 +1,10 @@
+<h1>2nd Patch release</h1>
+<h2>Droplists and Font loading</h2>
+<p>The calculation of width was being affected by the late loading of fonts.  This release update delays the calculations until after the font has loaded as calculations are affected by font changes.</p>
+<h2>Droplists and ResettoNull</h2>
+<p>This patch is focused on two fixes to the width of droplists and the issues with reset to null for singline questions in grids</p>
+<h2>Issues Resolved</h2>
+<h3>Droplist still wrapping widest item</h3>
+<p>Certain droplists are still wrapping the widest item</p>
+<h3>Singleline questions in grids are not reset</h3>
+<p>When a grid has a visibility rule then all the questions in the grid may be made invisible.  They should reset to null when this happens.  Singleline and singleline number questions were not resetting.</p>

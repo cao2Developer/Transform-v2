@@ -1,0 +1,30 @@
+<h1>Japan et al</h1>
+<p>This patch focuses on delivering improvements for non-English keyboards (both hardware and software driven).</p>
+<h2>New Features</h2>
+<h3>Totals are recalculated after visibility events</h3>
+<p>Previously totals only recalculated when value change events occurred within the table.  They now also occur if a cell changes its visibility state</p>
+<h2>Issues Resolved</h2>
+<p>The following issues are resolved in this release</p>
+<h3>Japanese Filtering</h3>
+<p>Users who are filtering combo-boxes by typing in search, find that options are not shown that match the entered search when they are using a non-english keyboard that swaps characters. This was caused by the browser not firing the right events when the user selected the option they required.   An adjustment has been made based on listening for different events.</p>
+<h3>Combo-Width</h3>
+<p>The width of a combo-box is not accurate in certain grid scenarios especially if the grid is invisible on page load and then made visible later.  This adjustment has been applied to all lists.</p>
+<h3>Question focus is missing</h3>
+<p>Some grid questions had individual question focus missing.  This created specific challenges when trying to complete a grid-based choice question as you could not see the focus when moving between the radio-buttons or checkboxes.</p>
+<h3>Error Font-size</h3>
+<p>Error messages now use 16px not 14px.</p>
+<h3>Choice not centred</h3>
+<p>Choice controls in grids are not centred within their cell</p>
+<h3>Click in cell not supported</h3>
+<p>Choice controls in grids require the user to click on the control directly, the option to click in the cell is not supported.</p>
+<h3>Totals in flipped tables</h3>
+<p>Totals were not being applied correctly when tables are flipped into column orientation</p>
+<h3>Totals on double headers</h3>
+<p>Totals were not being applied correctly when the table had more than one row/column header</p>
+<h3>Totals on Error rows</h3>
+<p>When a table has an error row inserted, totals were being calculated/presented on that row.</p>
+<h3>Options visibility does not collapse</h3>
+<p>choice options subject to visibility rules were not collapsing</p>
+<h2>Known Issues</h2>
+<p>We are currently reviewing everything to do with totals (in grids) there are a few combinations that are not quite working the way we want them to.</p>
+<h3>Post labels for totals are not positioned correctly</h3>
