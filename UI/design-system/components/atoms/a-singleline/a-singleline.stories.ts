@@ -14,8 +14,8 @@ export type SinglelineArgs = {
 export const defaultArgs: SinglelineArgs = {
     variant: 'default',
     answered: false,
-    value: 'Text',
-    placeholder: 'Text',
+    value: 'Answer',
+    placeholder: 'Placeholder',
     align: 'start',
     readOnly: false,
     error: false,
@@ -103,7 +103,7 @@ const meta = {
         variant: {
             name: 'Variant',
             description:
-                'Default for forms. Inline for compact layouts and tables: bottom border only, 32px high.',
+                'Default for forms. Inline for compact layouts and tables: bottom border only, 32px (`--size-lg`) high.',
             control: 'radio',
             options: ['default', 'inline'],
         },

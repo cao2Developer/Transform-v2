@@ -19,7 +19,7 @@
     font-family: var(--text-label-base-font-family);
     font-size: var(--text-label-base-font-size);
     font-weight: var(--text-label-base-font-weight);
-    height: 40px;
+    height: var(--size-xl);
     letter-spacing: var(--text-label-base-letter-spacing);
     line-height: var(--text-label-base-line-height);
     margin: 0;
@@ -54,7 +54,7 @@
     border-radius: 0;
     border-width: 0 0 var(--border-width-default);
     box-shadow: none;
-    height: 32px;
+    height: var(--size-lg);
     padding-inline: var(--space-sm);
 }
 
@@ -70,9 +70,11 @@
     background-image: var(--_error-icon);
     background-position: right var(--_icon-inset) center;
     background-repeat: no-repeat;
-    background-size: 16px 16px;
+    background-size: var(--size-sm) var(--size-sm);
     border-color: var(--color-border-system-error);
-    padding-inline-end: calc(var(--_icon-inset) + 16px + var(--space-sm));
+    padding-inline-end: calc(
+        var(--_icon-inset) + var(--size-sm) + var(--space-sm)
+    );
 }
 
 .a-singleline[aria-invalid='true']:not(:placeholder-shown) {

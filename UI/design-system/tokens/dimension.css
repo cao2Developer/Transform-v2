@@ -48,6 +48,12 @@
     --border-width-default: var(--base-unit-2);
     --border-width-thin: 0.0625rem; /* 1px */
 
+    /* Size */
+    --size-sm: var(--base-unit-16);
+    --size-md: var(--base-unit-24);
+    --size-lg: var(--base-unit-32);
+    --size-xl: var(--base-unit-40);
+
     /* Layout */
     --page-max-width: 85rem; /* 1360px */
     --page-margin: var(--base-unit-32);
