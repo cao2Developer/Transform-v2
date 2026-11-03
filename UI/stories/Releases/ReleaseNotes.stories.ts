@@ -12,15 +12,16 @@ import type { Meta, StoryObj } from '@storybook/web-components';
  * - Installation/upgrade instructions
  */
 const meta: Meta = {
-  title: 'Release/Notes',
-  tags: ['autodocs'],
-  parameters: {
-    docs: {
-      description: {
-        component: 'Historical release notes for all versions. View complete details for each release.',
-      },
+    title: 'Release Notes',
+    tags: ['autodocs'],
+    parameters: {
+        docs: {
+            description: {
+                component:
+                    'List of releases including the current release with links to the relevant release notes.',
+            },
+        },
     },
-  },
 };
 
 export default meta;
@@ -32,7 +33,7 @@ type Story = StoryObj<typeof meta>;
  * View the most recent release notes with the latest features and fixes.
  */
 export const Latest: Story = {
-  render: () => `
+    render: () => `
     <div style="padding: 2rem; max-width: 900px; font-family: system-ui, -apple-system, sans-serif;">
       <h1>📋 Release Notes</h1>
       
@@ -146,7 +147,7 @@ export const Latest: Story = {
  * Complete list of all historical releases.
  */
 export const Archive: Story = {
-  render: () => `
+    render: () => `
     <div style="padding: 2rem; max-width: 900px; font-family: system-ui, -apple-system, sans-serif;">
       <h2>📚 Release Archive</h2>
       
