@@ -104,7 +104,7 @@ const meta = {
             name: 'Variant',
             description:
                 'Default for forms. Inline for compact layouts and tables: bottom border only, 32px (`--size-lg`) high.',
-            control: 'radio',
+            control: 'select',
             options: ['default', 'inline'],
         },
         answered: {
@@ -117,7 +117,7 @@ const meta = {
             name: 'Text alignment',
             description:
                 'Set per question. Start and end follow the reading direction.',
-            control: 'radio',
+            control: 'select',
             options: ['start', 'center', 'end'],
         },
         readOnly: {
@@ -179,7 +179,7 @@ export const States: StoryObj<StatesArgs> = {
             name: 'State',
             description:
                 'Active: the field has keyboard focus. Forced on this page.',
-            control: 'radio',
+            control: 'select',
             options: ['inactive', 'active'],
         },
     },

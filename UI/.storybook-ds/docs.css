@@ -1,18 +1,34 @@
 /*
- * Docs Storybook backgrounds and headings
+ * Docs Storybook page styles
  *
- * The page uses --color-bg-neutral-secondary.
- * The canvas uses --color-bg-neutral-primary.
- * Headings use the heading text style font.
+ * These styles use base tokens, not semantic tokens, so a change in a
+ * semantic token does not change the docs pages. The Storybook themes in
+ * preview.ts and manager.ts repeat some of these values as hex, because
+ * a theme cannot read CSS variables.
  */
 
+/* Page */
+
 .sbdocs.sbdocs-wrapper {
-    background: var(--color-bg-neutral-secondary);
+    --docs-gutter: var(--base-unit-48);
+    --docs-toc-width: 15rem;
+
+    gap: 0;
+    padding-right: calc(var(--docs-toc-width) + var(--docs-gutter));
+    padding-left: var(--docs-gutter);
+    background: var(--base-color-neutral-20);
 }
 
 .sbdocs .docs-story,
 .sb-show-main {
-    background: var(--color-bg-neutral-primary);
+    background: var(--base-color-neutral-10);
+}
+
+/* Text */
+
+.sbdocs.sbdocs-p,
+.sbdocs.sbdocs-li {
+    color: var(--base-color-neutral-80);
 }
 
 .sbdocs.sbdocs-title,
@@ -22,5 +38,72 @@
 .sbdocs.sbdocs-h4,
 .sbdocs.sbdocs-h5,
 .sbdocs.sbdocs-h6 {
-    font-family: var(--text-heading-font-family);
+    font-family: var(--font-family-secondary);
+    color: var(--base-color-primary-blue-75);
+}
+
+.sbdocs.sbdocs-h2 {
+    border-bottom-color: var(--base-color-neutral-40);
+}
+
+/*
+ * Table of contents
+ *
+ * A fixed column on the right edge, from 1024px wide.
+ * The wrapper keeps its space with padding, so the page content
+ * never goes under it.
+ */
+
+.sbdocs.sbdocs-toc--custom {
+    width: 0;
+}
+
+.sbdocs-toc--custom nav {
+    right: 0;
+    box-sizing: border-box;
+    width: var(--docs-toc-width);
+    padding-right: var(--base-unit-24);
+    padding-left: var(--base-unit-24);
+    background: var(--base-color-neutral-25);
+    border-left: 1px solid var(--base-color-neutral-40);
+}
+
+.sbdocs-toc--custom nav > .toc-wrapper > .toc-list {
+    border-left: 1px solid var(--base-color-neutral-40);
+}
+
+.sbdocs-toc--custom nav .toc-list-item > a {
+    color: var(--base-color-neutral-80);
+}
+
+.sbdocs-toc--custom nav .toc-list-item.is-active-li > a {
+    color: var(--base-color-primary-teal-75);
+}
+
+.sbdocs-toc--custom nav .toc-list-item.is-active-li::before {
+    border-left-color: var(--base-color-primary-teal-50);
+}
+
+/* Controls */
+
+.docblock-argstable select option:first-child {
+    display: none;
+}
+
+/* Responsive */
+
+@media (max-width: 1024px) {
+    .sbdocs.sbdocs-wrapper {
+        padding-right: var(--docs-gutter);
+    }
+
+    .sbdocs.sbdocs-toc--custom {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .sbdocs.sbdocs-wrapper {
+        --docs-gutter: var(--base-unit-24);
+    }
 }
