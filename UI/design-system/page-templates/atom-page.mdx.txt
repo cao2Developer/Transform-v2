@@ -1,0 +1,74 @@
+import { Meta, Canvas, Controls, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from './TOKEN.stories';
+import { RENDER, defaultArgs } from './TOKEN.stories';
+import css from './TOKEN.css?raw';
+
+<Meta of={Stories} />
+
+# NAME
+
+**Atom** · `TOKEN`
+
+DESCRIPTION
+
+<Canvas of={Stories.Playground} sourceState="none" />
+
+<Controls of={Stories.Playground} />
+
+## Variations
+
+<Canvas of={Stories.Variations} sourceState="none" />
+
+<Controls of={Stories.Variations} include={[VARIATION_CONTROL_NAMES]} />
+
+VARIATIONS_SENTENCE
+
+### PROPERTY
+
+- **OPTION:** TEXT
+
+## States
+
+<Canvas of={Stories.States} sourceState="none" />
+
+<Controls of={Stories.States} include={[STATE_CONTROL_NAMES]} />
+
+STATES_SENTENCE
+
+- **STATE:** TEXT
+
+COMBINATIONS_SENTENCE
+
+## Skeleton
+
+SKELETON_SENTENCE
+
+### Dimensions and spacing
+
+- TEXT
+
+### Responsive behavior
+
+- TEXT
+
+## Accessibility
+
+### TOPIC
+
+- TEXT
+
+#### References:
+
+- [SOURCE TITLE](URL) (WCAG CRITERION)
+
+## HTML Structure
+
+The HTML of the component and its CSS. Both come from the files of the component.
+
+### HTML
+
+<Source code={RENDER({ ...defaultArgs }, 'ID')} language="html" />
+
+### CSS
+
+<Source code={css} language="css" />
