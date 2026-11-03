@@ -24,10 +24,6 @@ const preview: Preview = {
         layout: 'centered',
         docs: {
             theme: docsTheme,
-            toc: {
-                title: 'On this page',
-                headingSelector: 'h2',
-            },
         },
     },
 };

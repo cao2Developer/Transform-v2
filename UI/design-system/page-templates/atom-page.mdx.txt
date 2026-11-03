@@ -9,59 +9,117 @@ import css from './TOKEN.css?raw';
 
 **Atom** · `TOKEN`
 
+<div className="docs-section">
+<div className="docs-section-notes">
+
+## Overview
+
+</div>
+<div className="docs-section-body">
+
 DESCRIPTION
 
 <Canvas of={Stories.Playground} sourceState="none" />
 
 <Controls of={Stories.Playground} />
 
+</div>
+</div>
+
+<div className="docs-section">
+<div className="docs-section-notes">
+
 ## Variations
-
-<Canvas of={Stories.Variations} sourceState="none" />
-
-<Controls of={Stories.Variations} include={[VARIATION_CONTROL_NAMES]} />
-
-VARIATIONS_SENTENCE
 
 ### PROPERTY
 
 - **OPTION:** TEXT
 
+</div>
+<div className="docs-section-body">
+
+VARIATIONS_SENTENCE
+
+<Canvas of={Stories.Variations} sourceState="none" />
+
+<Controls of={Stories.Variations} include={[VARIATION_CONTROL_NAMES]} />
+
+</div>
+</div>
+
+<div className="docs-section">
+<div className="docs-section-notes">
+
 ## States
-
-<Canvas of={Stories.States} sourceState="none" />
-
-<Controls of={Stories.States} include={[STATE_CONTROL_NAMES]} />
-
-STATES_SENTENCE
 
 - **STATE:** TEXT
 
 COMBINATIONS_SENTENCE
 
-## Skeleton
+</div>
+<div className="docs-section-body">
 
-SKELETON_SENTENCE
+STATES_SENTENCE
+
+<Canvas of={Stories.States} sourceState="none" />
+
+<Controls of={Stories.States} include={[STATE_CONTROL_NAMES]} />
+
+</div>
+</div>
+
+<div className="docs-section">
+<div className="docs-section-notes">
+
+## Skeleton
 
 ### Dimensions and spacing
 
-- TEXT
+TEXT
 
 ### Responsive behavior
 
-- TEXT
+TEXT
+
+</div>
+<div className="docs-section-body">
+
+SKELETON_SENTENCE
+
+</div>
+</div>
+
+<div className="docs-section">
+<div className="docs-section-notes">
 
 ## Accessibility
 
+</div>
+<div className="docs-section-body">
+
+WCAG compliance, keyboard navigation, screen reader support, color contrast, and inclusive design practices.
+
+<div className="docs-note-grid">
+<div className="docs-note">
+
 ### TOPIC
 
-- TEXT
-
-#### References:
+TEXT
 
 - [SOURCE TITLE](URL) (WCAG CRITERION)
 
+</div>
+</div>
+</div>
+</div>
+
+<div className="docs-section">
+<div className="docs-section-notes">
+
 ## HTML Structure
+
+</div>
+<div className="docs-section-body">
 
 The HTML of the component and its CSS. Both come from the files of the component.
 
@@ -72,3 +130,6 @@ The HTML of the component and its CSS. Both come from the files of the component
 ### CSS
 
 <Source code={css} language="css" />
+
+</div>
+</div>
