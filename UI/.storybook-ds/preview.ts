@@ -7,10 +7,16 @@ import '../design-system/tokens/tokens.css';
 import '../design-system/assets/fonts/fonts.css';
 import './docs.css';
 
-// Docs pages use the Ipsos font.
+// Docs pages use the Ipsos font and base token colors.
+// The colors are hex because a theme cannot read CSS variables.
+// Each one repeats the base token in its comment.
 const docsTheme = create({
     base: 'light',
     fontBase: 'var(--font-family-primary), sans-serif',
+    textColor: '#324371', // --base-color-neutral-80
+    appBorderColor: '#d6ddeb', // --base-color-neutral-40
+    inputBorder: '#d6ddeb', // --base-color-neutral-40
+    appContentBg: '#fff', // --base-color-neutral-10
 });
 
 const preview: Preview = {
