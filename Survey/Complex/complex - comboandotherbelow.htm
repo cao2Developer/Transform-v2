@@ -1,0 +1,151 @@
+<mrSubTemplate>
+    <o-palette>
+        <div class="palette-empty">
+            <div class="m-message-information" data-translate="palette-empty" data-translate-purpose="content">
+                <h2>Instructions</h2>
+                <p>Click the Add button to create a new entry</p>
+                <p>Fill in the form with the relevant information</p>
+                <p>Click the tick to store the entry (it will appear in the history)</p>
+            </div>
+            <a-button-icon class="complexbutton-add" data-translate="add-button" data-translate-purpose="caption">
+                <!-- Add button -->
+            </a-button-icon>
+        </div>
+        <div class="palette-complete">
+            <div class="m-message-information" data-translate="palette-complete" data-translate-purpose="content">
+                <h2>You cannot add any more records</h2>
+                <p>The maximum number of records has been reached, you cannot create any more.  You can, however, contineue edit the existing records.</p>
+                <p>To edit, click on the record in the history, the record can then be changed</p>
+                <p>To delete, click on the record in the history and use the delete button, you will need to press the delete button twice to confirm the deletion</p>
+            </div>
+        </div>
+        <div class="palette-inprogress">
+            <style>
+                o-palette
+                {
+                    display: grid;
+                    grid-auto-rows: 1fr;
+                }
+                .palette-complete {
+                    grid-area: 1 / 1;
+                }
+               .palette-empty {
+                }
+                /* Main form layout */
+
+.palette-form {
+    display: grid;
+    grid-template-columns: max-content minmax(200px, 1fr);
+    column-gap: 24px;
+    row-gap: 12px;
+    align-items: center;
+    grid-area: 1 / 1;
+}
+
+/* otherdrug-row spans both columns as a subgrid so its children
+   align with the parent's label/control columns.
+   Using display:grid (not contents) means display:none from the
+   framework will cleanly collapse the row and its gap. */
+.otherdrug-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    align-items: center;
+    width:100%;
+}
+
+/* Actions row spans both columns, buttons pushed to the right */
+.palette-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+            </style>
+            <div class="palette-form">
+
+                <div class="label-cbDrugTest"
+                    data-associate-type="label"
+                    data-associate-question="cb__drugtest">
+                    <!-- drug label -->
+                </div>
+
+                <div class="control-cbDrugTest"
+                    data-associate-type="control"
+                    data-associate-question="cb__drugtest">
+                    <!-- combobox -->
+                </div>
+
+                <div class="otherdrug-row">
+                    <div class="label-otherdrug"
+                        data-associate-type="label"
+                        data-associate-question="otherdrug">
+                        <!-- other drug label -->
+                    </div>
+
+                    <div class="control-otherdrug"
+                        data-associate-type="control"
+                        data-associate-question="otherdrug">
+                        <!-- other drug input -->
+                    </div>
+                </div>
+
+                <div class="palette-actions">
+                    <a-button-icon class="complexbutton-delete">
+                        <!-- delete -->
+                    </a-button-icon>
+
+                    <a-button-icon class="complexbutton-cancel">
+                        <!-- cancel -->
+                    </a-button-icon>
+
+                    <a-button-icon class="complexbutton-submit">
+                        <!-- submit -->
+                    </a-button-icon>
+                </div>
+
+            </div>
+
+        </div>
+    </o-palette>
+    <o-history data-order="descending">
+        <template class="l-row-template">
+                <div class="l-col-history-ftd">
+                    <ftd type="variable" data-associate-control="cb__drugtest"><!-- cb_drugtest Value --></ftd>
+                    <ftd type="span" data-properties="{&quot;visible&quot;:{&quot;collapse&quot;:true,&quot;rules&quot;:&quot;cb__drugtest.containsAny('_1_1128_1128','_1_7126_7126','_1_5020_5020')&quot;}}">
+                            <ftd type="static" data-translate="other" data-translate-purpose="content"><!-- string --></ftd>
+                            <span>:&#160;</span>
+                        <ftd type="variable" data-associate-control="otherdrug"><!-- Otherdrug Value --></ftd>
+                    </ftd>
+                </div>
+                <div class="l-col-history">
+                    <a-button-icon class="complexquestion-edit">
+                        <!-- Edit button -->
+                    </a-button-icon>
+                    <a-button-icon class="complexquestion-delete">
+                        <!-- Delete button -->
+                    </a-button-icon>
+                </div>
+            </template>
+        <div class="history-empty">
+            <div class="m-message-information" data-translate="history-empty" data-translate-purpose="content">
+                <h2>History</h2>
+                <ul>
+                    <li>You can enter a maximum of four entries.</li>
+                    <li>Entries are listed in reverse order of entry</li>
+                    <li>Entries can be deleted, if no longer required</li>
+                </ul>
+            </div>
+        </div>
+        <div class="history-inprogress">
+            <div class="l-row-header">
+                <div class="l-col">
+                    <span class="a-label-question" data-associate-question="triggerword" data-associate-type="label"><!-- Question label --></span>
+                </div>
+            </div>
+            <div class="l-row-history">
+                <!-- history rows will be dynamically inserted here -->
+            </div>
+        </div>
+    </o-history>
+</mrSubTemplate>
