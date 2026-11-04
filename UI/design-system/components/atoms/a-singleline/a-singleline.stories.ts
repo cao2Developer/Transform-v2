@@ -86,7 +86,7 @@ function field(args: SinglelineArgs, id: string): string {
 </div>`;
 }
 
-// The atom alone, for the canvases of the Docs page: no label and no message.
+// The atom alone, for the canvases of the doc pages: no label and no message.
 // A hidden name keeps the field named for screen readers.
 function docField(args: SinglelineArgs, id: string): string {
     const nameId = `${id}-name`;
@@ -94,8 +94,14 @@ function docField(args: SinglelineArgs, id: string): string {
 ${singleline(args, id, { labelledBy: nameId })}`;
 }
 
+// The Docs page shows several canvases at once, so each story needs its own id.
+function renderWith(id: string) {
+    return (args: SinglelineArgs): string => docField(args, id);
+}
+
 const meta = {
-    title: 'Atoms/Singleline',
+    // The stories sit in the Playground group, after the doc pages.
+    title: 'Atoms/Singleline/Playground',
     // Exports that start with a lowercase letter are helpers, not stories.
     excludeStories: /^[a-z]/,
     args: defaultArgs,
@@ -147,48 +153,89 @@ const meta = {
     parameters: {
         controls: { disable: true },
     },
-    render: (args): string => docField(args, 'a-singleline-playground'),
+    render: renderWith('a-singleline'),
 } satisfies Meta<SinglelineArgs>;
 
 export default meta;
 
 type Story = StoryObj<SinglelineArgs>;
 
-// Every control of the component. Shown on the Docs page and in the sidebar.
-export const Playground: Story = {
+// Each story has one variant, so the Variant control is hidden.
+const fixedVariant = { variant: { table: { disable: true } } };
+
+// Playground: one story per variant, with every other control. Shown in the sidebar.
+export const Default: Story = {
+    args: { variant: 'default' },
+    argTypes: fixedVariant,
     parameters: { controls: { disable: false } },
+    render: renderWith('a-singleline-default'),
 };
 
-// One field with the controls of the Variations section. Shown only on the Docs page.
-export const Variations: Story = {
+export const Inline: Story = {
+    args: { variant: 'inline' },
+    argTypes: fixedVariant,
+    parameters: { controls: { disable: false } },
+    render: renderWith('a-singleline-inline'),
+};
+
+// Overview section: the whole component with every control, Variant included.
+// Shown only on the Docs page.
+export const Overview: Story = {
     tags: ['!dev'],
-    render: (args): string => docField(args, 'a-singleline-variations'),
+    render: renderWith('a-singleline-overview'),
 };
 
-// One field with the controls of the States section. Shown only on the Docs page.
-// State is an arg of this story only. The pseudo-states addon reads parameters, not
-// args, so Active puts the field inside the class that the addon uses to force
+// Variants section: one field per variant, with no controls. Shown only on the Docs page.
+export const VariantDefault: Story = {
+    tags: ['!dev'],
+    args: { variant: 'default' },
+    render: renderWith('a-singleline-variant-default'),
+};
+
+export const VariantInline: Story = {
+    tags: ['!dev'],
+    args: { variant: 'inline' },
+    render: renderWith('a-singleline-variant-inline'),
+};
+
+// States section: one field per variant, with the controls of the section.
+// Shown only on the doc pages.
+// State is an arg of these stories only. The pseudo-states addon reads parameters,
+// not args, so Active puts the field inside the class that the addon uses to force
 // :focus-visible on every element inside it.
 type StatesArgs = SinglelineArgs & { state: 'inactive' | 'active' };
 
-export const States: StoryObj<StatesArgs> = {
-    tags: ['!dev'],
-    args: { answered: true, state: 'inactive' },
-    argTypes: {
-        state: {
-            name: 'State',
-            description:
-                'Active: the field has keyboard focus. Forced on this page.',
-            control: 'select',
-            options: ['inactive', 'active'],
-        },
+const stateArgType = {
+    state: {
+        name: 'State',
+        description:
+            'Active: the field has keyboard focus. Forced on this page.',
+        control: 'select' as const,
+        options: ['inactive', 'active'],
     },
-    render: (args): string => {
-        const input = docField(args, 'a-singleline-states');
+};
+
+function renderStates(id: string) {
+    return (args: StatesArgs): string => {
+        const input = docField(args, id);
         return args.state === 'active'
             ? `<div class="pseudo-focus-visible-all">${input}</div>`
             : input;
-    },
+    };
+}
+
+export const StatesDefault: StoryObj<StatesArgs> = {
+    tags: ['!dev'],
+    args: { variant: 'default', answered: true, state: 'inactive' },
+    argTypes: { ...fixedVariant, ...stateArgType },
+    render: renderStates('a-singleline-states-default'),
+};
+
+export const StatesInline: StoryObj<StatesArgs> = {
+    tags: ['!dev'],
+    args: { variant: 'inline', answered: true, state: 'inactive' },
+    argTypes: { ...fixedVariant, ...stateArgType },
+    render: renderStates('a-singleline-states-inline'),
 };
 
 // Self-check: throws if a rule of this component breaks.

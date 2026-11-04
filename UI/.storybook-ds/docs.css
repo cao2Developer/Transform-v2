@@ -137,6 +137,26 @@
 }
 
 /*
+ * Variant label: under the section title, when the Docs page shows a
+ * section once per variant (for example, Skeleton for Default, then for
+ * Inline).
+ */
+.docs-section-notes > h2:has(+ .docs-section-variant) {
+    margin-bottom: var(--base-unit-8);
+}
+
+.docs-section-notes > .docs-section-variant {
+    color: var(--base-color-neutral-70);
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.1em; /* uppercase label, as in the docs header */
+    line-height: 1;
+    margin: 0 0 var(--base-unit-40);
+    text-transform: uppercase;
+}
+
+/*
  * Inline code (text between backticks in MDX): token names, attributes
  * and keys. It reads as part of the text, with a dotted underline.
  */

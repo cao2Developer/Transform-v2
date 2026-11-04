@@ -19,3 +19,4 @@ Then open http://localhost:6007.
 
 - `.storybook-ds/`: Storybook config for these docs.
 - `design-system/`: pages, components and their stories.
+- `design-system/components/`: the components. How each component folder is organized: `components/README.md`.

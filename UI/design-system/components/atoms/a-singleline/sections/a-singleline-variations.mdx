@@ -1,0 +1,28 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta isTemplate />
+
+{/* Description, notes and variant descriptions of the Variations section. Shown on the Docs page. */}
+
+export const description =
+    'The component has two variants, Default and Inline, with no other size or style variations.';
+
+export const defaultDescription =
+    'The standard text field for forms and survey questions. It has a border on all four sides.';
+
+export const inlineDescription =
+    'A shorter text field for compact layouts, tables and inline editing. Only the bottom border is visible.';
+
+### Variant
+
+- **Default:** primary input fields in forms.
+- **Inline:** compact layouts, tables, inline editing. Class `a-singleline--inline`.
+
+### Answered
+
+- **False:** the field is empty and shows its placeholder.
+- **True:** the field shows the answer.
+
+### Text alignment
+
+The text aligns to the start (default), the center or the end. The alignment is set per question. Center and end use the classes `a-singleline--align-center` and `a-singleline--align-end`.

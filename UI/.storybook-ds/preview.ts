@@ -24,6 +24,13 @@ const docsTheme = create({
 const preview: Preview = {
     parameters: {
         layout: 'centered',
+        // In each component: the Docs page first, then the other doc
+        // pages, then the Playground stories.
+        options: {
+            storySort: {
+                order: ['*', ['*', ['Docs', '*', 'Playground']]],
+            },
+        },
         docs: {
             theme: docsTheme,
         },
