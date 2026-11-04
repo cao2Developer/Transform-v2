@@ -6,6 +6,7 @@ import { create } from 'storybook/theming';
 import '../design-system/tokens/tokens.css';
 import '../design-system/assets/fonts/fonts.css';
 import './docs.css';
+import './page-blocks/docs-header/docs-header.css';
 
 // Docs pages use the Ipsos font and base token colors.
 // The colors are hex because a theme cannot read CSS variables.

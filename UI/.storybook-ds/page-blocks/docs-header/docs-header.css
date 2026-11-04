@@ -1,0 +1,313 @@
+/*
+ * Docs header (page block)
+ *
+ * The header at the top of every doc page: level, name, token,
+ * description and the Figma link.
+ * Figma: Ipsos Healthcare Foundation, node 3934:16083 (Mockup).
+ *
+ * It uses only base tokens: base colors and units (--base-*) and the font
+ * tokens (--font-*, --line-height, --letter-spacing-*). A change in a
+ * semantic token or an effect token does not change the docs pages.
+ * Values with no base token are custom properties at the top of
+ * .docs-header, each with a comment.
+ *
+ * In MDX, the root also has the sb-unstyled class, so the Storybook
+ * typography does not reach the header.
+ */
+
+.docs-header {
+    /* Values with no base token */
+    --docs-header-border-width: 1px;
+    --docs-header-line-height-tight: 1.25;
+    --docs-header-letter-spacing-wide: 0.1em; /* uppercase labels */
+    --docs-header-grid-cell: 0.375rem; /* 6px */
+    --docs-header-grid-width: 37.5rem; /* 600px */
+    --docs-header-shadow-token: 0.5px 0.5px 1px 0 rgb(0 0 0 / 6%);
+
+    /* Timing of the Figma link, from the showcase template buttons */
+    --docs-header-duration-fast: 80ms;
+    --docs-header-duration-shadow: 180ms;
+    --docs-header-ease: cubic-bezier(0.23, 1, 0.32, 1);
+
+    /* Same values as --shadow-inactive and --shadow-active, kept here
+       so a change in the effect tokens does not change the docs pages */
+    --docs-header-shadow: 0 1px 2px 0 rgb(33 44 76 / 12%);
+    --docs-header-shadow-focus: 0 0 12px 2px rgb(33 44 76 / 25%);
+
+    background: linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--base-color-neutral-10) 75%, transparent),
+        color-mix(in srgb, var(--base-color-neutral-30) 75%, transparent)
+    );
+    border: var(--docs-header-border-width) solid var(--base-color-neutral-40);
+    border-radius: var(--base-unit-12);
+    box-shadow: var(--docs-header-shadow);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: var(--base-unit-24);
+    isolation: isolate;
+    margin-bottom: var(--base-unit-40);
+    overflow: hidden;
+    padding: var(--base-unit-32);
+    position: relative;
+}
+
+/* Grid in the background, behind the content. It fades toward the top left. */
+
+.docs-header::before {
+    background-image:
+        linear-gradient(
+            to right,
+            var(--base-color-neutral-40) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to bottom,
+            var(--base-color-neutral-40) 1px,
+            transparent 1px
+        );
+    background-size: var(--docs-header-grid-cell) var(--docs-header-grid-cell);
+    bottom: 0;
+    content: '';
+    height: 100%;
+    mask-image: radial-gradient(
+        ellipse at bottom right,
+        rgb(0 0 0 / 100%),
+        rgb(0 0 0 / 0%) 70%
+    );
+    max-width: 100%;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    width: var(--docs-header-grid-width);
+    z-index: -1;
+}
+
+/* Top row: level, name and token on the left, the level icon on the right */
+
+.docs-header-top {
+    align-items: flex-start;
+    display: flex;
+    gap: var(--base-unit-4);
+}
+
+.docs-header-heading {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--base-unit-8);
+    min-width: 0;
+}
+
+.docs-header-level {
+    color: var(--base-color-neutral-70);
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--docs-header-letter-spacing-wide);
+    line-height: 1;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.docs-header-title-row {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--base-unit-16);
+}
+
+.docs-header-title {
+    color: var(--base-color-primary-blue-75);
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--docs-header-line-height-tight);
+    margin: 0;
+}
+
+.docs-header-token {
+    align-items: center;
+    background: var(--base-color-neutral-10);
+    border: var(--docs-header-border-width) solid var(--base-color-neutral-40);
+    border-radius: var(--base-unit-4);
+    box-shadow: var(--docs-header-shadow-token);
+    box-sizing: border-box;
+    color: var(--base-color-primary-blue-75);
+    display: inline-flex;
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    height: var(--base-unit-32);
+    line-height: 1;
+    padding: 0 var(--base-unit-12);
+}
+
+/* Level icon. The SVG is a mask, so the color comes from the token. */
+
+.docs-header-icon {
+    background-color: var(--base-color-primary-teal-50);
+    flex-shrink: 0;
+    height: var(--base-unit-40);
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    width: var(--base-unit-40);
+}
+
+/* One modifier per level. Each SVG is 40px with a 3px stroke. */
+
+.docs-header-icon--foundation {
+    mask-image: url('./icons/level-foundation.svg');
+}
+
+.docs-header-icon--atom {
+    mask-image: url('./icons/level-atom.svg');
+}
+
+.docs-header-icon--molecule {
+    mask-image: url('./icons/level-molecule.svg');
+}
+
+.docs-header-icon--organism {
+    mask-image: url('./icons/level-organism.svg');
+}
+
+.docs-header-icon--template {
+    mask-image: url('./icons/level-template.svg');
+}
+
+.docs-header-icon--layout {
+    mask-image: url('./icons/level-layout.svg');
+}
+
+.docs-header-icon--component {
+    mask-image: url('./icons/level-component.svg');
+}
+
+.docs-header-icon--pattern {
+    mask-image: url('./icons/level-pattern.svg');
+}
+
+.docs-header-icon--flow {
+    mask-image: url('./icons/level-flow.svg');
+}
+
+.docs-header-icon--utility {
+    mask-image: url('./icons/level-utility.svg');
+}
+
+.docs-header-icon--exploration {
+    mask-image: url('./icons/level-exploration.svg');
+}
+
+/*
+ * Description. The space on the right keeps long text out from under the
+ * Figma link (90px wide), with 30px between them.
+ */
+
+.docs-header-description {
+    color: var(--base-color-primary-blue-75);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-regular);
+    letter-spacing: var(--letter-spacing-tight);
+    line-height: var(--docs-header-line-height-tight);
+    margin: 0;
+    padding-right: var(--base-unit-120);
+}
+
+/*
+ * Figma link. It sits in the bottom right corner, out of the flow, as in
+ * Figma, so its bottom lines up with the bottom of the description. The
+ * Figma logo is its ::before.
+ */
+
+.docs-header-source {
+    align-items: center;
+    background: var(--base-color-neutral-10);
+    border: var(--docs-header-border-width) solid var(--base-color-neutral-40);
+    border-radius: var(--base-unit-8);
+    bottom: var(--base-unit-32);
+    box-shadow: var(--docs-header-shadow);
+    box-sizing: border-box;
+    color: var(--base-color-primary-blue-75);
+    display: inline-flex;
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    gap: var(--base-unit-8);
+    height: var(--base-unit-40);
+    line-height: var(--line-height);
+    padding: 0 var(--base-unit-20) 0 var(--base-unit-12);
+    position: absolute;
+    right: var(--base-unit-32);
+    text-decoration: none;
+    transition:
+        background-color var(--docs-header-duration-fast) ease,
+        box-shadow var(--docs-header-duration-shadow) var(--docs-header-ease);
+}
+
+.docs-header-source::before {
+    background: url('./icons/figma-logo.svg') center / contain no-repeat;
+    content: '';
+    flex-shrink: 0;
+    height: var(--base-unit-16);
+    width: var(--base-unit-16);
+}
+
+/*
+ * Hover and pressed, after the tertiary button of the showcase template.
+ * Hover: a darker background. Pressed: a darker background, and the drop
+ * shadow turns into a 1px inner ring, so the button looks pushed in.
+ * Hover only applies on devices with a pointer that can hover.
+ */
+
+@media (hover: hover) {
+    .docs-header-source:hover {
+        background: var(--base-color-neutral-25);
+    }
+}
+
+.docs-header-source:active {
+    background: var(--base-color-neutral-30);
+    box-shadow: inset 0 0 0 var(--docs-header-border-width)
+        var(--base-color-neutral-40);
+    transition-duration: var(--docs-header-duration-fast);
+}
+
+/* Keyboard focus: the active state, no native focus ring */
+
+.docs-header-source:focus-visible {
+    box-shadow: var(--docs-header-shadow-focus);
+    outline: none;
+}
+
+/* Text for screen readers only */
+
+.docs-header-hidden {
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+/* Narrow screens: smaller padding, and the Figma link goes back into the flow */
+
+@media (width <= 600px) {
+    .docs-header {
+        padding: var(--base-unit-24);
+    }
+
+    .docs-header-description {
+        padding-right: 0;
+    }
+
+    .docs-header-source {
+        align-self: flex-start;
+        position: static;
+    }
+}
