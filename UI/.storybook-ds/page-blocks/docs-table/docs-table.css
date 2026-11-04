@@ -1,0 +1,195 @@
+/*
+ * Docs table (page block)
+ *
+ * The note table of a doc page, as in the Accessibility section: one row
+ * per note, with three columns (Topic, Guidance and References).
+ * Figma: a-singleline, node 213:1771 (Mockup).
+ *
+ * It uses only base tokens, like the docs header. Values with no base
+ * token are custom properties at the top of .docs-table, each with a
+ * comment.
+ *
+ * In MDX, the root also has the sb-unstyled class, so the Storybook
+ * styles for tables, lists and code do not reach the table.
+ */
+
+.docs-table {
+    /* Values with no base token */
+    --docs-table-border-width: 1px;
+    --docs-table-duration: 80ms; /* row hover fade */
+    --docs-table-topic-width: 10rem; /* 200px */
+    --docs-table-references-width: 25%; /* about 1fr next to Guidance */
+
+    /* Same value as --shadow-inactive, kept here so a change in the
+       effect tokens does not change the docs pages */
+    --docs-table-shadow: 0 1px 2px 0 rgb(33 44 76 / 12%);
+
+    background: var(--base-color-neutral-10);
+    border: var(--docs-table-border-width) solid var(--base-color-neutral-40);
+    border-radius: var(--base-unit-8);
+    box-shadow: var(--docs-table-shadow);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height);
+    overflow: clip;
+}
+
+.docs-table table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.docs-table :is(th, td) {
+    padding: var(--base-unit-8) var(--base-unit-12);
+    text-align: start;
+    vertical-align: top;
+}
+
+/* Header */
+
+.docs-table thead th {
+    background: var(--base-color-neutral-25);
+    color: var(--base-color-neutral-70);
+    font-family: var(--font-family-secondary);
+    font-weight: var(--font-weight-medium);
+}
+
+/* Rows. The hover only applies on devices with a pointer that can hover. */
+
+.docs-table tbody tr {
+    border-top: var(--docs-table-border-width) solid
+        var(--base-color-neutral-40);
+    transition: background-color var(--docs-table-duration) ease;
+}
+
+@media (hover: hover) {
+    .docs-table tbody tr:hover {
+        background: var(--base-color-neutral-25);
+    }
+}
+
+/* Topic: the row header */
+
+.docs-table tbody th {
+    color: var(--base-color-primary-blue-75);
+    font-weight: var(--font-weight-medium);
+}
+
+/* Column widths. With table-layout: fixed, the header cells set the
+   widths of the columns. Guidance takes the rest. */
+.docs-table thead th:first-child {
+    width: var(--docs-table-topic-width);
+}
+
+.docs-table thead th:last-child {
+    width: var(--docs-table-references-width);
+}
+
+/* Guidance */
+
+.docs-table td {
+    color: var(--base-color-neutral-80);
+    font-weight: var(--font-weight-regular);
+}
+
+.docs-table td p {
+    margin: 0;
+}
+
+.docs-table td p + p {
+    margin-top: var(--base-unit-8);
+}
+
+/* Inline code, the same as in the text of the sections (docs.css) */
+.docs-table code {
+    background: none;
+    border: none;
+    border-radius: 0;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: var(--font-weight-medium);
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+    text-decoration: underline dotted var(--base-color-neutral-60);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.15em;
+}
+
+/*
+ * References: the last column. One link per item, with the link icon on
+ * its left at half opacity. A long link stays on one line and ends with
+ * an ellipsis. The WCAG criteria go on a second line, under the link.
+ */
+
+.docs-table td:last-child ul {
+    list-style: none;
+    margin: 0;
+    padding-inline-start: 0;
+}
+
+.docs-table td:last-child li {
+    color: var(--base-color-secondary-blue-75);
+    column-gap: var(--base-unit-8);
+    display: grid;
+    font-weight: var(--font-weight-medium);
+    grid-template-columns: var(--base-unit-16) minmax(0, 1fr);
+}
+
+.docs-table td:last-child li + li {
+    margin-top: var(--base-unit-8);
+}
+
+.docs-table td:last-child li::before {
+    align-self: center;
+    background-color: currentcolor;
+    content: '';
+    height: var(--base-unit-16);
+    mask: url('../../../design-system/assets/icons/link.svg') center / contain
+        no-repeat;
+    opacity: 0.5;
+}
+
+.docs-table td:last-child a {
+    color: inherit;
+    overflow: hidden;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.docs-table-wcag {
+    color: var(--base-color-neutral-70);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-regular);
+    grid-column: 2;
+}
+
+/* Devices that cannot hover show the whole link on more lines, because
+   they have no other way to read the end of the text. */
+@media (hover: none) {
+    .docs-table td:last-child a {
+        white-space: normal;
+    }
+}
+
+/*
+ * Narrow pages: each row becomes a block, with the topic, the guidance
+ * and the references one under the other. The header row is hidden,
+ * because the columns no longer line up under it.
+ */
+@media (width <= 600px) {
+    .docs-table :is(table, tbody, tr, th, td) {
+        display: block;
+    }
+
+    .docs-table thead {
+        display: none;
+    }
+
+    .docs-table :is(th, td) + td {
+        padding-top: 0;
+    }
+}

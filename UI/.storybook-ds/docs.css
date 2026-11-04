@@ -64,31 +64,12 @@
 }
 
 /*
- * Note grid
- *
- * Notes side by side in the body of a section, as in the Accessibility
- * section. Two per row. When a note would be narrower than 256px, one
- * note per row.
- */
-
-.docs-note-grid {
-    --docs-note-gap: var(--base-unit-32);
-
-    display: grid;
-    gap: var(--base-unit-40) var(--docs-note-gap);
-    grid-template-columns: repeat(
-        auto-fill,
-        minmax(max(16rem, (100% - var(--docs-note-gap)) / 2), 1fr)
-    );
-}
-
-/*
  * Text
  *
  * MDX headings, paragraphs, lists and tables are direct children of
- * .sbdocs-content, of a section column or of a note. Most of them have
- * no sbdocs-* class, so the selectors use the child combinator (>). It
- * also keeps these styles out of the stories inside a Canvas.
+ * .sbdocs-content or of a section column. Most of them have no sbdocs-*
+ * class, so the selectors use the child combinator (>). It also keeps
+ * these styles out of the stories inside a Canvas.
  */
 
 .sbdocs.sbdocs-content > :is(p, table),
@@ -99,27 +80,26 @@
 }
 
 /* The text of the sections is smaller than the text above them. */
-:is(.docs-section-notes, .docs-section-body, .docs-note) > :is(p, table),
-:is(.docs-section-notes, .docs-section-body, .docs-note) > :is(ul, ol) li {
+:is(.docs-section-notes, .docs-section-body) > :is(p, table),
+:is(.docs-section-notes, .docs-section-body) > :is(ul, ol) li {
     color: var(--base-color-neutral-80);
     font-size: var(--font-size-sm);
     line-height: var(--line-height);
 }
 
-:is(.sbdocs.sbdocs-content, .docs-section-notes, .docs-section-body, .docs-note)
+:is(.sbdocs.sbdocs-content, .docs-section-notes, .docs-section-body)
     > :is(h1, h2, h3, h4, h5, h6) {
     color: var(--base-color-primary-blue-75);
     font-family: var(--font-family-secondary);
 }
 
 /* Lists have no bullets. Each item reads as a short line of text. */
-:is(.sbdocs.sbdocs-content, .docs-section-notes, .docs-section-body, .docs-note)
-    > ul {
+:is(.sbdocs.sbdocs-content, .docs-section-notes, .docs-section-body) > ul {
     list-style: none;
     padding-left: 0;
 }
 
-:is(.sbdocs.sbdocs-content, .docs-section-notes, .docs-section-body, .docs-note)
+:is(.sbdocs.sbdocs-content, .docs-section-notes, .docs-section-body)
     > ul
     > li
     + li {
@@ -133,7 +113,7 @@
     padding-bottom: 0;
 }
 
-:is(.docs-section-notes, .docs-section-body, .docs-note) > h3 {
+:is(.docs-section-notes, .docs-section-body) > h3 {
     font-size: var(--font-size-lg);
 }
 
@@ -141,8 +121,8 @@
     margin-top: var(--base-unit-40);
 }
 
-/* The two columns, and the notes of a grid, start at the same line. */
-:is(.docs-section-notes, .docs-section-body, .docs-note) > :first-child {
+/* The two columns start at the same line. */
+:is(.docs-section-notes, .docs-section-body) > :first-child {
     margin-top: 0;
 }
 
@@ -160,7 +140,7 @@
  * Inline code (text between backticks in MDX): token names, attributes
  * and keys. It reads as part of the text, with a dotted underline.
  */
-:is(.docs-section-notes, .docs-section-body, .docs-note) > :is(p, ul, ol) code {
+:is(.docs-section-notes, .docs-section-body) > :is(p, ul, ol) code {
     background: none;
     border: none;
     border-radius: 0;
@@ -174,44 +154,6 @@
     text-decoration: underline dotted var(--base-color-neutral-60);
     text-decoration-thickness: 0.08em;
     text-underline-offset: 0.15em;
-}
-
-/*
- * Note
- *
- * A heading, the text, and a last list with the links to the sources.
- * A line separates the text from the links. Each link has a link icon
- * on its left, in a lighter shade of the link color.
- */
-
-.docs-note > h3 + p {
-    margin-top: var(--base-unit-8);
-}
-
-.docs-note > ul:last-child {
-    border-top: 1px solid var(--base-color-neutral-40);
-    margin-top: var(--base-unit-16);
-    padding-top: var(--base-unit-16);
-}
-
-.docs-note > ul:last-child > li {
-    font-family: var(--font-family-secondary);
-    font-weight: var(--font-weight-medium);
-    padding-left: var(--base-unit-24);
-    position: relative;
-}
-
-.docs-note > ul:last-child > li > a::before {
-    background-color: currentcolor;
-    content: '';
-    height: var(--base-unit-16);
-    left: 0;
-    mask: url('../design-system/assets/icons/link.svg') center / contain
-        no-repeat;
-    opacity: 0.5;
-    position: absolute;
-    top: calc((var(--line-height) * 1em - var(--base-unit-16)) / 2);
-    width: var(--base-unit-16);
 }
 
 /* Responsive */
