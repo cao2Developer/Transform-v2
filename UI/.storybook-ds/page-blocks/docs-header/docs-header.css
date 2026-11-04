@@ -3,7 +3,6 @@
  *
  * The header at the top of every doc page: level, name, token,
  * description and the Figma link.
- * Figma: Ipsos Healthcare Foundation, node 3934:16083 (Mockup).
  *
  * It uses only base tokens: base colors and units (--base-*) and the font
  * tokens (--font-*, --line-height, --letter-spacing-*). A change in a
@@ -13,6 +12,8 @@
  *
  * In MDX, the root also has the sb-unstyled class, so the Storybook
  * typography does not reach the header.
+ *
+ * Glossary of class names and terms: end of this file.
  */
 
 .docs-header {
@@ -24,7 +25,7 @@
     --docs-header-grid-width: 37.5rem; /* 600px */
     --docs-header-shadow-token: 0.5px 0.5px 1px 0 rgb(0 0 0 / 6%);
 
-    /* Timing of the Figma link, from the showcase template buttons */
+    /* Timing of the Figma link */
     --docs-header-duration-fast: 80ms;
     --docs-header-duration-shadow: 180ms;
     --docs-header-ease: cubic-bezier(0.23, 1, 0.32, 1);
@@ -258,7 +259,7 @@
 }
 
 /*
- * Hover and pressed, after the tertiary button of the showcase template.
+ * Hover and pressed.
  * Hover: a darker background. Pressed: a darker background, and the drop
  * shadow turns into a 1px inner ring, so the button looks pushed in.
  * Hover only applies on devices with a pointer that can hover.
@@ -311,3 +312,84 @@
         position: static;
     }
 }
+
+/*
+ * Glossary
+ *
+ * Structure of the header in MDX:
+ *
+ *   .docs-header                    the whole box
+ *     .docs-header-top              top row
+ *       .docs-header-heading        left side of the top row
+ *         .docs-header-level        level label, for example "Atom"
+ *         .docs-header-title-row    name and token, side by side
+ *           .docs-header-title      name, for example "Singleline"
+ *           .docs-header-token      token, for example "a-singleline"
+ *       .docs-header-icon           level icon, right side of the top row
+ *     .docs-header-description      short text under the top row
+ *     .docs-header-source           Figma link, bottom right corner
+ *       .docs-header-hidden         "(opens in a new tab)", screen readers
+ *
+ * Classes
+ *
+ * .docs-header
+ *     The root. The box with the border, the shadow, the gradient
+ *     background and the grid. It holds the custom properties of the file.
+ * .docs-header-top
+ *     Row with the heading on the left and the level icon on the right.
+ * .docs-header-heading
+ *     Column with the level label and the title row. It takes all the
+ *     free width, so the icon stays on the right edge.
+ * .docs-header-level
+ *     Small uppercase label with the atomic level of the page (Atom,
+ *     Molecule, Foundation and so on).
+ * .docs-header-title-row
+ *     Row with the title and the token. It wraps when there is no room.
+ * .docs-header-title
+ *     The name of the component or foundation. The h1 of the page.
+ * .docs-header-token
+ *     The token (the class name in code) in a small white box.
+ * .docs-header-icon
+ *     The level icon. An empty span, painted with a mask (see Terms).
+ * .docs-header-icon--<level>
+ *     Modifier. It picks the SVG of the level, for example
+ *     .docs-header-icon--atom. Use it together with .docs-header-icon.
+ * .docs-header-description
+ *     The short description of the component, under the top row.
+ * .docs-header-source
+ *     The Figma link, as a small button. The Figma logo is its ::before.
+ * .docs-header-hidden
+ *     Text that is hidden on screen but read by screen readers.
+ *
+ * Terms
+ *
+ * page block
+ *     A helper for doc pages, in HTML and CSS, for things the doc blocks
+ *     of Storybook do not cover.
+ * base token
+ *     A token with a raw value (--base-color-*, --base-unit-*), not a
+ *     semantic one. Using only base tokens keeps the docs pages stable.
+ * custom property
+ *     A CSS variable, like --docs-header-shadow. The ones at the top of
+ *     .docs-header hold values that have no base token.
+ * sb-unstyled
+ *     A Storybook class. It stops the Storybook styles from reaching
+ *     the element and its children.
+ * ::before
+ *     A part made by CSS, not by the HTML. Here it draws the background
+ *     grid (.docs-header::before) and the Figma logo
+ *     (.docs-header-source::before).
+ * mask
+ *     The SVG works as a stencil: the element shows its
+ *     background-color only where the SVG is drawn. So the color of the
+ *     icon comes from a token, not from the SVG file.
+ * isolation: isolate
+ *     Makes the header its own layer, so the grid (z-index: -1) stays
+ *     behind the content but in front of the header background.
+ * @media (hover: hover)
+ *     Only on devices with a pointer that can hover, like a mouse.
+ * :active
+ *     While the link is pressed.
+ * :focus-visible
+ *     When the link gets focus from the keyboard.
+ */
