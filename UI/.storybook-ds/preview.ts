@@ -8,6 +8,7 @@ import '../design-system/assets/fonts/fonts.css';
 import './docs.css';
 import './page-blocks/docs-header/docs-header.css';
 import './page-blocks/docs-table/docs-table.css';
+import './page-blocks/docs-switch/docs-switch.css';
 
 // Docs pages use the Ipsos font and base token colors.
 // The colors are hex because a theme cannot read CSS variables.

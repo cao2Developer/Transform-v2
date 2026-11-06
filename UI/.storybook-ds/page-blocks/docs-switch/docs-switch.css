@@ -1,0 +1,216 @@
+/*
+ * Switch (page block): .docs-switch
+ *
+ * A switch for the doc pages. A checkbox with role="switch": the input is the
+ * track and its ::before is the thumb. A label around it is optional.
+ *
+ *     <label class="docs-switch-row">
+ *         <input class="docs-switch" type="checkbox" role="switch" />
+ *         <span>rem</span>
+ *     </label>
+ *     <input class="docs-switch" type="checkbox" role="switch" aria-label="..." />
+ *
+ * Attribute:
+ *   data-size="compact"   28x16 with a 12px thumb. Default is 34x20 with 16px.
+ *
+ * The hover styles are allowed here: the "no hover" rule applies only to
+ * design system components, not to documentation components.
+ */
+
+.docs-switch,
+.docs-switch-row {
+    /* Values with no base token */
+    --docs-switch-width: 34px;
+    --docs-switch-height: 20px;
+    --docs-switch-thumb: 16px;
+    --docs-switch-inset: 2px; /* thumb to track edge */
+    --docs-switch-stretch: 2px; /* thumb growth on hover */
+    --docs-switch-press: 4px; /* thumb growth on press, and the same shrink in height */
+    --docs-switch-fast: 80ms; /* track and label fades */
+    --docs-switch-moderate: 160ms; /* thumb travel and size */
+    --docs-switch-move: 1; /* 0 stops the thumb travel and size change */
+
+    /* Critical spring: no overshoot, settles in about 160ms */
+    --docs-switch-spring: linear(
+        0,
+        0.072,
+        0.218,
+        0.378,
+        0.522,
+        0.642,
+        0.737,
+        0.81,
+        0.864,
+        0.904,
+        0.932,
+        0.953,
+        0.967,
+        0.977,
+        0.984,
+        0.989,
+        1
+    );
+    --docs-switch-thumb-shadow:
+        0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px -1px rgb(0 0 0 / 10%);
+
+    /* Same value as --shadow-active, kept here so a change in the effect
+       tokens does not change the docs pages */
+    --docs-switch-focus: 0 0 12px 2px rgb(33 44 76 / 25%);
+    --docs-switch-off: var(--base-color-neutral-70);
+    --docs-switch-on: var(--base-color-primary-teal-50);
+}
+
+.docs-switch[data-size='compact'] {
+    --docs-switch-width: 28px;
+    --docs-switch-height: 16px;
+    --docs-switch-thumb: 12px;
+    --docs-switch-press: 3px;
+}
+
+.docs-switch {
+    appearance: none;
+    background: var(--docs-switch-off);
+    block-size: var(--docs-switch-height);
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+    flex-shrink: 0;
+    inline-size: var(--docs-switch-width);
+    margin: 0;
+    padding: 0;
+    pointer-events: auto;
+    position: relative;
+    transition: background-color var(--docs-switch-fast) ease;
+}
+
+.docs-switch::before {
+    background: var(--base-color-neutral-10);
+    block-size: var(--docs-switch-thumb);
+    border-radius: 999px;
+    box-shadow: var(--docs-switch-thumb-shadow);
+    content: '';
+    inline-size: var(--docs-switch-thumb);
+    inset-block-start: var(--docs-switch-inset);
+    inset-inline-start: var(--docs-switch-inset);
+    position: absolute;
+    transition:
+        translate calc(var(--docs-switch-moderate) * var(--docs-switch-move))
+            var(--docs-switch-spring),
+        inline-size calc(var(--docs-switch-moderate) * var(--docs-switch-move))
+            var(--docs-switch-spring),
+        block-size calc(var(--docs-switch-moderate) * var(--docs-switch-move))
+            var(--docs-switch-spring),
+        inset-block-start
+            calc(var(--docs-switch-moderate) * var(--docs-switch-move))
+            var(--docs-switch-spring);
+    translate: 0 0;
+}
+
+.docs-switch:checked {
+    background: var(--docs-switch-on);
+}
+
+.docs-switch:checked::before {
+    translate: calc(
+            var(--docs-switch-width) - var(--docs-switch-thumb) -
+                (var(--docs-switch-inset) * 2)
+        )
+        0;
+}
+
+/* Hover is a mouse affordance: a touch tap must not leave the thumb
+   stretched. Checked, the extra width grows back toward the start, so the
+   outer edge stays inside the track. */
+@media (hover: hover) and (pointer: fine) {
+    .docs-switch:hover,
+    .docs-switch-row:hover > .docs-switch {
+        background: color-mix(in oklab, var(--docs-switch-off), black 10%);
+    }
+
+    .docs-switch:checked:hover,
+    .docs-switch-row:hover > .docs-switch:checked {
+        background: color-mix(in oklab, var(--docs-switch-on), black 8%);
+    }
+
+    .docs-switch:hover::before,
+    .docs-switch-row:hover > .docs-switch::before {
+        inline-size: calc(
+            var(--docs-switch-thumb) + var(--docs-switch-stretch)
+        );
+    }
+
+    .docs-switch:checked:hover::before,
+    .docs-switch-row:hover > .docs-switch:checked::before {
+        translate: calc(
+                var(--docs-switch-width) - var(--docs-switch-thumb) -
+                    (var(--docs-switch-inset) * 2) - var(--docs-switch-stretch)
+            )
+            0;
+    }
+}
+
+/* Press wins over hover (it comes after, with the same specificity) */
+.docs-switch:active::before,
+.docs-switch-row:active > .docs-switch::before {
+    block-size: calc(var(--docs-switch-thumb) - var(--docs-switch-press));
+    inline-size: calc(var(--docs-switch-thumb) + var(--docs-switch-press));
+    inset-block-start: calc(
+        var(--docs-switch-inset) + (var(--docs-switch-press) / 2)
+    );
+}
+
+.docs-switch:checked:active::before,
+.docs-switch-row:active > .docs-switch:checked::before {
+    translate: calc(
+            var(--docs-switch-width) - var(--docs-switch-thumb) -
+                (var(--docs-switch-inset) * 2) - var(--docs-switch-press)
+        )
+        0;
+}
+
+.docs-switch:focus-visible {
+    box-shadow: var(--docs-switch-focus);
+    outline: none;
+}
+
+.docs-switch:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* The label is the row: a click toggles, the text fades with the track. */
+.docs-switch-row {
+    align-items: center;
+    color: var(--base-color-neutral-70);
+    cursor: pointer;
+    display: inline-flex;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    gap: var(--base-unit-8);
+    padding-block: var(--base-unit-4);
+    pointer-events: auto;
+    transition: color var(--docs-switch-fast) ease;
+    user-select: none;
+}
+
+.docs-switch-row:has(> .docs-switch:checked) {
+    color: var(--base-color-neutral-80);
+}
+
+.docs-switch-row:has(> .docs-switch:disabled) {
+    cursor: default;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.docs-switch-row:has(> .docs-switch:disabled) > .docs-switch {
+    opacity: 1;
+}
+
+/* Reduced motion stops the travel and the size change. The fades stay. */
+@media (prefers-reduced-motion: reduce) {
+    .docs-switch,
+    .docs-switch-row {
+        --docs-switch-move: 0;
+    }
+}
