@@ -9,12 +9,15 @@
 
 /* Page */
 
+/*
+ * The page has 8px of padding. The docs header and the sections use the
+ * whole width inside it, and each one has 32px of padding on the sides,
+ * so the content of the header lines up with the content of the sections.
+ */
 .sbdocs.sbdocs-wrapper {
-    --docs-gutter: var(--base-unit-48);
-
     background: var(--base-color-neutral-10);
     gap: 0;
-    padding: var(--docs-gutter);
+    padding: var(--base-unit-8);
 }
 
 /*
@@ -44,23 +47,40 @@
 /*
  * Sections
  *
- * Each section is one row with two columns. The notes column holds the
- * section title and the notes. The body column holds the description
- * sentence, the canvas and the controls. The description lines up with
- * the baseline of the section title. Below 1024px wide, the body goes
- * under the notes.
+ * The section title sits on top, across the whole width. Below it, the
+ * body column (canvas and controls) is on the left and the notes column
+ * (the section description, then the notes) is on the right. A
+ * full-width section has no notes column: its body uses the whole width.
+ * Below 1024px wide, the notes go under the body.
+ *
+ * A section has 32px of padding on the sides, and none on the top and
+ * the bottom. Between two sections: 32px, a line across the whole
+ * section, then 32px. There is no line between the docs header and the
+ * first section, only the 32px under the header.
  */
 
 .docs-section {
     --docs-notes-width: 17.5rem; /* 280px */
 
-    align-items: baseline;
-    border-top: 1px solid var(--base-color-neutral-40);
+    align-items: start;
     display: grid;
     gap: var(--base-unit-24);
-    grid-template-columns: var(--docs-notes-width) minmax(0, 1fr);
-    padding-bottom: var(--base-unit-64);
-    padding-top: var(--base-unit-40);
+    grid-template-columns: minmax(0, 1fr) var(--docs-notes-width);
+    padding-inline: var(--base-unit-32);
+}
+
+.docs-section + .docs-section {
+    border-top: 1px solid var(--base-color-neutral-40);
+    margin-top: var(--base-unit-32);
+    padding-top: var(--base-unit-32);
+}
+
+.docs-section > h2 {
+    grid-column: 1 / -1;
+}
+
+.docs-section--full > .docs-section-body {
+    grid-column: 1 / -1;
 }
 
 /*
@@ -87,7 +107,12 @@
     line-height: var(--line-height);
 }
 
-:is(.sbdocs.sbdocs-content, .docs-section-notes, .docs-section-body)
+:is(
+        .sbdocs.sbdocs-content,
+        .docs-section,
+        .docs-section-notes,
+        .docs-section-body
+    )
     > :is(h1, h2, h3, h4, h5, h6) {
     color: var(--base-color-primary-blue-75);
     font-family: var(--font-family-secondary);
@@ -106,10 +131,10 @@
     margin-top: var(--base-unit-8);
 }
 
-:is(.sbdocs.sbdocs-content, .docs-section-notes) > h2 {
+:is(.sbdocs.sbdocs-content, .docs-section) > h2 {
     border-bottom: none;
     font-size: var(--font-size-2xl);
-    margin-bottom: var(--base-unit-40);
+    margin-bottom: 0;
     padding-bottom: 0;
 }
 
@@ -121,38 +146,25 @@
     margin-top: var(--base-unit-40);
 }
 
-/* The two columns start at the same line. */
-:is(.docs-section-notes, .docs-section-body) > :first-child {
+/* The title and the two columns start with no extra space. */
+:is(.docs-section, .docs-section-notes, .docs-section-body) > :first-child {
     margin-top: 0;
 }
 
 /*
- * Section description: the first paragraph of the body. Larger than the
- * text, in the color of the headings.
+ * Variant label: a short label above the section title, inside the title,
+ * when the Docs page shows a section of one variant (States of Default,
+ * then States of Inline). Inside the title, it gives each title its own
+ * text and its own id.
  */
-.docs-section-body > p:first-child {
-    color: var(--base-color-primary-blue-75);
-    font-size: var(--font-size-md);
-    margin-bottom: var(--base-unit-40);
-}
-
-/*
- * Variant label: under the section title, when the Docs page shows a
- * section once per variant (for example, Skeleton for Default, then for
- * Inline).
- */
-.docs-section-notes > h2:has(+ .docs-section-variant) {
-    margin-bottom: var(--base-unit-8);
-}
-
-.docs-section-notes > .docs-section-variant {
+.docs-section > h2 > .docs-section-variant {
     color: var(--base-color-neutral-70);
-    font-family: var(--font-family-secondary);
+    display: block;
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-bold);
     letter-spacing: 0.1em; /* uppercase label, as in the docs header */
     line-height: 1;
-    margin: 0 0 var(--base-unit-40);
+    margin-bottom: var(--base-unit-8);
     text-transform: uppercase;
 }
 
@@ -184,8 +196,9 @@
     }
 }
 
+/* Same side padding as the docs header on narrow screens */
 @media (width <= 600px) {
-    .sbdocs.sbdocs-wrapper {
-        --docs-gutter: var(--base-unit-24);
+    .docs-section {
+        padding-inline: var(--base-unit-24);
     }
 }

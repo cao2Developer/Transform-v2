@@ -1,0 +1,232 @@
+/*
+ * Code canvas (page block): .docs-code
+ *
+ * A box with a titlebar and tabs (HTML, CSS) that show one code block at a
+ * time. Each code block has a maximum height and scrolls inside. The HTML
+ * Structure section uses it.
+ *
+ *     <div class="docs-code">
+ *         <div class="docs-code-titlebar">
+ *             <div class="docs-code-tabs" role="radiogroup" aria-label="Code">
+ *                 <label class="docs-code-tab">
+ *                     <input type="radio" name="<token>-code" checked />
+ *                     HTML
+ *                 </label>
+ *                 <label class="docs-code-tab">
+ *                     <input type="radio" name="<token>-code" />
+ *                     CSS
+ *                 </label>
+ *             </div>
+ *         </div>
+ *         <div class="docs-code-panel">...Source block of the HTML...</div>
+ *         <div class="docs-code-panel">...Source block of the CSS...</div>
+ *     </div>
+ *
+ * The tabs are native radio buttons, so it needs no JavaScript: the arrow
+ * keys move between them and screen readers announce "radio button, 1 of
+ * 2". The checked radio shows its panel: tab 1 shows the first panel, tab
+ * 2 the second, up to 3 tabs. Each component uses its own name for the
+ * radios, so two code canvases on one page do not share the same group.
+ *
+ * The selected tab sits on a white pill, as a segmented control. The tabs
+ * have the same width, so the pill slides with CSS only.
+ *
+ * It uses only base tokens and the font tokens. Values with no base token
+ * are custom properties at the top of .docs-code, each with a comment.
+ * The hover styles are allowed here: the "no hover" rule applies only to
+ * design system components, not to documentation components.
+ */
+
+.docs-code {
+    /* Values with no base token */
+    --docs-code-border-width: 1px;
+    --docs-code-titlebar-height: 3.25rem; /* 52px */
+    --docs-code-max-height: 25rem; /* 400px of code, then it scrolls */
+    --docs-code-fast: 80ms; /* text color */
+    --docs-code-moderate: 160ms; /* pill travel */
+
+    /* Critical spring: no overshoot, settles in about 160ms. Same as the
+       thumb of docs-switch. */
+    --docs-code-spring: linear(
+        0,
+        0.072,
+        0.218,
+        0.378,
+        0.522,
+        0.642,
+        0.737,
+        0.81,
+        0.864,
+        0.904,
+        0.932,
+        0.953,
+        0.967,
+        0.977,
+        0.984,
+        0.989,
+        1
+    );
+
+    /* Same values as --shadow-inactive and --shadow-active, kept here
+       so a change in the effect tokens does not change the docs pages */
+    --docs-code-shadow: 0 1px 2px 0 rgb(33 44 76 / 12%);
+    --docs-code-shadow-focus: 0 0 12px 2px rgb(33 44 76 / 25%);
+
+    background: var(--base-color-neutral-0);
+    border: var(--docs-code-border-width) solid var(--base-color-neutral-40);
+    border-radius: var(--base-unit-12);
+    overflow: hidden;
+}
+
+/* Titlebar: the strip on top, with the tabs on the left */
+
+.docs-code-titlebar {
+    align-items: center;
+    border-bottom: var(--docs-code-border-width) solid
+        var(--base-color-neutral-40);
+    box-sizing: border-box;
+    display: flex;
+    min-height: var(--docs-code-titlebar-height);
+    padding: var(--base-unit-8) var(--base-unit-12);
+}
+
+/*
+ * Tabs: a muted track with one column per tab, all the same width.
+ * --docs-code-count is the number of tabs and --docs-code-index is the
+ * position of the checked tab (0 is the first). The pill reads both.
+ */
+
+.docs-code-tabs {
+    --docs-code-count: 1;
+    --docs-code-index: 0;
+
+    background: var(--base-color-neutral-20);
+    border-radius: var(--base-unit-12);
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    isolation: isolate;
+    padding: var(--base-unit-4);
+    position: relative;
+    width: fit-content;
+}
+
+.docs-code-tabs:has(> :nth-child(2):last-child) {
+    --docs-code-count: 2;
+}
+
+.docs-code-tabs:has(> :nth-child(3):last-child) {
+    --docs-code-count: 3;
+}
+
+.docs-code-tabs:has(> :nth-child(2) > input:checked) {
+    --docs-code-index: 1;
+}
+
+.docs-code-tabs:has(> :nth-child(3) > input:checked) {
+    --docs-code-index: 2;
+}
+
+/* The pill under the checked tab. It moves by its own width per tab. */
+.docs-code-tabs::before {
+    background: var(--base-color-neutral-0);
+    border-radius: var(--base-unit-8);
+    bottom: var(--base-unit-4);
+    box-shadow: var(--docs-code-shadow);
+    content: '';
+    left: var(--base-unit-4);
+    position: absolute;
+    top: var(--base-unit-4);
+    transform: translateX(calc(100% * var(--docs-code-index)));
+    transition: transform var(--docs-code-moderate) var(--docs-code-spring);
+    width: calc((100% - 2 * var(--base-unit-4)) / var(--docs-code-count));
+    z-index: -1;
+}
+
+.docs-code-tab {
+    align-items: center;
+    border-radius: var(--base-unit-8);
+    box-sizing: border-box;
+    color: var(--base-color-neutral-70);
+    cursor: pointer;
+    display: flex;
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    height: var(--base-unit-32);
+    justify-content: center;
+    line-height: 1;
+    padding-inline: var(--base-unit-12);
+    position: relative;
+    transition: color var(--docs-code-fast) ease;
+    white-space: nowrap;
+}
+
+/* The radio covers the whole tab, with no look of its own */
+.docs-code-tab > input {
+    appearance: none;
+    cursor: pointer;
+    inset: 0;
+    margin: 0;
+    position: absolute;
+}
+
+.docs-code-tab > input:focus-visible {
+    outline: none;
+}
+
+.docs-code-tab:has(> input:checked) {
+    color: var(--base-color-primary-blue-75);
+}
+
+@media (hover: hover) {
+    .docs-code-tab:hover {
+        color: var(--base-color-primary-blue-75);
+    }
+}
+
+/* Keyboard focus: the active state, no native focus ring */
+.docs-code-tab:has(> input:focus-visible) {
+    box-shadow: var(--docs-code-shadow-focus);
+}
+
+/* Panels: only the panel of the checked tab shows */
+
+.docs-code-panel {
+    display: none;
+}
+
+.docs-code:has(.docs-code-tab:nth-child(1) > input:checked)
+    > .docs-code-panel:nth-child(2),
+.docs-code:has(.docs-code-tab:nth-child(2) > input:checked)
+    > .docs-code-panel:nth-child(3),
+.docs-code:has(.docs-code-tab:nth-child(3) > input:checked)
+    > .docs-code-panel:nth-child(4) {
+    display: block;
+}
+
+/*
+ * The Source block of Storybook inside a panel: no border, shadow or
+ * margin of its own, because the code canvas has them. Its scroll area
+ * (data-radix-scroll-area-viewport, from Storybook) gets the maximum
+ * height, so the Copy button stays in the corner while the code scrolls.
+ * If a Storybook update renames this attribute, the code shows at full
+ * height again.
+ */
+
+.docs-code-panel .docblock-source {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+}
+
+.docs-code-panel .docblock-source [data-radix-scroll-area-viewport] {
+    max-height: var(--docs-code-max-height);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .docs-code-tabs::before {
+        transition: none;
+    }
+}
