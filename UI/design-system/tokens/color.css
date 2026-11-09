@@ -38,9 +38,9 @@
     --base-color-secondary-red-75: #d92911;
 
     /* Base colors: neutral */
-    --base-color-neutral-10: #fff;
-    --base-color-neutral-20: #fafafa;
-    --base-color-neutral-25: #f2f4f7;
+    --base-color-neutral-0: #fff;
+    --base-color-neutral-10: #fafafa;
+    --base-color-neutral-20: #f2f4f7;
     --base-color-neutral-30: #eceff5;
     --base-color-neutral-40: #d6ddeb;
     --base-color-neutral-50: #b4bddb;
@@ -51,10 +51,10 @@
 
     /* Semantic colors: background */
     --color-bg-brand: var(--base-color-primary-blue-50);
-    --color-bg-neutral-primary: var(--base-color-neutral-10);
-    --color-bg-neutral-secondary: var(--base-color-neutral-25);
+    --color-bg-neutral-primary: var(--base-color-neutral-0);
+    --color-bg-neutral-secondary: var(--base-color-neutral-20);
     --color-bg-neutral-tertiary: var(--base-color-neutral-40);
-    --color-bg-neutral-muted: var(--base-color-neutral-20);
+    --color-bg-neutral-muted: var(--base-color-neutral-10);
     --color-bg-system-success: var(--base-color-primary-teal-50);
     --color-bg-system-success-subtle: var(--base-color-primary-teal-5);
     --color-bg-system-error: var(--base-color-secondary-red-75);
@@ -66,7 +66,7 @@
 
     /* Semantic colors: fill */
     --color-fill-brand: var(--base-color-primary-blue-50);
-    --color-fill-neutral-inverse: var(--base-color-neutral-10);
+    --color-fill-neutral-inverse: var(--base-color-neutral-0);
     --color-fill-neutral-muted: var(--base-color-neutral-60);
     --color-fill-system-success: var(--base-color-primary-teal-50);
     --color-fill-system-error: var(--base-color-secondary-red-75);
@@ -77,8 +77,7 @@
     --color-text-primary: var(--base-color-primary-blue-75);
     --color-text-secondary: var(--base-color-neutral-80);
     --color-text-tertiary: var(--base-color-neutral-70);
-    --color-text-muted: var(--base-color-neutral-60);
-    --color-text-inverse: var(--base-color-neutral-10);
+    --color-text-inverse: var(--base-color-neutral-0);
     --color-text-system-success: var(--base-color-primary-teal-75);
     --color-text-system-error: var(--base-color-secondary-red-75);
     --color-text-system-warning: var(--base-color-secondary-yellow-75);

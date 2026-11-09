@@ -37,7 +37,7 @@
 
     background: linear-gradient(
         to bottom,
-        color-mix(in srgb, var(--base-color-neutral-10) 75%, transparent),
+        color-mix(in srgb, var(--base-color-neutral-0) 75%, transparent),
         color-mix(in srgb, var(--base-color-neutral-30) 75%, transparent)
     );
     border: var(--docs-header-border-width) solid var(--base-color-neutral-40);
@@ -130,7 +130,7 @@
 
 .docs-header-token {
     align-items: center;
-    background: var(--base-color-neutral-10);
+    background: var(--base-color-neutral-0);
     border: var(--docs-header-border-width) solid var(--base-color-neutral-40);
     border-radius: var(--base-unit-4);
     box-shadow: var(--docs-header-shadow-token);
@@ -227,7 +227,7 @@
 
 .docs-header-source {
     align-items: center;
-    background: var(--base-color-neutral-10);
+    background: var(--base-color-neutral-0);
     border: var(--docs-header-border-width) solid var(--base-color-neutral-40);
     border-radius: var(--base-unit-8);
     bottom: var(--base-unit-32);
@@ -267,7 +267,7 @@
 
 @media (hover: hover) {
     .docs-header-source:hover {
-        background: var(--base-color-neutral-25);
+        background: var(--base-color-neutral-20);
     }
 }
 

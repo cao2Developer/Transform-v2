@@ -84,7 +84,7 @@
 }
 
 .docs-switch::before {
-    background: var(--base-color-neutral-10);
+    background: var(--base-color-neutral-0);
     block-size: var(--docs-switch-thumb);
     border-radius: 999px;
     box-shadow: var(--docs-switch-thumb-shadow);

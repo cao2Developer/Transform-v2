@@ -25,7 +25,7 @@
        effect tokens does not change the docs pages */
     --docs-table-shadow: 0 1px 2px 0 rgb(33 44 76 / 12%);
 
-    background: var(--base-color-neutral-10);
+    background: var(--base-color-neutral-0);
     border: var(--docs-table-border-width) solid var(--base-color-neutral-40);
     border-radius: var(--base-unit-8);
     box-shadow: var(--docs-table-shadow);
@@ -50,7 +50,7 @@
 /* Header */
 
 .docs-table thead th {
-    background: var(--base-color-neutral-25);
+    background: var(--base-color-neutral-20);
     color: var(--base-color-neutral-70);
     font-family: var(--font-family-secondary);
     font-weight: var(--font-weight-medium);
@@ -66,7 +66,7 @@
 
 @media (hover: hover) {
     .docs-table tbody tr:hover {
-        background: var(--base-color-neutral-25);
+        background: var(--base-color-neutral-20);
     }
 }
 

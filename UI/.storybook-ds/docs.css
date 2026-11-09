@@ -12,7 +12,7 @@
 .sbdocs.sbdocs-wrapper {
     --docs-gutter: var(--base-unit-48);
 
-    background: var(--base-color-neutral-20);
+    background: var(--base-color-neutral-10);
     gap: 0;
     padding: var(--docs-gutter);
 }
@@ -27,7 +27,7 @@
 
 .sbdocs .docs-story,
 .sb-show-main {
-    background: var(--base-color-neutral-10);
+    background: var(--base-color-neutral-0);
 }
 
 /*

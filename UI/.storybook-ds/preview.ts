@@ -19,7 +19,7 @@ const docsTheme = create({
     textColor: '#324371', // --base-color-neutral-80
     appBorderColor: '#d6ddeb', // --base-color-neutral-40
     inputBorder: '#d6ddeb', // --base-color-neutral-40
-    appContentBg: '#fff', // --base-color-neutral-10
+    appContentBg: '#fff', // --base-color-neutral-0
 });
 
 const preview: Preview = {
