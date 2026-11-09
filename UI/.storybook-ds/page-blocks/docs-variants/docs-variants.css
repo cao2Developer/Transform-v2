@@ -1,25 +1,22 @@
 /*
  * Variants (page block): .docs-variants
  *
- * The variants of a component side by side, in one Storybook canvas, each
- * with its name on top. The Variations section uses it: one story renders
- * every variant with the same args, so one Controls block changes all of
- * them at once.
+ * The variants of a component side by side, in one Storybook canvas, with
+ * no name and no line between them. The Variations section uses it: one
+ * story renders every variant with the same args, so one Controls block
+ * changes all of them at once.
  *
  *     <div class="docs-variants">
- *         <figure class="docs-variants-item">
- *             <figcaption>Default</figcaption>
- *             ...the component...
- *         </figure>
- *         <figure class="docs-variants-item">
- *             <figcaption>Inline</figcaption>
- *             ...the component...
- *         </figure>
+ *         <div class="docs-variants-item">
+ *             ...the component (Default)...
+ *         </div>
+ *         <div class="docs-variants-item">
+ *             ...the component (Inline)...
+ *         </div>
  *     </div>
  *
  * It uses only base tokens, so a change in a semantic token does not
- * change the docs pages. The name looks like the variant label of the
- * section titles (.docs-section-variant in docs.css).
+ * change the docs pages.
  */
 
 .docs-variants {
@@ -33,34 +30,13 @@
     align-items: center;
     display: flex;
     flex-direction: column;
-    gap: var(--base-unit-16);
-    margin: 0;
     padding-inline: var(--base-unit-48);
 }
 
-/* A line between two variants */
-.docs-variants-item + .docs-variants-item {
-    border-left: 1px solid var(--base-color-neutral-40);
-}
-
-.docs-variants-item > figcaption {
-    color: var(--base-color-neutral-70);
-    font-family: var(--font-family-secondary);
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-bold);
-    letter-spacing: 0.1em; /* uppercase label, as in the docs header */
-    line-height: 1;
-    text-transform: uppercase;
-}
-
-/* Narrow screens: one variant under the other, with no line */
+/* Narrow screens: one variant under the other */
 @media (width <= 600px) {
     .docs-variants {
         gap: var(--base-unit-32);
         grid-auto-flow: row;
-    }
-
-    .docs-variants-item + .docs-variants-item {
-        border-left: none;
     }
 }

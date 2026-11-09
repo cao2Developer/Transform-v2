@@ -10,14 +10,14 @@
 /* Page */
 
 /*
- * The page has 8px of padding. The docs header and the sections use the
+ * The page has 16px of padding. The docs header and the sections use the
  * whole width inside it, and each one has 32px of padding on the sides,
  * so the content of the header lines up with the content of the sections.
  */
 .sbdocs.sbdocs-wrapper {
     background: var(--base-color-neutral-10);
     gap: 0;
-    padding: var(--base-unit-8);
+    padding: var(--base-unit-16);
 }
 
 /*
@@ -54,25 +54,27 @@
  * Below 1024px wide, the notes go under the body.
  *
  * A section has 32px of padding on the sides, and none on the top and
- * the bottom. Between two sections: 32px, a line across the whole
- * section, then 32px. There is no line between the docs header and the
- * first section, only the 32px under the header.
+ * the bottom. The title has 24px under it, and the body and the notes
+ * have 48px between them. Between two sections: 48px, a line across the
+ * whole section, then 48px. There is no line between the docs header and
+ * the first section, only the 32px under the header.
  */
 
 .docs-section {
     --docs-notes-width: 17.5rem; /* 280px */
 
     align-items: start;
+    column-gap: var(--base-unit-48);
     display: grid;
-    gap: var(--base-unit-24);
     grid-template-columns: minmax(0, 1fr) var(--docs-notes-width);
     padding-inline: var(--base-unit-32);
+    row-gap: var(--base-unit-24);
 }
 
 .docs-section + .docs-section {
     border-top: 1px solid var(--base-color-neutral-40);
-    margin-top: var(--base-unit-32);
-    padding-top: var(--base-unit-32);
+    margin-top: var(--base-unit-48);
+    padding-top: var(--base-unit-48);
 }
 
 .docs-section > h2 {
@@ -131,9 +133,10 @@
     margin-top: var(--base-unit-8);
 }
 
+/* Section titles are 24px, smaller than the page title (32px). */
 :is(.sbdocs.sbdocs-content, .docs-section) > h2 {
     border-bottom: none;
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-xl);
     margin-bottom: 0;
     padding-bottom: 0;
 }

@@ -179,20 +179,16 @@ export const Inline: Story = {
 };
 
 // Variations section: Default and Inline side by side, in one canvas, with the
-// same args. One Controls block changes both. Shown only on the Docs and Common
-// pages. The docs-variants classes come from the page block of the same name,
-// which the docs Storybook loads on every page.
-const variations: [SinglelineArgs['variant'], string][] = [
-    ['default', 'Default'],
-    ['inline', 'Inline'],
-];
+// same args and no names. One Controls block changes both. Shown only on the
+// Docs and Common pages. The docs-variants classes come from the page block of
+// the same name, which the docs Storybook loads on every page.
+const variations: SinglelineArgs['variant'][] = ['default', 'inline'];
 
 function renderVariations(args: SinglelineArgs): string {
     const items = variations.map(
-        ([variant, name]) => `<figure class="docs-variants-item">
-  <figcaption>${name}</figcaption>
+        (variant) => `<div class="docs-variants-item">
   ${docField({ ...args, variant }, `a-singleline-variations-${variant}`)}
-</figure>`,
+</div>`,
     );
     return `<div class="docs-variants">
 ${items.join('\n')}

@@ -19,9 +19,9 @@ Each section has its title on top, across the whole width. Below the title:
 
 A full-width section has no notes column. Its body uses the whole width: the description, then the content. HTML Structure and Accessibility are full-width sections. Accessibility has no description: its body is the note table.
 
-The Variations section shows every variant side by side in one canvas, with one Controls block under it that changes all of them (`docs-variants` page block). The HTML Structure section shows the code in a code canvas, with one tab for the HTML and one for the CSS, and a maximum height (`docs-code` page block).
+The Variations section shows every variant side by side in one canvas, with no name and no line between them, and one Controls block under it that changes all of them (`docs-variants` page block). The HTML Structure section shows the code in a code canvas, with one tab for the HTML and one for the CSS, and a maximum height (`docs-code` page block).
 
-The page has 8px of padding. The docs header and each section have 32px of padding on the sides, so their content lines up. Between two sections: 32px, a line, then 32px.
+The page has 16px of padding. The docs header and each section have 32px of padding on the sides, so their content lines up. The body and the notes have 48px between them. Between two sections: 48px, a line, then 48px. Section titles are 24px, smaller than the page title (32px).
 
 On the Docs page, a section of one variant shows a short variant label above its title (for example, "Default" above "States"). The label is part of the title, so each title has its own text and its own id. The pages of each variant do not need the label.
 
