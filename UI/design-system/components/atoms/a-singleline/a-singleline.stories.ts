@@ -178,16 +178,17 @@ export const Inline: Story = {
     render: renderWith('a-singleline-inline'),
 };
 
-// Variations section: Default and Inline side by side, in one canvas, with the
-// same args and no names. One Controls block changes both. Shown only on the
-// Docs and Common pages. The docs-variants classes come from the page block of
-// the same name, which the docs Storybook loads on every page.
+// Default and Inline side by side, in one canvas, with the same args and no
+// names. The Variations and States sections of the Docs and Common pages use it,
+// so one Controls block changes both variants. The docs-variants classes come
+// from the page block of the same name, which the docs Storybook loads on every
+// page. id keeps the ids of each section apart.
 const variations: SinglelineArgs['variant'][] = ['default', 'inline'];
 
-function renderVariations(args: SinglelineArgs): string {
+function variantsRow(args: SinglelineArgs, id: string): string {
     const items = variations.map(
         (variant) => `<div class="docs-variants-item">
-  ${docField({ ...args, variant }, `a-singleline-variations-${variant}`)}
+  ${docField({ ...args, variant }, `${id}-${variant}`)}
 </div>`,
     );
     return `<div class="docs-variants">
@@ -195,16 +196,18 @@ ${items.join('\n')}
 </div>`;
 }
 
+// Variations section. Shown only on the Docs and Common pages.
 export const Variations: Story = {
     tags: ['!dev'],
     argTypes: fixedVariant,
-    render: renderVariations,
+    render: (args) => variantsRow(args, 'a-singleline-variations'),
 };
 
-// States section: one field per variant, with the controls of the section.
-// Shown only on the doc pages.
+// States section, with the controls of the section. Shown only on the doc pages:
+// States has both variants in one canvas (Docs and Common pages), and
+// StatesDefault and StatesInline have one variant each (variant pages).
 // State is an arg of these stories only. The pseudo-states addon reads parameters,
-// not args, so Active puts the field inside the class that the addon uses to force
+// not args, so Active puts the fields inside the class that the addon uses to force
 // :focus-visible on every element inside it.
 type StatesArgs = SinglelineArgs & { state: 'inactive' | 'active' };
 
@@ -218,14 +221,23 @@ const stateArgType = {
     },
 };
 
-function renderStates(id: string) {
-    return (args: StatesArgs): string => {
-        const input = docField(args, id);
-        return args.state === 'active'
-            ? `<div class="pseudo-focus-visible-all">${input}</div>`
-            : input;
-    };
+function withState(args: StatesArgs, html: string): string {
+    return args.state === 'active'
+        ? `<div class="pseudo-focus-visible-all">${html}</div>`
+        : html;
 }
+
+function renderStates(id: string) {
+    return (args: StatesArgs): string => withState(args, docField(args, id));
+}
+
+export const States: StoryObj<StatesArgs> = {
+    tags: ['!dev'],
+    args: { answered: true, state: 'inactive' },
+    argTypes: { ...fixedVariant, ...stateArgType },
+    render: (args) =>
+        withState(args, variantsRow(args, 'a-singleline-states-row')),
+};
 
 export const StatesDefault: StoryObj<StatesArgs> = {
     tags: ['!dev'],

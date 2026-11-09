@@ -72,6 +72,29 @@ import SkeletonInlineNotes, {
 </div>
 </div>
 
+<div className="docs-section">
+
+## States
+
+<div className="docs-section-body">
+
+<Canvas of={Stories.States} sourceState="none" />
+
+<Controls
+    of={Stories.States}
+    include={['Answered', 'State', 'Read only', 'Error']}
+/>
+
+</div>
+<div className="docs-section-notes">
+
+<p>{statesDescription}</p>
+
+<StatesNotes />
+
+</div>
+</div>
+
 <div className="docs-section docs-section--full">
 
 ## HTML Structure
@@ -98,29 +121,6 @@ import SkeletonInlineNotes, {
 
 <div className="docs-section">
 
-## <span className="docs-section-variant">Default</span> States
-
-<div className="docs-section-body">
-
-<Canvas of={Stories.StatesDefault} sourceState="none" />
-
-<Controls
-    of={Stories.StatesDefault}
-    include={['Answered', 'State', 'Read only', 'Error']}
-/>
-
-</div>
-<div className="docs-section-notes">
-
-<p>{statesDescription}</p>
-
-<StatesNotes />
-
-</div>
-</div>
-
-<div className="docs-section">
-
 ## <span className="docs-section-variant">Default</span> Skeleton
 
 <div className="docs-section-body" />
@@ -129,29 +129,6 @@ import SkeletonInlineNotes, {
 <p>{skeletonDefaultDescription}</p>
 
 <SkeletonDefaultNotes />
-
-</div>
-</div>
-
-<div className="docs-section">
-
-## <span className="docs-section-variant">Inline</span> States
-
-<div className="docs-section-body">
-
-<Canvas of={Stories.StatesInline} sourceState="none" />
-
-<Controls
-    of={Stories.StatesInline}
-    include={['Answered', 'State', 'Read only', 'Error']}
-/>
-
-</div>
-<div className="docs-section-notes">
-
-<p>{statesDescription}</p>
-
-<StatesNotes />
 
 </div>
 </div>

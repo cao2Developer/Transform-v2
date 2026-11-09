@@ -4,9 +4,9 @@ How each component folder is organized in the docs Storybook, and why. `a-single
 
 ## The approach
 
-- **One Docs page with everything.** Each component has a Docs page with every section. It starts with the sections that are the same in every variant (Variations, HTML Structure, Accessibility), then one block per variant with the sections that change per variant (States and Skeleton for Default, then for Inline). The sections are in the same place in every component.
-- **A Common page and one page per variant.** When a component has variants, the Docs page is split into smaller pages. The Common page has the sections that are the same in every variant. Each variant has its own page, with only the sections that change per variant. A reader who only needs the Inline variant does not see notes about the Default variant.
-- **The same order everywhere.** The Docs page follows the order of the smaller pages: Common, then Default, then Inline. A reader who moves between the Docs page and a smaller page finds the sections in the same order.
+- **One Docs page with everything.** Each component has a Docs page with every section. It starts with the sections that show every variant together (Variations, States, HTML Structure, Accessibility), then one block per variant with the sections that change per variant (Skeleton for Default, then for Inline). The sections are in the same place in every component.
+- **A Common page and one page per variant.** When a component has variants, the Docs page is split into smaller pages. The Common page has the sections that show every variant together. Each variant has its own page, with States for that variant only, then the sections that change per variant. A reader who only needs the Inline variant does not see notes about the Default variant.
+- **The same order everywhere.** The first part of the Docs page has the same sections as the Common page, in the same order, and its variant blocks follow the variant pages: Default, then Inline. States is the exception: the Docs page shows it once, with both variants, and each variant page shows it again with only its variant.
 - **Each text is written once.** The text of each section lives in its own file, in `sections/`. The pages hold only the structure (header, sections, canvases and controls) and import the text. When a text changes, every page that shows it changes too.
 - **Stories at the end.** The Playground stories, one per variant, sit in their own group after the doc pages. They are kept apart from the doc pages because a doc page and a story with the same name (for example, "Default") cannot be in the same group in Storybook.
 
@@ -19,11 +19,11 @@ Each section has its title on top, across the whole width. Below the title:
 
 A full-width section has no notes column. Its body uses the whole width: the description, then the content. HTML Structure and Accessibility are full-width sections. Accessibility has no description: its body is the note table.
 
-The Variations section shows every variant side by side in one canvas, with no name and no line between them, and one Controls block under it that changes all of them (`docs-variants` page block). The HTML Structure section shows the code in a code canvas, with one tab for the HTML and one for the CSS, and a maximum height (`docs-code` page block).
+On the Docs and Common pages, the Variations and States sections show every variant side by side in one canvas, with no name and no line between them, and one Controls block under it that changes all of them (`docs-variants` page block). The HTML Structure section shows the code in a code canvas, with one tab for the HTML and one for the CSS, and a maximum height (`docs-code` page block).
 
 The page has 16px of padding. The docs header and each section have 32px of padding on the sides, so their content lines up. The body and the notes have 48px between them. Between two sections: 48px, a line, then 48px. Section titles are 24px, smaller than the page title (32px).
 
-On the Docs page, a section of one variant shows a short variant label above its title (for example, "Default" above "States"). The label is part of the title, so each title has its own text and its own id. The pages of each variant do not need the label.
+On the Docs page, a section of one variant shows a short variant label above its title (for example, "Default" above "Skeleton"). The label is part of the title, so each title has its own text and its own id. The pages of each variant do not need the label.
 
 Below 1024px wide, the notes go under the body.
 
@@ -70,9 +70,9 @@ The order (Docs first, Playground last, the other doc pages in alphabetical orde
 | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `<token>.css`                              | The CSS of the component. The file name is the token, so the future move to `UI/src/css/` is a one-to-one swap.                                                     |
 | `<token>.stories.ts`                       | The stories. The Playground stories (one per variant) show in the sidebar. The stories that only the doc pages show (Variations, States) have the `!dev` tag.       |
-| `<token>.mdx`                              | The Docs page: the sections that are the same in every variant, then one block per variant.                                                                         |
-| `<token>-common.mdx`                       | The Common page: the header and the sections that are the same in every variant. Only for components with variants.                                                 |
-| `<token>-<variant>.mdx`                    | The page of one variant: the header and only the sections that change per variant. Only for components with variants.                                               |
+| `<token>.mdx`                              | The Docs page: the sections that show every variant together, then one block per variant.                                                                           |
+| `<token>-common.mdx`                       | The Common page: the header and the sections that show every variant together. Only for components with variants.                                                   |
+| `<token>-<variant>.mdx`                    | The page of one variant: the header, States with only this variant, and the sections that change per variant. Only for components with variants.                    |
 | `sections/<token>-<section>.mdx`           | The description and notes of one section. For HTML Structure, the description and the content of the section. For Accessibility, only the content (the note table). |
 | `sections/<token>-<section>-<variant>.mdx` | The description and notes of one section for one variant, when the text changes per variant.                                                                        |
 
@@ -133,7 +133,7 @@ A full-width section adds the `docs-section--full` class and has no notes column
 ## Editing the docs
 
 - **To change a text,** edit its file in `sections/`. The pages that show it change too. Each file says in a comment where it is shown.
-- **To change the layout of a page** (the order of the sections, canvases, controls), edit the page (`<token>.mdx`, `<token>-common.mdx` or `<token>-<variant>.mdx`). Keep the Docs page in the same order as the smaller pages.
+- **To change the layout of a page** (the order of the sections, canvases, controls), edit the page (`<token>.mdx`, `<token>-common.mdx` or `<token>-<variant>.mdx`). Keep the first part of the Docs page in the same order as the Common page, and its variant blocks in the same order as the variant pages.
 - **The text in the header** of each page (the short description under the title) is written in the page itself, as a string expression: `{'...'}`. Plain text on its own lines inside a JSX element becomes a Markdown paragraph in MDX, so the description would get a second `<p>` inside it, with the margin of Storybook.
 
 ## Known limits
