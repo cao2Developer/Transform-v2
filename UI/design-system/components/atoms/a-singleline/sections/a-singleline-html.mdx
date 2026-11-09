@@ -1,0 +1,34 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+import { singleline, defaultArgs } from '../a-singleline.stories';
+import css from '../a-singleline.css?raw';
+
+<Meta isTemplate />
+
+{/* Description and code of the HTML Structure section. Shown on the Docs and Common pages, in a full-width section. The code goes in the body column, after the description, in the code canvas (docs-code page block): one tab for the HTML and one for the CSS. The tab names are string expressions, so MDX does not wrap them in a paragraph. */}
+
+export const description =
+    'The HTML of the component and its CSS. Both come from the files of the component.';
+
+<div className="docs-code sb-unstyled">
+    <div className="docs-code-titlebar">
+        <div className="docs-code-tabs" role="radiogroup" aria-label="Code">
+            <label className="docs-code-tab">
+                <input type="radio" name="a-singleline-code" defaultChecked />
+                {'HTML'}
+            </label>
+            <label className="docs-code-tab">
+                <input type="radio" name="a-singleline-code" />
+                {'CSS'}
+            </label>
+        </div>
+    </div>
+    <div className="docs-code-panel">
+        <Source
+            code={singleline({ ...defaultArgs, answered: true }, 'answer')}
+            language="html"
+        />
+    </div>
+    <div className="docs-code-panel">
+        <Source code={css} language="css" />
+    </div>
+</div>

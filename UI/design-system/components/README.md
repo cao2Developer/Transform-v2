@@ -4,10 +4,28 @@ How each component folder is organized in the docs Storybook, and why. `a-single
 
 ## The approach
 
-- **One Docs page with everything.** Each component has a Docs page with every section, always in the same order: Overview, Variations, States, Skeleton, Accessibility, HTML Structure. The sections are in the same place in every component.
-- **One page per variant.** When a component has variants, each variant also has its own page, with only the sections that change per variant. For `a-singleline`: States and Skeleton. A reader who only needs the Inline variant does not see notes about the Default variant.
+- **One Docs page with everything.** Each component has a Docs page with every section. It starts with the sections that are the same in every variant (Variations, HTML Structure, Accessibility), then one block per variant with the sections that change per variant (States and Skeleton for Default, then for Inline). The sections are in the same place in every component.
+- **A Common page and one page per variant.** When a component has variants, the Docs page is split into smaller pages. The Common page has the sections that are the same in every variant. Each variant has its own page, with only the sections that change per variant. A reader who only needs the Inline variant does not see notes about the Default variant.
+- **The same order everywhere.** The Docs page follows the order of the smaller pages: Common, then Default, then Inline. A reader who moves between the Docs page and a smaller page finds the sections in the same order.
 - **Each text is written once.** The text of each section lives in its own file, in `sections/`. The pages hold only the structure (header, sections, canvases and controls) and import the text. When a text changes, every page that shows it changes too.
 - **Stories at the end.** The Playground stories, one per variant, sit in their own group after the doc pages. They are kept apart from the doc pages because a doc page and a story with the same name (for example, "Default") cannot be in the same group in Storybook.
+
+## Page layout
+
+Each section has its title on top, across the whole width. Below the title:
+
+- **Body**, on the left: the canvases and the controls.
+- **Notes**, on the right: the section description, then the notes.
+
+A full-width section has no notes column. Its body uses the whole width: the description, then the content. HTML Structure and Accessibility are full-width sections. Accessibility has no description: its body is the note table.
+
+The Variations section shows every variant side by side in one canvas, with one Controls block under it that changes all of them (`docs-variants` page block). The HTML Structure section shows the code in a code canvas, with one tab for the HTML and one for the CSS, and a maximum height (`docs-code` page block).
+
+The page has 8px of padding. The docs header and each section have 32px of padding on the sides, so their content lines up. Between two sections: 32px, a line, then 32px.
+
+On the Docs page, a section of one variant shows a short variant label above its title (for example, "Default" above "States"). The label is part of the title, so each title has its own text and its own id. The pages of each variant do not need the label.
+
+Below 1024px wide, the notes go under the body.
 
 ## Folder structure
 
@@ -18,14 +36,16 @@ components/
       ├ a-singleline.css                     the component
       ├ a-singleline.stories.ts              the stories
       ├ a-singleline.mdx                     Docs page
+      ├ a-singleline-common.mdx              Common page
       ├ a-singleline-default.mdx             Default page
       ├ a-singleline-inline.mdx              Inline page
       └ sections/
          ├ a-singleline-variations.mdx
+         ├ a-singleline-html.mdx
+         ├ a-singleline-accessibility.mdx
          ├ a-singleline-states.mdx
          ├ a-singleline-skeleton-default.mdx
-         ├ a-singleline-skeleton-inline.mdx
-         └ a-singleline-accessibility.mdx
+         └ a-singleline-skeleton-inline.mdx
 ```
 
 ## Sidebar
@@ -34,6 +54,7 @@ components/
 Atoms
 └ Singleline
    ├ Docs          a-singleline.mdx
+   ├ Common        a-singleline-common.mdx
    ├ Default       a-singleline-default.mdx
    ├ Inline        a-singleline-inline.mdx
    └ Playground    a-singleline.stories.ts
@@ -41,20 +62,21 @@ Atoms
       └ Inline
 ```
 
-The order (Docs first, Playground last) is set by `storySort` in `.storybook-ds/preview.ts`, for every component.
+The order (Docs first, Playground last, the other doc pages in alphabetical order between them) is set by `storySort` in `.storybook-ds/preview.ts`, for every component.
 
 ## What each file is
 
-| File                                       | What it has                                                                                                                                                             |
-| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `<token>.css`                              | The CSS of the component. The file name is the token, so the future move to `UI/src/css/` is a one-to-one swap.                                                         |
-| `<token>.stories.ts`                       | The stories. The Playground stories (one per variant) show in the sidebar. The stories that only the doc pages show (Overview, Variations, States) have the `!dev` tag. |
-| `<token>.mdx`                              | The Docs page: Overview and every section.                                                                                                                              |
-| `<token>-<variant>.mdx`                    | The page of one variant: the header and only the sections that change per variant. Only for components with variants.                                                   |
-| `sections/<token>-<section>.mdx`           | The description and notes of one section.                                                                                                                               |
-| `sections/<token>-<section>-<variant>.mdx` | The description and notes of one section for one variant, when the text changes per variant.                                                                            |
+| File                                       | What it has                                                                                                                                                         |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `<token>.css`                              | The CSS of the component. The file name is the token, so the future move to `UI/src/css/` is a one-to-one swap.                                                     |
+| `<token>.stories.ts`                       | The stories. The Playground stories (one per variant) show in the sidebar. The stories that only the doc pages show (Variations, States) have the `!dev` tag.       |
+| `<token>.mdx`                              | The Docs page: the sections that are the same in every variant, then one block per variant.                                                                         |
+| `<token>-common.mdx`                       | The Common page: the header and the sections that are the same in every variant. Only for components with variants.                                                 |
+| `<token>-<variant>.mdx`                    | The page of one variant: the header and only the sections that change per variant. Only for components with variants.                                               |
+| `sections/<token>-<section>.mdx`           | The description and notes of one section. For HTML Structure, the description and the content of the section. For Accessibility, only the content (the note table). |
+| `sections/<token>-<section>-<variant>.mdx` | The description and notes of one section for one variant, when the text changes per variant.                                                                        |
 
-A component without variants has only `<token>.mdx` and no variant pages.
+A component without variants has only `<token>.mdx`, with no Common page and no variant pages.
 
 ## Section files
 
@@ -73,10 +95,10 @@ export const description =
 ```
 
 - `<Meta isTemplate />` keeps the file out of the sidebar. Without it, Storybook shows every `.mdx` file as a page. The option is made for autodocs templates; these files use only its documented effect: the file is not indexed.
-- `description` is the section description, the first paragraph of the body column. It is plain text, with no Markdown.
-- The rest of the file is the notes of the section.
+- `description` is the section description, the first paragraph of the notes column. In a full-width section, it is the first paragraph of the body. It is plain text, with no Markdown.
+- The rest of the file is the notes of the section. In a full-width section, it is the content of the section (the note table of Accessibility, the code of HTML Structure).
 
-A page imports the file and places each part in its column:
+A page imports the file and places each part in its column. The title comes first, then the body, then the notes:
 
 ```mdx
 import StatesNotes, {
@@ -84,30 +106,39 @@ import StatesNotes, {
 } from './sections/a-singleline-states.mdx';
 
 <div className="docs-section">
-<div className="docs-section-notes">
 
 ## States
 
-<StatesNotes />
+<div className="docs-section-body">
+
+<Canvas of={Stories.StatesDefault} sourceState="none" />
 
 </div>
-<div className="docs-section-body">
+<div className="docs-section-notes">
 
 <p>{statesDescription}</p>
 
-<Canvas of={Stories.StatesDefault} sourceState="none" />
+<StatesNotes />
 
 </div>
 </div>
 ```
 
+A full-width section adds the `docs-section--full` class and has no notes column. On the Docs page, the title of a section of one variant starts with the variant label:
+
+```mdx
+## <span className="docs-section-variant">Default</span> States
+```
+
 ## Editing the docs
 
 - **To change a text,** edit its file in `sections/`. The pages that show it change too. Each file says in a comment where it is shown.
-- **To change the layout of a page** (the order of the sections, canvases, controls), edit the page (`<token>.mdx` or `<token>-<variant>.mdx`).
-- **The text in the header** of each page (the short description under the title) is written in the page itself.
-- **HTML Structure** stays whole in the Docs page, because it shows the code of the component files.
+- **To change the layout of a page** (the order of the sections, canvases, controls), edit the page (`<token>.mdx`, `<token>-common.mdx` or `<token>-<variant>.mdx`). Keep the Docs page in the same order as the smaller pages.
+- **The text in the header** of each page (the short description under the title) is written in the page itself, as a string expression: `{'...'}`. Plain text on its own lines inside a JSX element becomes a Markdown paragraph in MDX, so the description would get a second `<p>` inside it, with the margin of Storybook.
 
 ## Known limits
 
-- On the Docs page, the subtitles that come from two section files with the same headings (for example, the two Skeleton files) get the same `id`, because each file numbers its own headings. The anchor link of the second one goes to the first one.
+- On the Docs page, the notes of States are the same for both variants, so they appear in the Default block and again in the Inline block.
+- When one page shows two section files with the same subtitles, the subtitles get the same `id`, because each file numbers its own headings. The anchor link of the second one goes to the first one.
+- On the Docs page, the Skeleton notes of Default and Inline have the same subtitles (Dimensions and spacing, Error icon, Responsive behavior), so they get the same `id`.
+- The Skeleton sections show their title and their notes for now. The body is empty until the Skeleton canvas is ready.

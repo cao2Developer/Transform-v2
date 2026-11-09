@@ -24,8 +24,9 @@ import SkeletonNotes, {
         />
     </div>
     <p className="docs-header-description">
-        A shorter text field for compact layouts, tables and inline editing.
-        Only the bottom border is visible.
+        {
+            'A shorter text field for compact layouts, tables and inline editing. Only the bottom border is visible.'
+        }
     </p>
     <a
         className="docs-header-source"
@@ -39,16 +40,10 @@ import SkeletonNotes, {
 </div>
 
 <div className="docs-section">
-<div className="docs-section-notes">
 
 ## States
 
-<StatesNotes />
-
-</div>
 <div className="docs-section-body">
-
-<p>{statesDescription}</p>
 
 <Canvas of={Stories.StatesInline} sourceState="none" />
 
@@ -58,19 +53,25 @@ import SkeletonNotes, {
 />
 
 </div>
+<div className="docs-section-notes">
+
+<p>{statesDescription}</p>
+
+<StatesNotes />
+
+</div>
 </div>
 
 <div className="docs-section">
-<div className="docs-section-notes">
 
 ## Skeleton
 
-<SkeletonNotes />
-
-</div>
-<div className="docs-section-body">
+<div className="docs-section-body" />
+<div className="docs-section-notes">
 
 <p>{skeletonDescription}</p>
+
+<SkeletonNotes />
 
 </div>
 </div>

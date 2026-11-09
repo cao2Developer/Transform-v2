@@ -1,0 +1,88 @@
+import { Meta, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import * as Stories from './a-singleline.stories';
+import VariationsNotes, {
+    description as variationsDescription,
+} from './sections/a-singleline-variations.mdx';
+import HtmlStructure, {
+    description as htmlDescription,
+} from './sections/a-singleline-html.mdx';
+import AccessibilityTable from './sections/a-singleline-accessibility.mdx';
+
+<Meta title="Atoms/Singleline/Common" />
+
+<div className="docs-header sb-unstyled">
+    <div className="docs-header-top">
+        <div className="docs-header-heading">
+            <p className="docs-header-level">Atom</p>
+            <div className="docs-header-title-row">
+                <h1 className="docs-header-title">Singleline Common</h1>
+                <code className="docs-header-token">a-singleline</code>
+            </div>
+        </div>
+        <span
+            className="docs-header-icon docs-header-icon--atom"
+            aria-hidden="true"
+        />
+    </div>
+    <p className="docs-header-description">
+        {
+            'The parts of the component that are the same in both variants: variations, HTML structure and accessibility.'
+        }
+    </p>
+    <a
+        className="docs-header-source"
+        href="https://www.figma.com/design/mhwJPwxZprMWh0y4alKzu3/a-singleline?node-id=1-2"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        Figma
+        <span className="docs-header-hidden"> (opens in a new tab)</span>
+    </a>
+</div>
+
+<div className="docs-section">
+
+## Variations
+
+<div className="docs-section-body">
+
+<Canvas of={Stories.Variations} sourceState="none" />
+
+<Controls
+    of={Stories.Variations}
+    include={['Answered', 'Text alignment', 'Value', 'Placeholder']}
+/>
+
+</div>
+<div className="docs-section-notes">
+
+<p>{variationsDescription}</p>
+
+<VariationsNotes />
+
+</div>
+</div>
+
+<div className="docs-section docs-section--full">
+
+## HTML Structure
+
+<div className="docs-section-body">
+
+<p>{htmlDescription}</p>
+
+<HtmlStructure />
+
+</div>
+</div>
+
+<div className="docs-section docs-section--full">
+
+## Accessibility
+
+<div className="docs-section-body">
+
+<AccessibilityTable />
+
+</div>
+</div>

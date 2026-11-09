@@ -1,22 +1,21 @@
-import { Meta, Canvas, Controls, Source } from '@storybook/addon-docs/blocks';
+import { Meta, Canvas, Controls } from '@storybook/addon-docs/blocks';
 import * as Stories from './a-singleline.stories';
-import { singleline, defaultArgs } from './a-singleline.stories';
-import css from './a-singleline.css?raw';
 import VariationsNotes, {
     description as variationsDescription,
-    defaultDescription,
-    inlineDescription,
 } from './sections/a-singleline-variations.mdx';
+import HtmlStructure, {
+    description as htmlDescription,
+} from './sections/a-singleline-html.mdx';
+import AccessibilityTable from './sections/a-singleline-accessibility.mdx';
 import StatesNotes, {
     description as statesDescription,
 } from './sections/a-singleline-states.mdx';
 import SkeletonDefaultNotes, {
-    description as skeletonDescription,
+    description as skeletonDefaultDescription,
 } from './sections/a-singleline-skeleton-default.mdx';
-import SkeletonInlineNotes from './sections/a-singleline-skeleton-inline.mdx';
-import AccessibilityTable, {
-    description as accessibilityDescription,
-} from './sections/a-singleline-accessibility.mdx';
+import SkeletonInlineNotes, {
+    description as skeletonInlineDescription,
+} from './sections/a-singleline-skeleton-inline.mdx';
 
 <Meta title="Atoms/Singleline/Docs" />
 
@@ -35,8 +34,9 @@ import AccessibilityTable, {
         />
     </div>
     <p className="docs-header-description">
-        A single-line text input for collecting user data in forms, surveys, and
-        text-based questions.
+        {
+            'A single-line text input for collecting user data in forms, surveys, and text-based questions.'
+        }
     </p>
     <a
         className="docs-header-source"
@@ -50,60 +50,57 @@ import AccessibilityTable, {
 </div>
 
 <div className="docs-section">
-<div className="docs-section-notes">
-
-## Overview
-
-</div>
-<div className="docs-section-body">
-
-<Canvas of={Stories.Overview} sourceState="none" />
-
-<Controls of={Stories.Overview} />
-
-</div>
-</div>
-
-<div className="docs-section">
-<div className="docs-section-notes">
 
 ## Variations
+
+<div className="docs-section-body">
+
+<Canvas of={Stories.Variations} sourceState="none" />
+
+<Controls
+    of={Stories.Variations}
+    include={['Answered', 'Text alignment', 'Value', 'Placeholder']}
+/>
+
+</div>
+<div className="docs-section-notes">
+
+<p>{variationsDescription}</p>
 
 <VariationsNotes />
 
 </div>
+</div>
+
+<div className="docs-section docs-section--full">
+
+## HTML Structure
+
 <div className="docs-section-body">
 
-<p>{variationsDescription}</p>
+<p>{htmlDescription}</p>
 
-### Default
+<HtmlStructure />
 
-<p>{defaultDescription}</p>
+</div>
+</div>
 
-<Canvas of={Stories.VariantDefault} sourceState="none" />
+<div className="docs-section docs-section--full">
 
-### Inline
+## Accessibility
 
-<p>{inlineDescription}</p>
+<div className="docs-section-body">
 
-<Canvas of={Stories.VariantInline} sourceState="none" />
+<AccessibilityTable />
 
 </div>
 </div>
 
 <div className="docs-section">
-<div className="docs-section-notes">
 
-## States
+## <span className="docs-section-variant">Default</span> States
 
-<StatesNotes />
-
-</div>
 <div className="docs-section-body">
-
-<p>{statesDescription}</p>
-
-### Default
 
 <Canvas of={Stories.StatesDefault} sourceState="none" />
 
@@ -112,7 +109,35 @@ import AccessibilityTable, {
     include={['Answered', 'State', 'Read only', 'Error']}
 />
 
-### Inline
+</div>
+<div className="docs-section-notes">
+
+<p>{statesDescription}</p>
+
+<StatesNotes />
+
+</div>
+</div>
+
+<div className="docs-section">
+
+## <span className="docs-section-variant">Default</span> Skeleton
+
+<div className="docs-section-body" />
+<div className="docs-section-notes">
+
+<p>{skeletonDefaultDescription}</p>
+
+<SkeletonDefaultNotes />
+
+</div>
+</div>
+
+<div className="docs-section">
+
+## <span className="docs-section-variant">Inline</span> States
+
+<div className="docs-section-body">
 
 <Canvas of={Stories.StatesInline} sourceState="none" />
 
@@ -122,73 +147,25 @@ import AccessibilityTable, {
 />
 
 </div>
-</div>
-
-<div className="docs-section">
 <div className="docs-section-notes">
 
-## Skeleton
+<p>{statesDescription}</p>
 
-<p className="docs-section-variant sb-unstyled">Default</p>
-
-<SkeletonDefaultNotes />
-
-</div>
-<div className="docs-section-body">
-
-<p>{skeletonDescription}</p>
+<StatesNotes />
 
 </div>
 </div>
 
 <div className="docs-section">
+
+## <span className="docs-section-variant">Inline</span> Skeleton
+
+<div className="docs-section-body" />
 <div className="docs-section-notes">
 
-## Skeleton
-
-<p className="docs-section-variant sb-unstyled">Inline</p>
+<p>{skeletonInlineDescription}</p>
 
 <SkeletonInlineNotes />
-
-</div>
-<div className="docs-section-body"></div>
-</div>
-
-<div className="docs-section">
-<div className="docs-section-notes">
-
-## Accessibility
-
-</div>
-<div className="docs-section-body">
-
-<p>{accessibilityDescription}</p>
-
-<AccessibilityTable />
-
-</div>
-</div>
-
-<div className="docs-section">
-<div className="docs-section-notes">
-
-## HTML Structure
-
-</div>
-<div className="docs-section-body">
-
-The HTML of the component and its CSS. Both come from the files of the component.
-
-### HTML
-
-<Source
-    code={singleline({ ...defaultArgs, answered: true }, 'answer')}
-    language="html"
-/>
-
-### CSS
-
-<Source code={css} language="css" />
 
 </div>
 </div>

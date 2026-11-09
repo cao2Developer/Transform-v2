@@ -178,24 +178,31 @@ export const Inline: Story = {
     render: renderWith('a-singleline-inline'),
 };
 
-// Overview section: the whole component with every control, Variant included.
-// Shown only on the Docs page.
-export const Overview: Story = {
-    tags: ['!dev'],
-    render: renderWith('a-singleline-overview'),
-};
+// Variations section: Default and Inline side by side, in one canvas, with the
+// same args. One Controls block changes both. Shown only on the Docs and Common
+// pages. The docs-variants classes come from the page block of the same name,
+// which the docs Storybook loads on every page.
+const variations: [SinglelineArgs['variant'], string][] = [
+    ['default', 'Default'],
+    ['inline', 'Inline'],
+];
 
-// Variants section: one field per variant, with no controls. Shown only on the Docs page.
-export const VariantDefault: Story = {
-    tags: ['!dev'],
-    args: { variant: 'default' },
-    render: renderWith('a-singleline-variant-default'),
-};
+function renderVariations(args: SinglelineArgs): string {
+    const items = variations.map(
+        ([variant, name]) => `<figure class="docs-variants-item">
+  <figcaption>${name}</figcaption>
+  ${docField({ ...args, variant }, `a-singleline-variations-${variant}`)}
+</figure>`,
+    );
+    return `<div class="docs-variants">
+${items.join('\n')}
+</div>`;
+}
 
-export const VariantInline: Story = {
+export const Variations: Story = {
     tags: ['!dev'],
-    args: { variant: 'inline' },
-    render: renderWith('a-singleline-variant-inline'),
+    argTypes: fixedVariant,
+    render: renderVariations,
 };
 
 // States section: one field per variant, with the controls of the section.
