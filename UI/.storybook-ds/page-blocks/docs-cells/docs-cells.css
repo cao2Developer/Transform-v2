@@ -1,0 +1,92 @@
+/*
+ * Cells (page block): .docs-cells
+ *
+ * A Storybook canvas split into cells, one instance of the component per
+ * cell, each with its name at the top left: the variant in Variations
+ * ("Default"), the variant and the state in States ("Default · Error").
+ * One column per variant, set by --docs-cells-columns on the root. One
+ * story renders every cell with the same args, so one Controls block
+ * changes all of them.
+ *
+ *     <div class="docs-cells sb-unstyled" style="--docs-cells-columns: 2">
+ *         <div class="docs-cells-item">
+ *             <p class="docs-cells-label">
+ *                 Default
+ *                 <span class="docs-cells-separator" aria-hidden="true">·</span>
+ *                 Error
+ *             </p>
+ *             <div class="docs-cells-stage">...the component...</div>
+ *         </div>
+ *         ...
+ *     </div>
+ *
+ * The story sets layout: 'fullscreen', so the cells fill the canvas.
+ * In States, the fields are static (docs-cells--static): no mouse here,
+ * and tabindex="-1" in the story, so a real focus never mixes with the
+ * Active control. Variations and the Playground stay interactive.
+ * sb-unstyled keeps the Storybook text styles out.
+ *
+ * It uses only base tokens, so a change in a semantic token does not
+ * change the docs pages.
+ */
+
+.docs-cells {
+    /* Values with no base token */
+    --docs-cells-line: var(--base-color-neutral-40);
+    --docs-cells-min-height: 10rem; /* 160px, the min-height of every canvas in docs.css */
+
+    display: grid;
+    grid-template-columns: repeat(
+        var(--docs-cells-columns, 1),
+        minmax(max-content, 1fr)
+    );
+    min-height: var(--docs-cells-min-height);
+    overflow-x: auto; /* a wide Width scrolls inside the canvas */
+}
+
+/*
+ * Lines between the cells: each cell draws one on its right and one at
+ * its bottom. The lines of the last column and the last row fall on the
+ * edge of the canvas, where overflow cuts them. The cells have no
+ * background, so no cell covers the line of its neighbor.
+ */
+.docs-cells-item {
+    box-shadow:
+        1px 0 0 var(--docs-cells-line),
+        0 1px 0 var(--docs-cells-line);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    padding: var(--base-unit-16);
+}
+
+.docs-cells-label {
+    color: var(--base-color-neutral-80);
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height);
+    margin: 0;
+}
+
+.docs-cells-separator {
+    color: var(--base-color-neutral-60);
+}
+
+/* The component in the center of the space under the name */
+.docs-cells-stage {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: var(--base-unit-16) var(--base-unit-32);
+}
+
+.docs-cells--static .docs-cells-stage {
+    pointer-events: none;
+}
+
+/* Narrow screens: one cell under the other */
+@media (width <= 600px) {
+    .docs-cells {
+        grid-template-columns: minmax(max-content, 1fr);
+    }
+}

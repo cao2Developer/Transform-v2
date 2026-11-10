@@ -9,6 +9,7 @@ export type SinglelineArgs = {
     align: 'start' | 'center' | 'end';
     readOnly: boolean;
     error: boolean;
+    width: number;
 };
 
 export const defaultArgs: SinglelineArgs = {
@@ -19,6 +20,7 @@ export const defaultArgs: SinglelineArgs = {
     align: 'start',
     readOnly: false,
     error: false,
+    width: 200,
 };
 
 // How the field is named and described by other elements.
@@ -62,6 +64,10 @@ export function singleline(
         `placeholder="${escapeHtml(args.placeholder)}"`,
         `value="${escapeHtml(value)}"`,
     ];
+    // The default width comes from the CSS, so only another width is written.
+    const width = Number(args.width);
+    if (width > 0 && width !== defaultArgs.width)
+        attrs.push(`style="width: ${width}px"`);
     if (links.labelledBy) attrs.push(`aria-labelledby="${links.labelledBy}"`);
     if (args.readOnly) attrs.push('readonly');
     if (error) {
@@ -99,13 +105,26 @@ function renderWith(id: string) {
     return (args: SinglelineArgs): string => docField(args, id);
 }
 
+// The States stories have one more arg: Active, the keyboard focus on every
+// cell. It is the first arg of the meta, because the Controls block lists the
+// controls in the order of the args: Active is the first control of States.
+type StatesArgs = SinglelineArgs & { active: boolean };
+
 const meta = {
     // The stories sit in the Playground group, after the doc pages.
     title: 'Atoms/Singleline/Playground',
     // Exports that start with a lowercase letter are helpers, not stories.
     excludeStories: /^[a-z]/,
-    args: defaultArgs,
+    args: { active: false, ...defaultArgs },
     argTypes: {
+        active: {
+            name: 'Active',
+            description:
+                'The field has keyboard focus. Forced on this page, on every cell.',
+            control: 'boolean',
+            // Hidden here. Only the States stories show it (showActive).
+            table: { disable: true },
+        },
         variant: {
             name: 'Variant',
             description:
@@ -149,12 +168,18 @@ const meta = {
             description: 'Hint shown while the field is empty.',
             control: 'text',
         },
+        width: {
+            name: 'Width',
+            description:
+                'In px. 200px by default. It can be changed per question.',
+            control: { type: 'number', step: 10 },
+        },
     },
     parameters: {
         controls: { disable: true },
     },
     render: renderWith('a-singleline'),
-} satisfies Meta<SinglelineArgs>;
+} satisfies Meta<StatesArgs>;
 
 export default meta;
 
@@ -178,81 +203,117 @@ export const Inline: Story = {
     render: renderWith('a-singleline-inline'),
 };
 
-// Default and Inline side by side, in one canvas, with the same args and no
-// names. The Variations and States sections of the Docs and Common pages use it,
-// so one Controls block changes both variants. The docs-variants classes come
+// The cells canvas of the Variations and States sections: one cell per variant
+// and state, each with its name at the top left, and the same args in every
+// cell, so one Controls block changes all of them. The docs-cells classes come
 // from the page block of the same name, which the docs Storybook loads on every
 // page. id keeps the ids of each section apart.
 const variations: SinglelineArgs['variant'][] = ['default', 'inline'];
 
-function variantsRow(args: SinglelineArgs, id: string): string {
-    const items = variations.map(
-        (variant) => `<div class="docs-variants-item">
-  ${docField({ ...args, variant }, `${id}-${variant}`)}
-</div>`,
+const variantNames = { default: 'Default', inline: 'Inline' };
+
+// One row of cells, one cell per variant: the state the row shows (none in
+// Variations) and the args it changes.
+type Row = { state?: string; args?: Partial<SinglelineArgs> };
+
+// Variations: one row, named by the variant only.
+const variationRows: Row[] = [{}];
+
+// States: Inactive, Error and Read only, in the order of the notes. Active is
+// a control, so it combines with each of them.
+const stateRows: Row[] = [
+    { state: 'Inactive' },
+    { state: 'Error', args: { error: true } },
+    { state: 'Read only', args: { readOnly: true } },
+];
+
+// The States stories show the Active control, hidden in the meta. The name is
+// repeated: without it, Storybook names the argType by its key ("active"), and
+// include no longer finds "Active".
+const showActive = { active: { name: 'Active', table: { disable: false } } };
+
+// A field in a States cell is static: out of the tab order here, and out of
+// reach of the mouse with docs-cells--static. A real focus would mix with the
+// Active control.
+function staticField(args: SinglelineArgs, id: string): string {
+    return docField(args, id).replace('<input ', '<input tabindex="-1" ');
+}
+
+function cells(
+    args: SinglelineArgs & { active?: boolean },
+    id: string,
+    variants: SinglelineArgs['variant'][],
+    rows: Row[],
+): string {
+    // Rows with a state are States, so their cells are static. Variations
+    // stays interactive.
+    const states = rows.some((row) => row.state);
+    const field = states ? staticField : docField;
+    const items = rows.flatMap((row, index) =>
+        variants.map((variant) => {
+            const name = row.state
+                ? `${variantNames[variant]} <span class="docs-cells-separator" aria-hidden="true">·</span> ${row.state}`
+                : variantNames[variant];
+            return `<div class="docs-cells-item">
+  <p class="docs-cells-label">${name}</p>
+  <div class="docs-cells-stage">
+    ${field({ ...args, ...row.args, variant }, `${id}-${index}-${variant}`)}
+  </div>
+</div>`;
+        }),
     );
-    return `<div class="docs-variants">
+    const classes = ['docs-cells', 'sb-unstyled'];
+    if (states) classes.push('docs-cells--static');
+    // The pseudo-states addon reads parameters, not args. So Active puts the
+    // cells inside the class that the addon uses to force :focus-visible on
+    // every element inside it.
+    if (args.active) classes.push('pseudo-focus-visible-all');
+    return `<div class="${classes.join(' ')}" style="--docs-cells-columns: ${variants.length}">
 ${items.join('\n')}
 </div>`;
 }
+
+// The cells fill the canvas, with no padding around them.
+const fullscreen = { layout: 'fullscreen' };
 
 // Variations section. Shown only on the Docs and Common pages.
 export const Variations: Story = {
     tags: ['!dev'],
     argTypes: fixedVariant,
-    render: (args) => variantsRow(args, 'a-singleline-variations'),
+    parameters: fullscreen,
+    render: (args) =>
+        cells(args, 'a-singleline-variations', variations, variationRows),
 };
 
-// States section, with the controls of the section. Shown only on the doc pages:
-// States has both variants in one canvas (Docs and Common pages), and
-// StatesDefault and StatesInline have one variant each (variant pages).
-// State is an arg of these stories only. The pseudo-states addon reads parameters,
-// not args, so Active puts the fields inside the class that the addon uses to force
-// :focus-visible on every element inside it.
-type StatesArgs = SinglelineArgs & { state: 'inactive' | 'active' };
-
-const stateArgType = {
-    state: {
-        name: 'State',
-        description:
-            'Active: the field has keyboard focus. Forced on this page.',
-        control: 'select' as const,
-        options: ['inactive', 'active'],
-    },
-};
-
-function withState(args: StatesArgs, html: string): string {
-    return args.state === 'active'
-        ? `<div class="pseudo-focus-visible-all">${html}</div>`
-        : html;
-}
-
-function renderStates(id: string) {
-    return (args: StatesArgs): string => withState(args, docField(args, id));
-}
-
+// States section. Shown only on the doc pages: States has both variants
+// (Docs page), and StatesDefault and StatesInline have one variant each
+// (variant pages). The rows set Error and Read only, so the controls of the
+// section change only what every cell shares, and Active.
 export const States: StoryObj<StatesArgs> = {
     tags: ['!dev'],
-    args: { answered: true, state: 'inactive' },
-    argTypes: { ...fixedVariant, ...stateArgType },
-    render: (args) =>
-        withState(args, variantsRow(args, 'a-singleline-states-row')),
+    args: { answered: true },
+    argTypes: { ...fixedVariant, ...showActive },
+    parameters: fullscreen,
+    render: (args) => cells(args, 'a-singleline-states', variations, stateRows),
 };
 
 export const StatesDefault: StoryObj<StatesArgs> = {
     tags: ['!dev'],
-    args: { variant: 'default', answered: true, state: 'inactive' },
-    argTypes: { ...fixedVariant, ...stateArgType },
-    render: renderStates('a-singleline-states-default'),
+    args: { answered: true },
+    argTypes: { ...fixedVariant, ...showActive },
+    parameters: fullscreen,
+    render: (args) =>
+        cells(args, 'a-singleline-states-default', ['default'], stateRows),
 };
 
 export const StatesInline: StoryObj<StatesArgs> = {
     tags: ['!dev'],
-    args: { variant: 'inline', answered: true, state: 'inactive' },
-    argTypes: { ...fixedVariant, ...stateArgType },
-    render: renderStates('a-singleline-states-inline'),
+    args: { answered: true },
+    argTypes: { ...fixedVariant, ...showActive },
+    parameters: fullscreen,
+    render: (args) =>
+        cells(args, 'a-singleline-states-inline', ['inline'], stateRows),
 };
-
 // Self-check: throws if a rule of this component breaks.
 const leaked = field(
     { ...defaultArgs, readOnly: true, error: true },
@@ -281,4 +342,38 @@ if (
     !alone.includes('aria-labelledby="check-doc-name"')
 ) {
     throw new Error('a doc canvas field has a label, a message or no name');
+}
+
+if (singleline(defaultArgs, 'check-width').includes('style=')) {
+    throw new Error('the default width is written in the HTML');
+}
+const stateFields = cells(
+    { ...defaultArgs, answered: true },
+    'check-cells',
+    variations,
+    stateRows,
+)
+    .split('<input ')
+    .slice(1);
+if (
+    stateFields.length !== variations.length * stateRows.length ||
+    stateFields.some(
+        (input) =>
+            !input.startsWith('tabindex="-1"') ||
+            (input.includes('readonly') && input.includes('aria-invalid')),
+    )
+) {
+    throw new Error(
+        'a States cell is missing, can be focused, or combines read only and error',
+    );
+}
+
+const variationCells = cells(
+    defaultArgs,
+    'check-variations',
+    variations,
+    variationRows,
+);
+if (variationCells.includes('tabindex')) {
+    throw new Error('a Variations cell cannot be focused');
 }
