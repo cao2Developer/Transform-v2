@@ -4,6 +4,7 @@
  * A Storybook canvas split into cells, one instance of the component per
  * cell, each with its name at the top left: the variant in Variations
  * ("Default"), the variant and the state in States ("Default · Error").
+ * The names are shown in lowercase.
  * One column per variant, set by --docs-cells-columns on the root. One
  * story renders every cell with the same args, so one Controls block
  * changes all of them.
@@ -66,6 +67,7 @@
     font-weight: var(--font-weight-medium);
     line-height: var(--line-height);
     margin: 0;
+    text-transform: lowercase;
 }
 
 .docs-cells-separator {

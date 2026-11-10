@@ -4,9 +4,9 @@ How each component folder is organized in the docs Storybook, and why. `a-single
 
 ## The approach
 
-- **One Docs page with everything.** Each component has a Docs page with every section. It starts with the sections that show every variant together (Variations, States, HTML Structure, Accessibility), then one block per variant with the sections that change per variant (Skeleton for Default, then for Inline). The sections are in the same place in every component.
+- **One Docs page with everything.** Each component has a Docs page with every section. It starts with Overview, the context of the component in plain text, then the sections that show every variant together (Variations, States, HTML Structure, Accessibility), then one block per variant with the sections that change per variant (Skeleton for Default, then for Inline). The sections are in the same place in every component.
 - **A Common page and one page per variant.** When a component has variants, the Docs page is split into smaller pages. The Common page has the sections that are the same for every variant: Variations, HTML Structure and Accessibility. Each variant has its own page, with States for that variant only, then the sections that change per variant. A reader who only needs the Inline variant does not see notes about the Default variant.
-- **The same order everywhere.** The first part of the Docs page has the sections of the Common page, in the same order, with States after Variations. Its variant blocks follow the variant pages: Default, then Inline. States is the exception: the Docs page shows it once, with both variants, the Common page does not show it, and each variant page shows it with only its variant.
+- **The same order everywhere.** After Overview, the first part of the Docs page has the sections of the Common page, in the same order, with States after Variations. Its variant blocks follow the variant pages: Default, then Inline. States is the exception: the Docs page shows it once, with both variants, the Common page does not show it, and each variant page shows it with only its variant.
 - **Each text is written once, in plain Markdown.** The text of each section lives in its own `.md` file, in `content/`. The pages hold only the layout (header, sections, canvases and controls) and show the text in its place. A text can change without touching the layout, and every page that shows it changes too.
 - **Stories at the end.** The Playground stories, one per variant, sit in their own group after the doc pages. They are kept apart from the doc pages because a doc page and a story with the same name (for example, "Default") cannot be in the same group in Storybook.
 
@@ -17,7 +17,7 @@ Each section has its title on top, across the whole width. Below the title:
 - **Body**, on the left: the canvases and the controls.
 - **Notes**, on the right: the section description, then the notes.
 
-A full-width section has no notes column and no description. Its body uses the whole width. HTML Structure and Accessibility are full-width sections: the body of HTML Structure is the code canvas, and the body of Accessibility is the note table.
+A full-width section has no notes column and no description. Its body uses the whole width. Overview, HTML Structure and Accessibility are full-width sections: the body of Overview is plain text, the body of HTML Structure is the code canvas, and the body of Accessibility is the note table. Overview is only on the Docs page.
 
 On the Docs page, the Variations and States sections show every variant in one cells canvas (`docs-cells` page block): one cell per variant and state, each with its name at the top left, and lines between all the cells. Variations has one row ("Default"). States has one row per state ("Default · Error"), and each variant page shows it with one column. Active is a control of States that focuses every cell. One Controls block under the canvas changes every cell. In States, the fields are static: no mouse and no `Tab`, so a real focus never mixes with the Active control. The Common page does the same in Variations. The HTML Structure section shows the code in a code canvas, with one tab for the HTML and one for the CSS, and a maximum height (`docs-code` page block).
 
@@ -40,6 +40,7 @@ components/
       ├ a-singleline-default.mdx             Default page
       ├ a-singleline-inline.mdx              Inline page
       ├ content/                             the texts, plain Markdown
+      │  ├ overview.md
       │  ├ variations.md
       │  ├ states.md
       │  ├ accessibility.md
@@ -96,6 +97,7 @@ The component has four states: inactive, active, error and read only.
 - The first paragraph is the section description: the first paragraph of the notes column. No title before it.
 - The rest of the file is the notes of the section. Subtitles use `###`. The page holds the `#` and `##` titles.
 - In `states.md`, the list of states has one line per state, as `- **Inactive:** ...`, with the state names of the component. The Skeleton export checks the states of its canvases against this list.
+- `overview.md` has no description, only text: the context of the component. Only the Docs page shows it.
 - `accessibility.md` has no description, only the note table, in HTML. Markdown blocks do not work inside a table cell, so each paragraph is in `<p>` and each reference is in `<li>`. Links and `code` in Markdown work inside them. HTML attributes use `class`, not `className`.
 - A comment goes only where an edit could break something, for example above the list of states: `<!-- ... -->`. It does not show on the page.
 - If a text ever needs a live example in the middle, the page shows it between two `.md` files.

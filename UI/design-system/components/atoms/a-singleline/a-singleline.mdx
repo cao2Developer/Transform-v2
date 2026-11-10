@@ -1,5 +1,6 @@
 import { Meta, Canvas, Controls, Markdown } from '@storybook/addon-docs/blocks';
 import * as Stories from './a-singleline.stories';
+import overview from './content/overview.md?raw';
 import variations from './content/variations.md?raw';
 import HtmlStructure from './sections/html.mdx';
 import accessibility from './content/accessibility.md?raw';
@@ -37,6 +38,17 @@ import skeletonInline from './content/skeleton-inline.md?raw';
         Figma
         <span className="docs-header-hidden"> (opens in a new tab)</span>
     </a>
+</div>
+
+{/* Section: Overview */}
+
+<div className="docs-section docs-section--full">
+
+## Overview
+
+<Markdown className="docs-section-body" options={{ forceWrapper: true }}>
+    {overview}
+</Markdown>
 </div>
 
 {/* Section: Variations */}
