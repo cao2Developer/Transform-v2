@@ -7,9 +7,6 @@ import HtmlStructure, {
     description as htmlDescription,
 } from './sections/a-singleline-html.mdx';
 import AccessibilityTable from './sections/a-singleline-accessibility.mdx';
-import StatesNotes, {
-    description as statesDescription,
-} from './sections/a-singleline-states.mdx';
 
 <Meta title="Atoms/Singleline/Common" />
 
@@ -62,29 +59,6 @@ import StatesNotes, {
 <p>{variationsDescription}</p>
 
 <VariationsNotes />
-
-</div>
-</div>
-
-<div className="docs-section">
-
-## States
-
-<div className="docs-section-body">
-
-<Canvas of={Stories.States} sourceState="none" />
-
-<Controls
-    of={Stories.States}
-    include={['Answered', 'State', 'Read only', 'Error']}
-/>
-
-</div>
-<div className="docs-section-notes">
-
-<p>{statesDescription}</p>
-
-<StatesNotes />
 
 </div>
 </div>
