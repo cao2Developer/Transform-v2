@@ -1,21 +1,11 @@
 import { Meta, Canvas, Controls } from '@storybook/addon-docs/blocks';
 import * as Stories from './a-singleline.stories';
-import VariationsNotes, {
-    description as variationsDescription,
-} from './sections/a-singleline-variations.mdx';
-import HtmlStructure, {
-    description as htmlDescription,
-} from './sections/a-singleline-html.mdx';
-import AccessibilityTable from './sections/a-singleline-accessibility.mdx';
-import StatesNotes, {
-    description as statesDescription,
-} from './sections/a-singleline-states.mdx';
-import SkeletonDefaultNotes, {
-    description as skeletonDefaultDescription,
-} from './sections/a-singleline-skeleton-default.mdx';
-import SkeletonInlineNotes, {
-    description as skeletonInlineDescription,
-} from './sections/a-singleline-skeleton-inline.mdx';
+import VariationsNotes from './sections/variations.mdx';
+import HtmlStructure from './sections/html.mdx';
+import AccessibilityTable from './sections/accessibility.mdx';
+import StatesNotes from './sections/states.mdx';
+import SkeletonDefaultNotes from './sections/skeleton-default.mdx';
+import SkeletonInlineNotes from './sections/skeleton-inline.mdx';
 
 <Meta title="Atoms/Singleline/Docs" />
 
@@ -65,8 +55,6 @@ import SkeletonInlineNotes, {
 </div>
 <div className="docs-section-notes">
 
-<p>{variationsDescription}</p>
-
 <VariationsNotes />
 
 </div>
@@ -88,8 +76,6 @@ import SkeletonInlineNotes, {
 </div>
 <div className="docs-section-notes">
 
-<p>{statesDescription}</p>
-
 <StatesNotes />
 
 </div>
@@ -100,8 +86,6 @@ import SkeletonInlineNotes, {
 ## HTML Structure
 
 <div className="docs-section-body">
-
-<p>{htmlDescription}</p>
 
 <HtmlStructure />
 
@@ -126,8 +110,6 @@ import SkeletonInlineNotes, {
 <div className="docs-section-body" />
 <div className="docs-section-notes">
 
-<p>{skeletonDefaultDescription}</p>
-
 <SkeletonDefaultNotes />
 
 </div>
@@ -139,8 +121,6 @@ import SkeletonInlineNotes, {
 
 <div className="docs-section-body" />
 <div className="docs-section-notes">
-
-<p>{skeletonInlineDescription}</p>
 
 <SkeletonInlineNotes />
 

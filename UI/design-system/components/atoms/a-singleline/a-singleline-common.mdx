@@ -1,12 +1,8 @@
 import { Meta, Canvas, Controls } from '@storybook/addon-docs/blocks';
 import * as Stories from './a-singleline.stories';
-import VariationsNotes, {
-    description as variationsDescription,
-} from './sections/a-singleline-variations.mdx';
-import HtmlStructure, {
-    description as htmlDescription,
-} from './sections/a-singleline-html.mdx';
-import AccessibilityTable from './sections/a-singleline-accessibility.mdx';
+import VariationsNotes from './sections/variations.mdx';
+import HtmlStructure from './sections/html.mdx';
+import AccessibilityTable from './sections/accessibility.mdx';
 
 <Meta title="Atoms/Singleline/Common" />
 
@@ -26,7 +22,7 @@ import AccessibilityTable from './sections/a-singleline-accessibility.mdx';
     </div>
     <p className="docs-header-description">
         {
-            'The parts of the component that are the same in both variants: variations, states, HTML structure and accessibility.'
+            'The parts of the component that are the same in both variants: variations, HTML structure and accessibility.'
         }
     </p>
     <a
@@ -56,8 +52,6 @@ import AccessibilityTable from './sections/a-singleline-accessibility.mdx';
 </div>
 <div className="docs-section-notes">
 
-<p>{variationsDescription}</p>
-
 <VariationsNotes />
 
 </div>
@@ -68,8 +62,6 @@ import AccessibilityTable from './sections/a-singleline-accessibility.mdx';
 ## HTML Structure
 
 <div className="docs-section-body">
-
-<p>{htmlDescription}</p>
 
 <HtmlStructure />
 
