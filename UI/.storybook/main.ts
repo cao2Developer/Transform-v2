@@ -6,6 +6,8 @@ const config: StorybookConfig = {
     stories: [
         '../stories/**/*.mdx',
         '../stories/**/*.stories.@(js|jsx|ts|tsx)',
+        '../design-system/**/*.mdx',
+        '../design-system/**/*.stories.@(js|jsx|ts|tsx)',
     ],
 
     staticDirs: [
