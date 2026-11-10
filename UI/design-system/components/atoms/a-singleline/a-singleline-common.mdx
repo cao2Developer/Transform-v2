@@ -1,8 +1,8 @@
-import { Meta, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import { Meta, Canvas, Controls, Markdown } from '@storybook/addon-docs/blocks';
 import * as Stories from './a-singleline.stories';
-import VariationsNotes from './sections/variations.mdx';
+import variations from './content/variations.md?raw';
 import HtmlStructure from './sections/html.mdx';
-import AccessibilityTable from './sections/accessibility.mdx';
+import accessibility from './content/accessibility.md?raw';
 
 <Meta title="Atoms/Singleline/Common" />
 
@@ -36,6 +36,8 @@ import AccessibilityTable from './sections/accessibility.mdx';
     </a>
 </div>
 
+{/* Section: Variations */}
+
 <div className="docs-section">
 
 ## Variations
@@ -50,12 +52,12 @@ import AccessibilityTable from './sections/accessibility.mdx';
 />
 
 </div>
-<div className="docs-section-notes">
-
-<VariationsNotes />
-
+<Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
+    {variations}
+</Markdown>
 </div>
-</div>
+
+{/* Section: HTML Structure */}
 
 <div className="docs-section docs-section--full">
 
@@ -68,13 +70,13 @@ import AccessibilityTable from './sections/accessibility.mdx';
 </div>
 </div>
 
+{/* Section: Accessibility */}
+
 <div className="docs-section docs-section--full">
 
 ## Accessibility
 
-<div className="docs-section-body">
-
-<AccessibilityTable />
-
-</div>
+<Markdown className="docs-section-body" options={{ forceWrapper: true }}>
+    {accessibility}
+</Markdown>
 </div>

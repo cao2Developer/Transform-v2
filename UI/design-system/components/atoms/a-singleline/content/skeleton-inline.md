@@ -1,7 +1,3 @@
-import { Meta } from '@storybook/addon-docs/blocks';
-
-<Meta isTemplate />
-
 The component is a single text field. In the error state, the field shows an error icon at its end. The icon is drawn by the field itself, not by a separate component.
 
 ### Dimensions and spacing

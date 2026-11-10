@@ -1,7 +1,3 @@
-import { Meta } from '@storybook/addon-docs/blocks';
-
-<Meta isTemplate />
-
 The component has two variants, Default and Inline, with no other size or style variations.
 
 ### Variant

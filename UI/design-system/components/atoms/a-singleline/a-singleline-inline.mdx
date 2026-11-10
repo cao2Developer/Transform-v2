@@ -1,7 +1,7 @@
-import { Meta, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import { Meta, Canvas, Controls, Markdown } from '@storybook/addon-docs/blocks';
 import * as Stories from './a-singleline.stories';
-import StatesNotes from './sections/states.mdx';
-import SkeletonNotes from './sections/skeleton-inline.mdx';
+import states from './content/states.md?raw';
+import skeleton from './content/skeleton-inline.md?raw';
 
 <Meta title="Atoms/Singleline/Inline" />
 
@@ -37,6 +37,8 @@ import SkeletonNotes from './sections/skeleton-inline.mdx';
     </a>
 </div>
 
+{/* Section: States */}
+
 <div className="docs-section">
 
 ## States
@@ -51,21 +53,19 @@ import SkeletonNotes from './sections/skeleton-inline.mdx';
 />
 
 </div>
-<div className="docs-section-notes">
-
-<StatesNotes />
-
+<Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
+    {states}
+</Markdown>
 </div>
-</div>
+
+{/* Section: Skeleton */}
 
 <div className="docs-section">
 
 ## Skeleton
 
 <div className="docs-section-body" />
-<div className="docs-section-notes">
-
-<SkeletonNotes />
-
-</div>
+<Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
+    {skeleton}
+</Markdown>
 </div>

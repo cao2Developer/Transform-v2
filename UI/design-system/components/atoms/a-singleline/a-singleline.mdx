@@ -1,11 +1,11 @@
-import { Meta, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import { Meta, Canvas, Controls, Markdown } from '@storybook/addon-docs/blocks';
 import * as Stories from './a-singleline.stories';
-import VariationsNotes from './sections/variations.mdx';
+import variations from './content/variations.md?raw';
 import HtmlStructure from './sections/html.mdx';
-import AccessibilityTable from './sections/accessibility.mdx';
-import StatesNotes from './sections/states.mdx';
-import SkeletonDefaultNotes from './sections/skeleton-default.mdx';
-import SkeletonInlineNotes from './sections/skeleton-inline.mdx';
+import accessibility from './content/accessibility.md?raw';
+import states from './content/states.md?raw';
+import skeletonDefault from './content/skeleton-default.md?raw';
+import skeletonInline from './content/skeleton-inline.md?raw';
 
 <Meta title="Atoms/Singleline/Docs" />
 
@@ -39,6 +39,8 @@ import SkeletonInlineNotes from './sections/skeleton-inline.mdx';
     </a>
 </div>
 
+{/* Section: Variations */}
+
 <div className="docs-section">
 
 ## Variations
@@ -53,12 +55,12 @@ import SkeletonInlineNotes from './sections/skeleton-inline.mdx';
 />
 
 </div>
-<div className="docs-section-notes">
-
-<VariationsNotes />
-
+<Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
+    {variations}
+</Markdown>
 </div>
-</div>
+
+{/* Section: States */}
 
 <div className="docs-section">
 
@@ -74,12 +76,12 @@ import SkeletonInlineNotes from './sections/skeleton-inline.mdx';
 />
 
 </div>
-<div className="docs-section-notes">
-
-<StatesNotes />
-
+<Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
+    {states}
+</Markdown>
 </div>
-</div>
+
+{/* Section: HTML Structure */}
 
 <div className="docs-section docs-section--full">
 
@@ -92,37 +94,37 @@ import SkeletonInlineNotes from './sections/skeleton-inline.mdx';
 </div>
 </div>
 
+{/* Section: Accessibility */}
+
 <div className="docs-section docs-section--full">
 
 ## Accessibility
 
-<div className="docs-section-body">
-
-<AccessibilityTable />
-
+<Markdown className="docs-section-body" options={{ forceWrapper: true }}>
+    {accessibility}
+</Markdown>
 </div>
-</div>
+
+{/* Section: Default Skeleton */}
 
 <div className="docs-section">
 
 ## <span className="docs-section-variant">Default</span> Skeleton
 
 <div className="docs-section-body" />
-<div className="docs-section-notes">
-
-<SkeletonDefaultNotes />
-
+<Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
+    {skeletonDefault}
+</Markdown>
 </div>
-</div>
+
+{/* Section: Inline Skeleton */}
 
 <div className="docs-section">
 
 ## <span className="docs-section-variant">Inline</span> Skeleton
 
 <div className="docs-section-body" />
-<div className="docs-section-notes">
-
-<SkeletonInlineNotes />
-
-</div>
+<Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
+    {skeletonInline}
+</Markdown>
 </div>

@@ -1,10 +1,6 @@
-import { Meta } from '@storybook/addon-docs/blocks';
-
-<Meta isTemplate />
-
 The component has four states: inactive, active, error and read only.
 
-{/* The Skeleton export checks its canvases against this list. Keep one line per state, in this format. */}
+<!-- The Skeleton export checks its canvases against this list. Keep one line per state, in this format. -->
 
 - **Inactive:** the field is ready to receive input.
 - **Active:** the field has keyboard focus and follows the Active State pattern.
