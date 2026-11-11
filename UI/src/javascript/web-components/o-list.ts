@@ -47,6 +47,7 @@ export default class OList extends Component implements Observer {
     private initialHeight = 0;
     private isConfigured = false;
     private positionFrame: number | null = null;
+    private suppressClickEventPropagation = false;
 
     constructor() {
         super();
@@ -226,7 +227,7 @@ export default class OList extends Component implements Observer {
     private buildVisibleList(): void {
         this.visibleList = Array.from(
             this.querySelectorAll(
-                'li:not(.hidden-filter):not(.hidden-rule):not([class^="a-list-placeholder-"])',
+                'li:not(.hidden-filter):not(.hidden-rule):not(.hidden-external-filter):not([class^="a-list-placeholder-"])',
             ),
         );
         this.indexVisibleList();
@@ -540,25 +541,57 @@ export default class OList extends Component implements Observer {
                     currentItem.classList.add('hidden-filter');
                 }
             }
-
-            if (this.properties.exact) {
-                if (itemLabel === userInput) {
-                    this.listSelectedIndex = Number(
-                        currentItem.dataset.position ?? '0',
-                    );
-                    this.displayEmptyMessage(false);
-                    this.setHighlightedOption(currentItem);
-                    this.setSelectedOptionByIndex();
-                    return;
-                } else if (this.element?.value) {
-                    this.clearHighlightedOption();
-                    this.updateScrollPosition();
-                    this.clearValueFromLocal();
-                }
-            }
         }
 
         this.buildVisibleList();
+
+        const matchingOptions = this.visibleList.filter((item) => {
+            if (item.dataset.readonly === 'true') return false;
+
+            const itemLabel =
+                item
+                    .getElementsByClassName('a-label-option')[0]
+                    .textContent?.toLowerCase() ?? '';
+
+            if (this.properties.filtertype === 'starts') {
+                return itemLabel.startsWith(userInput);
+            }
+            if (this.properties.filtertype === 'contains') {
+                return itemLabel.includes(userInput);
+            }
+
+            return itemLabel === userInput;
+        });
+        const exactMatch = this.properties.exact
+            ? matchingOptions.find((item) => {
+                  const itemLabel =
+                      item
+                          .getElementsByClassName('a-label-option')[0]
+                          .textContent?.toLowerCase() ?? '';
+
+                  return itemLabel === userInput;
+              })
+            : undefined;
+
+        if (exactMatch) {
+            const preserveFilter = matchingOptions.length > 1;
+
+            this.displayEmptyMessage(false);
+            this.clearHighlightedOption();
+            this.setHighlightedOption(exactMatch);
+            this.setSelectedOption(exactMatch, preserveFilter);
+            this.updateScrollPosition();
+
+            if (preserveFilter) this.setDropListDirection(true);
+
+            return;
+        }
+
+        if (this.properties.exact && this.element?.value) {
+            this.clearHighlightedOption();
+            this.updateScrollPosition();
+            this.clearValueFromLocal();
+        }
 
         if (this.visibleList.length) {
             this.displayEmptyMessage(false);
@@ -645,11 +678,21 @@ export default class OList extends Component implements Observer {
         this.updateScrollPosition();
     }
 
-    private setSelectedOption(option: HTMLLIElement): void {
+    private setSelectedOption(
+        option: HTMLLIElement,
+        preserveFilter = false,
+    ): void {
         this.clearSelectedOptions();
         this.setOption(option);
-        this.setValue(option);
-        this.clearFilteredOptions();
+
+        this.suppressClickEventPropagation = preserveFilter;
+        try {
+            this.setValue(option);
+        } finally {
+            this.suppressClickEventPropagation = false;
+        }
+
+        if (!preserveFilter) this.clearFilteredOptions();
     }
 
     protected restoreSelection(): void {
@@ -778,6 +821,8 @@ export default class OList extends Component implements Observer {
     }
 
     private sendClickEvent(): void {
+        if (this.suppressClickEventPropagation) return;
+
         const clickEvent = new CustomEvent('clickEvent', {
             bubbles: true,
             detail: this,
