@@ -1,0 +1,201 @@
+/*
+ * Page navigation (page block): docs-nav
+ *
+ * A bar under the docs header with one link per section of the page. It
+ * sticks to the top of the page while the page scrolls. A line under the
+ * links marks the section on screen, and it slides to the next link when
+ * the section changes. docs-nav.ts marks the current link, moves the line
+ * and turns on the shadow when the bar is stuck.
+ *
+ *     <docs-nav class="sb-unstyled">
+ *         <nav aria-label="On this page">
+ *             <a href="#overview">Overview</a>
+ *             <a href="#variations">Variations</a>
+ *         </nav>
+ *     </docs-nav>
+ *
+ * It uses only base tokens. Values with no base token are custom
+ * properties at the top of docs-nav, each with a comment.
+ *
+ * The hover styles are allowed here: the "no hover" rule applies only to
+ * design system components, not to the page blocks.
+ */
+
+docs-nav {
+    /* Values with no base token */
+    --docs-nav-background: color-mix(
+        in srgb,
+        var(--base-color-neutral-10) 85%,
+        transparent
+    );
+    --docs-nav-blur: 4px;
+    --docs-nav-line: 1px; /* gray line under the bar, while it is stuck */
+    --docs-nav-indicator: 3px; /* blue line under the current link */
+    --docs-nav-shadow: 0 2px 8px 0 rgb(0 0 0 / 8%);
+    --docs-nav-fast: 80ms; /* text color and shadow */
+    --docs-nav-moderate: 160ms; /* travel of the blue line */
+
+    /* Critical spring: no overshoot, settles in about 160ms */
+    --docs-nav-spring: linear(
+        0,
+        0.072,
+        0.218,
+        0.378,
+        0.522,
+        0.642,
+        0.737,
+        0.81,
+        0.864,
+        0.904,
+        0.932,
+        0.953,
+        0.967,
+        0.977,
+        0.984,
+        0.989,
+        1
+    );
+
+    /* Set by docs-nav.ts: position and width of the current link */
+    --docs-nav-x: 0;
+    --docs-nav-width: 0;
+
+    backdrop-filter: blur(var(--docs-nav-blur));
+    background: var(--docs-nav-background);
+    display: block;
+
+    /*
+     * The side margins cancel the 16px of the page, so the background
+     * uses the whole width. 32px of padding plus the 16px of each link
+     * puts the text at 48px, in line with the section titles. The bottom
+     * margin and the 32px padding of the first section put its title
+     * 64px under the links, the same space as between two sections.
+     */
+    margin-bottom: var(--base-unit-32);
+    margin-inline: calc(-1 * var(--base-unit-16));
+    padding: var(--base-unit-32) var(--base-unit-32) 0;
+    position: sticky;
+    top: 0;
+    transition: box-shadow var(--docs-nav-fast) ease;
+    z-index: 2; /* above the canvases */
+}
+
+/*
+ * Stuck to the top of the page: a gray line under the whole bar, from
+ * edge to edge, and a light shadow. The blue line sits on the gray line.
+ */
+
+docs-nav[data-stuck] {
+    box-shadow:
+        inset 0 calc(-1 * var(--docs-nav-line)) 0 var(--base-color-neutral-40),
+        var(--docs-nav-shadow);
+}
+
+/*
+ * Row of links. On narrow screens it scrolls sideways, with no
+ * scrollbar.
+ */
+
+docs-nav > nav {
+    display: flex;
+    overflow-x: auto;
+    position: relative;
+    scrollbar-width: none;
+}
+
+/* The blue line. One line for the whole row, so it can slide. */
+
+docs-nav > nav::after {
+    background: var(--base-color-primary-blue-50);
+    block-size: var(--docs-nav-indicator);
+    bottom: 0;
+    content: '';
+    inline-size: var(--docs-nav-width);
+    left: 0;
+    position: absolute;
+    transform: translateX(var(--docs-nav-x));
+}
+
+/*
+ * The line slides only after the first placement (data-ready), so it
+ * does not slide in when the page opens. With reduced motion it jumps.
+ */
+
+@media (prefers-reduced-motion: no-preference) {
+    docs-nav[data-ready] > nav::after {
+        transition:
+            transform var(--docs-nav-moderate) var(--docs-nav-spring),
+            inline-size var(--docs-nav-moderate) var(--docs-nav-spring);
+    }
+}
+
+/* Links */
+
+docs-nav a {
+    border-radius: var(--base-unit-4);
+    color: var(--base-color-neutral-70);
+    display: inline-grid;
+    flex-shrink: 0;
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height);
+    padding: var(--base-unit-16);
+    text-decoration: none;
+    transition: color var(--docs-nav-fast) ease;
+    white-space: nowrap;
+}
+
+/*
+ * A hidden copy of the label in Medium (data-label, set by docs-nav.ts).
+ * It keeps each link as wide as its Medium text, so the links do not
+ * move when the current link changes.
+ */
+
+docs-nav a::after {
+    content: attr(data-label);
+    font-weight: var(--font-weight-medium);
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+
+docs-nav a[aria-current='true'] {
+    color: var(--base-color-primary-blue-50);
+    font-weight: var(--font-weight-medium);
+}
+
+@media (hover: hover) {
+    docs-nav a:hover {
+        color: var(--base-color-primary-blue-50);
+    }
+}
+
+/*
+ * Keyboard focus: a ring inside the link. The row scrolls sideways, and
+ * that would cut a ring or a shadow outside the link.
+ */
+
+docs-nav a:focus-visible {
+    outline: var(--base-unit-2) solid var(--base-color-primary-blue-50);
+    outline-offset: calc(-1 * var(--base-unit-2));
+}
+
+/*
+ * A link scrolls its section to 120px from the top: the 88px of the bar,
+ * then the 32px margin under it. The 32px padding of the section then
+ * puts the title 64px under the bar, as at the top of the page.
+ * docs-nav.ts reads this value to know which section is on screen.
+ */
+
+.docs-section {
+    scroll-margin-top: var(--base-unit-120);
+}
+
+/* Same side padding as the sections on narrow screens (24px + 16px) */
+
+@media (width <= 600px) {
+    docs-nav {
+        padding-inline: var(--base-unit-24);
+    }
+}

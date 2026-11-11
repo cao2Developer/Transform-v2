@@ -11,6 +11,8 @@ import './page-blocks/docs-table/docs-table.css';
 import './page-blocks/docs-switch/docs-switch.css';
 import './page-blocks/docs-cells/docs-cells.css';
 import './page-blocks/docs-code/docs-code.css';
+import './page-blocks/docs-nav/docs-nav.css';
+import './page-blocks/docs-nav/docs-nav';
 
 // Docs pages use the Ipsos font and base token colors.
 // The colors are hex because a theme cannot read CSS variables.
