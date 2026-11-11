@@ -3,19 +3,18 @@ import './a-singleline.css';
 
 export type SinglelineArgs = {
     variant: 'default' | 'inline';
-    answered: boolean;
     value: string;
     placeholder: string;
     align: 'start' | 'center' | 'end';
     readOnly: boolean;
     error: boolean;
     width: number;
+    maxLength?: number;
 };
 
 export const defaultArgs: SinglelineArgs = {
     variant: 'default',
-    answered: false,
-    value: 'Answer',
+    value: '',
     placeholder: 'Placeholder',
     align: 'start',
     readOnly: false,
@@ -56,18 +55,19 @@ export function singleline(
     if (args.variant === 'inline') classes.push('a-singleline--inline');
     if (args.align === 'center') classes.push('a-singleline--align-center');
     if (args.align === 'end') classes.push('a-singleline--align-end');
-    const value = args.answered ? args.value : '';
     const attrs = [
         `id="${id}"`,
         `type="text"`,
         `class="${classes.join(' ')}"`,
         `placeholder="${escapeHtml(args.placeholder)}"`,
-        `value="${escapeHtml(value)}"`,
+        `value="${escapeHtml(args.value)}"`,
     ];
     // The default width comes from the CSS, so only another width is written.
     const width = Number(args.width);
     if (width > 0 && width !== defaultArgs.width)
         attrs.push(`style="width: ${width}px"`);
+    const maxLength = Number(args.maxLength);
+    if (maxLength > 0) attrs.push(`maxlength="${maxLength}"`);
     if (links.labelledBy) attrs.push(`aria-labelledby="${links.labelledBy}"`);
     if (args.readOnly) attrs.push('readonly');
     if (error) {
@@ -100,7 +100,7 @@ function docField(args: SinglelineArgs, id: string): string {
 ${singleline(args, id, { labelledBy: nameId })}`;
 }
 
-// The Docs page shows several canvases at once, so each story needs its own id.
+// The Summary page shows several canvases at once, so each story needs its own id.
 function renderWith(id: string) {
     return (args: SinglelineArgs): string => docField(args, id);
 }
@@ -119,60 +119,49 @@ const meta = {
     argTypes: {
         active: {
             name: 'Active',
-            description:
-                'The field has keyboard focus. Forced on this page, on every cell.',
             control: 'boolean',
             // Hidden here. Only the States stories show it (showActive).
             table: { disable: true },
         },
         variant: {
             name: 'Variant',
-            description:
-                'Default for forms. Inline for compact layouts and tables: bottom border only, 32px (`--size-lg`) high.',
             control: 'select',
             options: ['default', 'inline'],
         },
-        answered: {
-            name: 'Answered',
-            description:
-                'On: the field shows the value. Off: the field is empty and shows the placeholder.',
-            control: 'boolean',
-        },
         align: {
             name: 'Text alignment',
-            description:
-                'Set per question. Start and end follow the reading direction.',
             control: 'select',
             options: ['start', 'center', 'end'],
+            table: { defaultValue: { summary: 'start' } },
         },
         readOnly: {
             name: 'Read only',
-            description:
-                'The value can be focused, read and copied, but not changed. Never combined with Error.',
             control: 'boolean',
+            table: { defaultValue: { summary: 'false' } },
         },
         error: {
             name: 'Error',
-            description:
-                'After a submit with a missing or invalid value: red border, error icon and aria-invalid. Hidden while Read only is on.',
             control: 'boolean',
+            // Read only and error never combine.
             if: { arg: 'readOnly', truthy: false },
+            table: { defaultValue: { summary: 'false' } },
         },
         value: {
             name: 'Value',
-            description: 'The answer. Shown only when Answered is on.',
             control: 'text',
         },
         placeholder: {
             name: 'Placeholder',
-            description: 'Hint shown while the field is empty.',
             control: 'text',
         },
         width: {
             name: 'Width',
-            description:
-                'In px. 200px by default. It can be changed per question.',
             control: { type: 'number', step: 10 },
+            table: { defaultValue: { summary: '200' } },
+        },
+        maxLength: {
+            name: 'Max length',
+            control: 'number',
         },
     },
     parameters: {
@@ -230,7 +219,12 @@ const stateRows: Row[] = [
 // The States stories show the Active control, hidden in the meta. The name is
 // repeated: without it, Storybook names the argType by its key ("active"), and
 // include no longer finds "Active".
-const showActive = { active: { name: 'Active', table: { disable: false } } };
+const showActive = {
+    active: {
+        name: 'Active',
+        table: { disable: false, defaultValue: { summary: 'false' } },
+    },
+};
 
 // A field in a States cell is static: out of the tab order here, and out of
 // reach of the mouse with docs-cells--static. A real focus would mix with the
@@ -276,22 +270,56 @@ ${items.join('\n')}
 // The cells fill the canvas, with no padding around them.
 const fullscreen = { layout: 'fullscreen' };
 
-// Variations section. Shown only on the Docs and Common pages.
-export const Variations: Story = {
+// The Variations story has one more arg: State, one of the states of the
+// States section, set on every cell.
+type VariationsArgs = SinglelineArgs & { state?: string };
+
+function withState(args: VariationsArgs): VariationsArgs {
+    const row = stateRows.find((item) => item.state === args.state);
+    return { ...args, ...row?.args };
+}
+
+// Variations section. Shown only on the Summary and Common pages. Its
+// Controls block has only State.
+export const Variations: StoryObj<VariationsArgs> = {
+    tags: ['!dev'],
+    args: { state: 'Inactive' },
+    argTypes: {
+        ...fixedVariant,
+        state: {
+            name: 'State',
+            control: 'select',
+            options: stateRows.map((row) => row.state),
+            table: { defaultValue: { summary: 'Inactive' } },
+        },
+    },
+    parameters: fullscreen,
+    render: (args) =>
+        cells(
+            withState(args),
+            'a-singleline-variations',
+            variations,
+            variationRows,
+        ),
+};
+
+// Attributes section. Shown only on the Summary and Common pages: the same
+// cells as Variations, in the inactive state, with the attribute controls.
+export const Attributes: Story = {
     tags: ['!dev'],
     argTypes: fixedVariant,
     parameters: fullscreen,
     render: (args) =>
-        cells(args, 'a-singleline-variations', variations, variationRows),
+        cells(args, 'a-singleline-attributes', variations, variationRows),
 };
 
 // States section. Shown only on the doc pages: States has both variants
-// (Docs page), and StatesDefault and StatesInline have one variant each
+// (Summary page), and StatesDefault and StatesInline have one variant each
 // (variant pages). The rows set Error and Read only, so the controls of the
 // section change only what every cell shares, and Active.
 export const States: StoryObj<StatesArgs> = {
     tags: ['!dev'],
-    args: { answered: true },
+    args: { value: 'Answer' },
     argTypes: { ...fixedVariant, ...showActive },
     parameters: fullscreen,
     render: (args) => cells(args, 'a-singleline-states', variations, stateRows),
@@ -299,7 +327,7 @@ export const States: StoryObj<StatesArgs> = {
 
 export const StatesDefault: StoryObj<StatesArgs> = {
     tags: ['!dev'],
-    args: { answered: true },
+    args: { value: 'Answer' },
     argTypes: { ...fixedVariant, ...showActive },
     parameters: fullscreen,
     render: (args) =>
@@ -308,7 +336,7 @@ export const StatesDefault: StoryObj<StatesArgs> = {
 
 export const StatesInline: StoryObj<StatesArgs> = {
     tags: ['!dev'],
-    args: { answered: true },
+    args: { value: 'Answer' },
     argTypes: { ...fixedVariant, ...showActive },
     parameters: fullscreen,
     render: (args) =>
@@ -325,10 +353,7 @@ if (
 ) {
     throw new Error('read only and error were combined');
 }
-const shown = field(
-    { ...defaultArgs, error: true, answered: true },
-    'check-error',
-);
+const shown = field({ ...defaultArgs, error: true }, 'check-error');
 if (
     !shown.includes('aria-invalid="true"') ||
     !shown.includes('aria-describedby="check-error-error"')
@@ -347,12 +372,7 @@ if (
 if (singleline(defaultArgs, 'check-width').includes('style=')) {
     throw new Error('the default width is written in the HTML');
 }
-const stateFields = cells(
-    { ...defaultArgs, answered: true },
-    'check-cells',
-    variations,
-    stateRows,
-)
+const stateFields = cells(defaultArgs, 'check-cells', variations, stateRows)
     .split('<input ')
     .slice(1);
 if (
@@ -376,4 +396,18 @@ const variationCells = cells(
 );
 if (variationCells.includes('tabindex')) {
     throw new Error('a Variations cell cannot be focused');
+}
+
+const readOnlyState = withState({ ...defaultArgs, state: 'Read only' });
+if (!readOnlyState.readOnly || readOnlyState.error) {
+    throw new Error('the State control of Variations does not set read only');
+}
+
+if (
+    !singleline({ ...defaultArgs, maxLength: 3 }, 'check-max').includes(
+        'maxlength="3"',
+    ) ||
+    singleline(defaultArgs, 'check-no-max').includes('maxlength')
+) {
+    throw new Error('max length is missing, or written with no value');
 }

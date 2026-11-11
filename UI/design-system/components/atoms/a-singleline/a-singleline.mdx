@@ -2,13 +2,14 @@ import { Meta, Canvas, Controls, Markdown } from '@storybook/addon-docs/blocks';
 import * as Stories from './a-singleline.stories';
 import overview from './content/overview.md?raw';
 import variations from './content/variations.md?raw';
+import attributes from './content/attributes.md?raw';
 import HtmlStructure from './sections/html.mdx';
 import accessibility from './content/accessibility.md?raw';
 import states from './content/states.md?raw';
 import skeletonDefault from './content/skeleton-default.md?raw';
 import skeletonInline from './content/skeleton-inline.md?raw';
 
-<Meta title="Atoms/Singleline/Docs" />
+<Meta title="Atoms/Singleline/Summary" />
 
 <div className="docs-header sb-unstyled">
     <div className="docs-header-top">
@@ -61,14 +62,32 @@ import skeletonInline from './content/skeleton-inline.md?raw';
 
 <Canvas of={Stories.Variations} sourceState="none" />
 
-<Controls
-    of={Stories.Variations}
-    include={['Answered', 'Text alignment', 'Value', 'Placeholder', 'Width']}
-/>
+<Controls of={Stories.Variations} include={['State']} />
 
 </div>
 <Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
     {variations}
+</Markdown>
+</div>
+
+{/* Section: Attributes */}
+
+<div className="docs-section">
+
+## Attributes
+
+<div className="docs-section-body">
+
+<Canvas of={Stories.Attributes} sourceState="none" />
+
+<Controls
+    of={Stories.Attributes}
+    include={['Value', 'Placeholder', 'Text alignment', 'Width', 'Max length']}
+/>
+
+</div>
+<Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
+    {attributes}
 </Markdown>
 </div>
 
@@ -84,14 +103,7 @@ import skeletonInline from './content/skeleton-inline.md?raw';
 
 <Controls
     of={Stories.States}
-    include={[
-        'Answered',
-        'Active',
-        'Text alignment',
-        'Value',
-        'Placeholder',
-        'Width',
-    ]}
+    include={['Active', 'Text alignment', 'Value', 'Placeholder', 'Width']}
 />
 
 </div>

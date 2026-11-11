@@ -48,7 +48,6 @@
     flex-direction: column;
     gap: var(--base-unit-24);
     isolation: isolate;
-    margin-bottom: var(--base-unit-32);
     overflow: hidden;
     padding: var(--base-unit-32);
     position: relative;

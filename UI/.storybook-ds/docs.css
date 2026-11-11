@@ -45,6 +45,14 @@
 }
 
 /*
+ * Storybook controls: the notes describe each control, so the Description
+ * column is hidden.
+ */
+.docs-section-body .docblock-argstable :is(th, td):nth-child(2) {
+    display: none;
+}
+
+/*
  * Sections
  *
  * The section title sits on top, across the whole width. Below it, the
@@ -53,11 +61,10 @@
  * full-width section has no notes column: its body uses the whole width.
  * Below 1024px wide, the notes go under the body.
  *
- * A section has 32px of padding on the sides, and none on the top and
- * the bottom. The title has 24px under it, and the body and the notes
- * have 48px between them. Between two sections: 48px, a line across the
- * whole section, then 48px. There is no line between the docs header and
- * the first section, only the 32px under the header.
+ * A section has 32px of padding on every side. Sections touch, with no
+ * space and no line between them, so two sections are 64px apart. The
+ * title has 24px under it, and the body and the notes have 48px between
+ * them.
  */
 
 .docs-section {
@@ -67,18 +74,38 @@
     column-gap: var(--base-unit-48);
     display: grid;
     grid-template-columns: minmax(0, 1fr) var(--docs-notes-width);
-    padding-inline: var(--base-unit-32);
+    padding: var(--base-unit-32);
     row-gap: var(--base-unit-24);
 }
 
-.docs-section + .docs-section {
-    border-top: 1px solid var(--base-color-neutral-40);
-    margin-top: var(--base-unit-48);
-    padding-top: var(--base-unit-48);
+/*
+ * Section title: the text, then a line from the text to the right edge,
+ * centered on the text, 24px after it. The line fades into the color of
+ * the page. A grid, so the variant label has its own row above the text.
+ */
+.docs-section > h2 {
+    align-items: center;
+    column-gap: var(--base-unit-24);
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: auto minmax(0, 1fr);
+    position: relative;
 }
 
-.docs-section > h2 {
-    grid-column: 1 / -1;
+.docs-section > h2::after {
+    background: linear-gradient(
+        to right,
+        var(--base-color-neutral-40) 50%,
+        var(--base-color-neutral-10)
+    );
+    content: '';
+    height: 1px;
+}
+
+/* The anchor link of Storybook stays out of the grid, left of the text. */
+.docs-section > h2 > a {
+    left: 0;
+    position: absolute;
 }
 
 .docs-section--full > .docs-section-body {
@@ -145,8 +172,24 @@
     font-size: var(--font-size-lg);
 }
 
-:is(.docs-section-notes, .docs-section-body) > * + h3 {
+/*
+ * 40px above each subtitle. The .docs-section prefix makes this rule win
+ * over the Storybook rule that removes the margin of the first h3.
+ */
+.docs-section :is(.docs-section-notes, .docs-section-body) > * + h3 {
     margin-top: var(--base-unit-40);
+}
+
+/*
+ * The paragraphs of the notes have no margin: only the 8px under each
+ * subtitle, and 8px between two paragraphs.
+ */
+.docs-section-notes > p {
+    margin: 0;
+}
+
+.docs-section-notes > p + p {
+    margin-top: var(--base-unit-8);
 }
 
 /* The title and the two columns start with no extra space. */
@@ -165,6 +208,7 @@
     display: block;
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-bold);
+    grid-column: 1 / -1;
     letter-spacing: 0.1em; /* uppercase label, as in the docs header */
     line-height: 1;
     margin-bottom: var(--base-unit-8);

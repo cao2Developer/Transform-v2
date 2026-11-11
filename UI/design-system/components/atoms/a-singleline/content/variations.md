@@ -1,15 +1,9 @@
 The component has two variants, Default and Inline, with no other size or style variations.
 
-### Variant
+### Default
 
-- **Default:** used in standalone questions and combinations using blocks and loops.
-- **Inline:** Vertically compact version for choice questions where an other specify is required. Class `a-singleline--inline`.
+Used in standalone questions and combinations using blocks and loops.
 
-### Answered
+### Inline
 
-- **False:** the field is empty and shows its placeholder.
-- **True:** the field shows the answer.
-
-### Text alignment
-
-The text aligns to the start (default), the center or the end. The alignment is set per question. Center and end use the classes `a-singleline--align-center` and `a-singleline--align-end`.
+Vertically compact version for choice questions where an other specify is required. Class `a-singleline--inline`.
