@@ -406,7 +406,7 @@ export default class OList extends Component implements Observer {
     private updateScrollPosition(): void {
         const currentItem =
             this.querySelector('.highlight') ??
-            this.querySelector('[data-selected]');
+            this.querySelector('[data-selected="true"]');
         if (!currentItem) return;
 
         currentItem.scrollIntoView({ block: 'center', inline: 'nearest' });
