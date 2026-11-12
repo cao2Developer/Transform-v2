@@ -1,7 +1,8 @@
 import { Meta, Canvas, Controls, Markdown } from '@storybook/addon-docs/blocks';
 import * as Stories from './a-singleline.stories';
 import states from './content/states.md?raw';
-import skeleton from './content/skeleton-inline.md?raw';
+import skeletonNotes from './content/skeleton-inline.md?raw';
+import skeleton from './sections/skeleton.json';
 
 <Meta title="Atoms/Singleline/Inline" />
 
@@ -64,8 +65,13 @@ import skeleton from './content/skeleton-inline.md?raw';
 
 ## Skeleton
 
-<div className="docs-section-body" />
+<div className="docs-section-body">
+
+<docs-skeleton data={skeleton.variants.find((v) => v.variant === 'Inline')} />
+
+</div>
+
 <Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
-    {skeleton}
+    {skeletonNotes}
 </Markdown>
 </div>

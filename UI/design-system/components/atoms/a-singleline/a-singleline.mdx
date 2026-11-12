@@ -8,6 +8,7 @@ import accessibility from './content/accessibility.md?raw';
 import states from './content/states.md?raw';
 import skeletonDefault from './content/skeleton-default.md?raw';
 import skeletonInline from './content/skeleton-inline.md?raw';
+import skeleton from './sections/skeleton.json';
 
 <Meta title="Atoms/Singleline/Summary" />
 
@@ -156,7 +157,12 @@ import skeletonInline from './content/skeleton-inline.md?raw';
 
 ## <span className="docs-section-variant">Default</span> Skeleton
 
-<div className="docs-section-body" />
+<div className="docs-section-body">
+
+<docs-skeleton data={skeleton.variants.find((v) => v.variant === 'Default')} />
+
+</div>
+
 <Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
     {skeletonDefault}
 </Markdown>
@@ -168,7 +174,11 @@ import skeletonInline from './content/skeleton-inline.md?raw';
 
 ## <span className="docs-section-variant">Inline</span> Skeleton
 
-<div className="docs-section-body" />
+<div className="docs-section-body">
+
+<docs-skeleton data={skeleton.variants.find((v) => v.variant === 'Inline')} />
+
+</div>
 <Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
     {skeletonInline}
 </Markdown>

@@ -1,0 +1,1231 @@
+{
+    "component": "a-singleline",
+    "figma": {
+        "fileKey": "uQUHViMd9U0EU3mnDAoJmD",
+        "canvases": ["4035:21241", "4035:21407", "4035:21324", "4035:21418"]
+    },
+    "variants": [
+        {
+            "variant": "Default",
+            "dir": "ltr",
+            "groups": [
+                {
+                    "canvas": "4035:21241",
+                    "states": ["Inactive", "Active", "Read only"],
+                    "layouts": [
+                        {
+                            "width": 200,
+                            "height": 40,
+                            "parts": [
+                                {
+                                    "key": "box",
+                                    "kind": "box",
+                                    "label": "a-singleline",
+                                    "box": { "x": 0, "y": 0, "w": 200, "h": 40 }
+                                },
+                                {
+                                    "key": "el:Value",
+                                    "kind": "visible",
+                                    "label": "Value",
+                                    "box": {
+                                        "x": 16,
+                                        "y": 8,
+                                        "w": 168,
+                                        "h": 24
+                                    }
+                                }
+                            ],
+                            "marks": [
+                                {
+                                    "key": "space:inline-start",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 0,
+                                    "size": 16,
+                                    "token": "space-lg",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-start, from the outer edge",
+                                    "cross": [0, 40]
+                                },
+                                {
+                                    "key": "space:inline-end",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 184,
+                                    "size": 16,
+                                    "token": "space-lg",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-end, from the outer edge",
+                                    "cross": [0, 40]
+                                },
+                                {
+                                    "key": "size:box:block",
+                                    "kind": "size",
+                                    "axis": "block",
+                                    "start": 0,
+                                    "size": 40,
+                                    "token": null,
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "height",
+                                    "lead": false
+                                },
+                                {
+                                    "key": "size:box:inline",
+                                    "kind": "size",
+                                    "axis": "inline",
+                                    "start": 0,
+                                    "size": 200,
+                                    "token": "input-width",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "width",
+                                    "lead": false
+                                }
+                            ],
+                            "rows": [
+                                {
+                                    "key": "box|width",
+                                    "part": "a-singleline",
+                                    "property": "width",
+                                    "px": [200],
+                                    "token": "input-width",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:box:inline",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "box|height",
+                                    "part": "a-singleline",
+                                    "property": "height",
+                                    "px": [40],
+                                    "token": null,
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:box:block",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "space:inline-start|padding-inline-start, from the outer edge",
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-start, from the outer edge",
+                                    "px": [16],
+                                    "token": "space-lg",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "space:inline-start",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "space:inline-end|padding-inline-end, from the outer edge",
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-end, from the outer edge",
+                                    "px": [16],
+                                    "token": "space-lg",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "space:inline-end",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "box|border-width",
+                                    "part": "a-singleline",
+                                    "property": "border-width",
+                                    "px": [2],
+                                    "token": "border-width-default",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "box",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "box|border-radius",
+                                    "part": "a-singleline",
+                                    "property": "border-radius",
+                                    "px": [2],
+                                    "token": "radius-xs",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "box",
+                                    "kind": "other"
+                                }
+                            ],
+                            "components": []
+                        },
+                        {
+                            "width": 200,
+                            "height": 40,
+                            "parts": [
+                                {
+                                    "key": "box",
+                                    "kind": "box",
+                                    "label": "a-singleline",
+                                    "box": { "x": 0, "y": 0, "w": 200, "h": 40 }
+                                },
+                                {
+                                    "key": "el:Value",
+                                    "kind": "visible",
+                                    "label": "Value",
+                                    "box": {
+                                        "x": 16,
+                                        "y": 8,
+                                        "w": 168,
+                                        "h": 24
+                                    }
+                                }
+                            ],
+                            "marks": [
+                                {
+                                    "key": "space:inline-start",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 0,
+                                    "size": 16,
+                                    "token": "space-lg",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-start, from the outer edge",
+                                    "cross": [0, 40]
+                                },
+                                {
+                                    "key": "space:inline-end",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 184,
+                                    "size": 16,
+                                    "token": "space-lg",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-end, from the outer edge",
+                                    "cross": [0, 40]
+                                },
+                                {
+                                    "key": "size:box:block",
+                                    "kind": "size",
+                                    "axis": "block",
+                                    "start": 0,
+                                    "size": 40,
+                                    "token": null,
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "height",
+                                    "lead": false
+                                },
+                                {
+                                    "key": "size:box:inline",
+                                    "kind": "size",
+                                    "axis": "inline",
+                                    "start": 0,
+                                    "size": 200,
+                                    "token": "input-width",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "width",
+                                    "lead": false
+                                }
+                            ],
+                            "rows": [
+                                {
+                                    "key": "box|width",
+                                    "part": "a-singleline",
+                                    "property": "width",
+                                    "px": [200],
+                                    "token": "input-width",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:box:inline",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "box|height",
+                                    "part": "a-singleline",
+                                    "property": "height",
+                                    "px": [40],
+                                    "token": null,
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:box:block",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "space:inline-start|padding-inline-start, from the outer edge",
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-start, from the outer edge",
+                                    "px": [16],
+                                    "token": "space-lg",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "space:inline-start",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "space:inline-end|padding-inline-end, from the outer edge",
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-end, from the outer edge",
+                                    "px": [16],
+                                    "token": "space-lg",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "space:inline-end",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "box|border-width",
+                                    "part": "a-singleline",
+                                    "property": "border-width",
+                                    "px": [2],
+                                    "token": "border-width-default",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "box",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "box|border-radius",
+                                    "part": "a-singleline",
+                                    "property": "border-radius",
+                                    "px": [2],
+                                    "token": "radius-xs",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "box",
+                                    "kind": "other"
+                                }
+                            ],
+                            "components": []
+                        },
+                        {
+                            "width": 200,
+                            "height": 40,
+                            "parts": [
+                                {
+                                    "key": "box",
+                                    "kind": "box",
+                                    "label": "a-singleline",
+                                    "box": { "x": 0, "y": 0, "w": 200, "h": 40 }
+                                },
+                                {
+                                    "key": "el:Value",
+                                    "kind": "visible",
+                                    "label": "Value",
+                                    "box": {
+                                        "x": 16,
+                                        "y": 8,
+                                        "w": 168,
+                                        "h": 24
+                                    }
+                                }
+                            ],
+                            "marks": [
+                                {
+                                    "key": "space:inline-start",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 0,
+                                    "size": 16,
+                                    "token": "space-lg",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-start, from the outer edge",
+                                    "cross": [0, 40]
+                                },
+                                {
+                                    "key": "space:inline-end",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 184,
+                                    "size": 16,
+                                    "token": "space-lg",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-end, from the outer edge",
+                                    "cross": [0, 40]
+                                },
+                                {
+                                    "key": "size:box:block",
+                                    "kind": "size",
+                                    "axis": "block",
+                                    "start": 0,
+                                    "size": 40,
+                                    "token": null,
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "height",
+                                    "lead": false
+                                },
+                                {
+                                    "key": "size:box:inline",
+                                    "kind": "size",
+                                    "axis": "inline",
+                                    "start": 0,
+                                    "size": 200,
+                                    "token": "input-width",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "width",
+                                    "lead": false
+                                }
+                            ],
+                            "rows": [
+                                {
+                                    "key": "box|width",
+                                    "part": "a-singleline",
+                                    "property": "width",
+                                    "px": [200],
+                                    "token": "input-width",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:box:inline",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "box|height",
+                                    "part": "a-singleline",
+                                    "property": "height",
+                                    "px": [40],
+                                    "token": null,
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:box:block",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "space:inline-start|padding-inline-start, from the outer edge",
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-start, from the outer edge",
+                                    "px": [16],
+                                    "token": "space-lg",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "space:inline-start",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "space:inline-end|padding-inline-end, from the outer edge",
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-end, from the outer edge",
+                                    "px": [16],
+                                    "token": "space-lg",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "space:inline-end",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "box|border-width",
+                                    "part": "a-singleline",
+                                    "property": "border-width",
+                                    "px": [1],
+                                    "token": "border-width-thin",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "box",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "box|border-radius",
+                                    "part": "a-singleline",
+                                    "property": "border-radius",
+                                    "px": [2],
+                                    "token": "radius-xs",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "box",
+                                    "kind": "other"
+                                }
+                            ],
+                            "components": []
+                        }
+                    ]
+                },
+                {
+                    "canvas": "4035:21324",
+                    "states": ["Error"],
+                    "layouts": [
+                        {
+                            "width": 200,
+                            "height": 40,
+                            "parts": [
+                                {
+                                    "key": "box",
+                                    "kind": "box",
+                                    "label": "a-singleline",
+                                    "box": { "x": 0, "y": 0, "w": 200, "h": 40 }
+                                },
+                                {
+                                    "key": "el:Value",
+                                    "kind": "visible",
+                                    "label": "Value",
+                                    "box": {
+                                        "x": 16,
+                                        "y": 8,
+                                        "w": 148,
+                                        "h": 24
+                                    }
+                                },
+                                {
+                                    "key": "el:Error icon",
+                                    "kind": "visible",
+                                    "label": "Error icon",
+                                    "box": {
+                                        "x": 172,
+                                        "y": 12,
+                                        "w": 16,
+                                        "h": 16
+                                    }
+                                }
+                            ],
+                            "marks": [
+                                {
+                                    "key": "space:inline-start",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 0,
+                                    "size": 16,
+                                    "token": "space-lg",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-start, from the outer edge",
+                                    "cross": [0, 40]
+                                },
+                                {
+                                    "key": "gap:inline:0",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 164,
+                                    "size": 8,
+                                    "token": "space-sm",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "column-gap",
+                                    "cross": [0, 40]
+                                },
+                                {
+                                    "key": "space:inline-end",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 188,
+                                    "size": 12,
+                                    "token": "space-md",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-end, from the outer edge",
+                                    "cross": [0, 40]
+                                },
+                                {
+                                    "key": "size:box:block",
+                                    "kind": "size",
+                                    "axis": "block",
+                                    "start": 0,
+                                    "size": 40,
+                                    "token": null,
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "height",
+                                    "lead": false
+                                },
+                                {
+                                    "key": "size:box:inline",
+                                    "kind": "size",
+                                    "axis": "inline",
+                                    "start": 0,
+                                    "size": 200,
+                                    "token": "input-width",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "width",
+                                    "lead": false
+                                },
+                                {
+                                    "key": "size:el:Error icon:inline",
+                                    "kind": "size",
+                                    "axis": "inline",
+                                    "start": 172,
+                                    "size": 16,
+                                    "token": null,
+                                    "tokenless": false,
+                                    "part": "Error icon",
+                                    "property": "width",
+                                    "lead": true
+                                }
+                            ],
+                            "rows": [
+                                {
+                                    "key": "box|width",
+                                    "part": "a-singleline",
+                                    "property": "width",
+                                    "px": [200],
+                                    "token": "input-width",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:box:inline",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "box|height",
+                                    "part": "a-singleline",
+                                    "property": "height",
+                                    "px": [40],
+                                    "token": null,
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:box:block",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "space:inline-start|padding-inline-start, from the outer edge",
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-start, from the outer edge",
+                                    "px": [16],
+                                    "token": "space-lg",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "space:inline-start",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "gap:inline:0|column-gap",
+                                    "part": "a-singleline",
+                                    "property": "column-gap",
+                                    "px": [8],
+                                    "token": "space-sm",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "gap:inline:0",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "space:inline-end|padding-inline-end, from the outer edge",
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-end, from the outer edge",
+                                    "px": [12],
+                                    "token": "space-md",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "space:inline-end",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "el:Error icon|width, height",
+                                    "part": "Error icon",
+                                    "property": "width, height",
+                                    "px": [16, 16],
+                                    "token": "size-sm",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:el:Error icon:inline",
+                                    "kind": "size"
+                                },
+                                {
+                                    "key": "box|border-width",
+                                    "part": "a-singleline",
+                                    "property": "border-width",
+                                    "px": [2],
+                                    "token": "border-width-default",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "box",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "box|border-radius",
+                                    "part": "a-singleline",
+                                    "property": "border-radius",
+                                    "px": [2],
+                                    "token": "radius-xs",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "box",
+                                    "kind": "other"
+                                }
+                            ],
+                            "components": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "variant": "Inline",
+            "dir": "ltr",
+            "groups": [
+                {
+                    "canvas": "4035:21407",
+                    "states": ["Inactive", "Active", "Read only"],
+                    "layouts": [
+                        {
+                            "width": 200,
+                            "height": 32,
+                            "parts": [
+                                {
+                                    "key": "box",
+                                    "kind": "box",
+                                    "label": "a-singleline",
+                                    "box": { "x": 0, "y": 0, "w": 200, "h": 32 }
+                                },
+                                {
+                                    "key": "el:Value",
+                                    "kind": "visible",
+                                    "label": "Value",
+                                    "box": { "x": 8, "y": 4, "w": 184, "h": 24 }
+                                }
+                            ],
+                            "marks": [
+                                {
+                                    "key": "space:inline-start",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 0,
+                                    "size": 8,
+                                    "token": "space-sm",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-start",
+                                    "cross": [0, 32]
+                                },
+                                {
+                                    "key": "space:inline-end",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 192,
+                                    "size": 8,
+                                    "token": "space-sm",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-end",
+                                    "cross": [0, 32]
+                                },
+                                {
+                                    "key": "size:box:block",
+                                    "kind": "size",
+                                    "axis": "block",
+                                    "start": 0,
+                                    "size": 32,
+                                    "token": null,
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "height",
+                                    "lead": false
+                                },
+                                {
+                                    "key": "size:box:inline",
+                                    "kind": "size",
+                                    "axis": "inline",
+                                    "start": 0,
+                                    "size": 200,
+                                    "token": "input-width",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "width",
+                                    "lead": false
+                                }
+                            ],
+                            "rows": [
+                                {
+                                    "key": "box|width",
+                                    "part": "a-singleline",
+                                    "property": "width",
+                                    "px": [200],
+                                    "token": "input-width",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:box:inline",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "box|height",
+                                    "part": "a-singleline",
+                                    "property": "height",
+                                    "px": [32],
+                                    "token": null,
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:box:block",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "space:inline-start|padding-inline-start",
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-start",
+                                    "px": [8],
+                                    "token": "space-sm",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "space:inline-start",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "space:inline-end|padding-inline-end",
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-end",
+                                    "px": [8],
+                                    "token": "space-sm",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "space:inline-end",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "box|border-block-end-width",
+                                    "part": "a-singleline",
+                                    "property": "border-block-end-width",
+                                    "px": [2],
+                                    "token": "border-width-default",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "box",
+                                    "kind": "other"
+                                }
+                            ],
+                            "components": []
+                        },
+                        {
+                            "width": 200,
+                            "height": 32,
+                            "parts": [
+                                {
+                                    "key": "box",
+                                    "kind": "box",
+                                    "label": "a-singleline",
+                                    "box": { "x": 0, "y": 0, "w": 200, "h": 32 }
+                                },
+                                {
+                                    "key": "el:Value",
+                                    "kind": "visible",
+                                    "label": "Value",
+                                    "box": { "x": 8, "y": 4, "w": 184, "h": 24 }
+                                }
+                            ],
+                            "marks": [
+                                {
+                                    "key": "space:inline-start",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 0,
+                                    "size": 8,
+                                    "token": "space-sm",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-start",
+                                    "cross": [0, 32]
+                                },
+                                {
+                                    "key": "space:inline-end",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 192,
+                                    "size": 8,
+                                    "token": "space-sm",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-end",
+                                    "cross": [0, 32]
+                                },
+                                {
+                                    "key": "size:box:block",
+                                    "kind": "size",
+                                    "axis": "block",
+                                    "start": 0,
+                                    "size": 32,
+                                    "token": null,
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "height",
+                                    "lead": false
+                                },
+                                {
+                                    "key": "size:box:inline",
+                                    "kind": "size",
+                                    "axis": "inline",
+                                    "start": 0,
+                                    "size": 200,
+                                    "token": "input-width",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "width",
+                                    "lead": false
+                                }
+                            ],
+                            "rows": [
+                                {
+                                    "key": "box|width",
+                                    "part": "a-singleline",
+                                    "property": "width",
+                                    "px": [200],
+                                    "token": "input-width",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:box:inline",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "box|height",
+                                    "part": "a-singleline",
+                                    "property": "height",
+                                    "px": [32],
+                                    "token": null,
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:box:block",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "space:inline-start|padding-inline-start",
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-start",
+                                    "px": [8],
+                                    "token": "space-sm",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "space:inline-start",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "space:inline-end|padding-inline-end",
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-end",
+                                    "px": [8],
+                                    "token": "space-sm",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "space:inline-end",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "box|border-block-end-width",
+                                    "part": "a-singleline",
+                                    "property": "border-block-end-width",
+                                    "px": [2],
+                                    "token": "border-width-default",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "box",
+                                    "kind": "other"
+                                }
+                            ],
+                            "components": []
+                        },
+                        {
+                            "width": 200,
+                            "height": 32,
+                            "parts": [
+                                {
+                                    "key": "box",
+                                    "kind": "box",
+                                    "label": "a-singleline",
+                                    "box": { "x": 0, "y": 0, "w": 200, "h": 32 }
+                                },
+                                {
+                                    "key": "el:Value",
+                                    "kind": "visible",
+                                    "label": "Value",
+                                    "box": { "x": 8, "y": 4, "w": 184, "h": 24 }
+                                }
+                            ],
+                            "marks": [
+                                {
+                                    "key": "space:inline-start",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 0,
+                                    "size": 8,
+                                    "token": "space-sm",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-start",
+                                    "cross": [0, 32]
+                                },
+                                {
+                                    "key": "space:inline-end",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 192,
+                                    "size": 8,
+                                    "token": "space-sm",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-end",
+                                    "cross": [0, 32]
+                                },
+                                {
+                                    "key": "size:box:block",
+                                    "kind": "size",
+                                    "axis": "block",
+                                    "start": 0,
+                                    "size": 32,
+                                    "token": null,
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "height",
+                                    "lead": false
+                                },
+                                {
+                                    "key": "size:box:inline",
+                                    "kind": "size",
+                                    "axis": "inline",
+                                    "start": 0,
+                                    "size": 200,
+                                    "token": "input-width",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "width",
+                                    "lead": false
+                                }
+                            ],
+                            "rows": [
+                                {
+                                    "key": "box|width",
+                                    "part": "a-singleline",
+                                    "property": "width",
+                                    "px": [200],
+                                    "token": "input-width",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:box:inline",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "box|height",
+                                    "part": "a-singleline",
+                                    "property": "height",
+                                    "px": [32],
+                                    "token": null,
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:box:block",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "space:inline-start|padding-inline-start",
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-start",
+                                    "px": [8],
+                                    "token": "space-sm",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "space:inline-start",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "space:inline-end|padding-inline-end",
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-end",
+                                    "px": [8],
+                                    "token": "space-sm",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "space:inline-end",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "box|border-block-end-width",
+                                    "part": "a-singleline",
+                                    "property": "border-block-end-width",
+                                    "px": [1],
+                                    "token": "border-width-thin",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "box",
+                                    "kind": "other"
+                                }
+                            ],
+                            "components": []
+                        }
+                    ]
+                },
+                {
+                    "canvas": "4035:21418",
+                    "states": ["Error"],
+                    "layouts": [
+                        {
+                            "width": 200,
+                            "height": 32,
+                            "parts": [
+                                {
+                                    "key": "box",
+                                    "kind": "box",
+                                    "label": "a-singleline",
+                                    "box": { "x": 0, "y": 0, "w": 200, "h": 32 }
+                                },
+                                {
+                                    "key": "el:Value",
+                                    "kind": "visible",
+                                    "label": "Value",
+                                    "box": { "x": 8, "y": 4, "w": 160, "h": 24 }
+                                },
+                                {
+                                    "key": "el:Error icon",
+                                    "kind": "visible",
+                                    "label": "Error icon",
+                                    "box": {
+                                        "x": 176,
+                                        "y": 8,
+                                        "w": 16,
+                                        "h": 16
+                                    }
+                                }
+                            ],
+                            "marks": [
+                                {
+                                    "key": "space:inline-start",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 0,
+                                    "size": 8,
+                                    "token": "space-sm",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-start",
+                                    "cross": [0, 32]
+                                },
+                                {
+                                    "key": "gap:inline:0",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 168,
+                                    "size": 8,
+                                    "token": "space-sm",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "column-gap",
+                                    "cross": [0, 32]
+                                },
+                                {
+                                    "key": "space:inline-end",
+                                    "kind": "space",
+                                    "axis": "inline",
+                                    "start": 192,
+                                    "size": 8,
+                                    "token": "space-sm",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-end",
+                                    "cross": [0, 32]
+                                },
+                                {
+                                    "key": "size:box:block",
+                                    "kind": "size",
+                                    "axis": "block",
+                                    "start": 0,
+                                    "size": 32,
+                                    "token": null,
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "height",
+                                    "lead": false
+                                },
+                                {
+                                    "key": "size:box:inline",
+                                    "kind": "size",
+                                    "axis": "inline",
+                                    "start": 0,
+                                    "size": 200,
+                                    "token": "input-width",
+                                    "tokenless": false,
+                                    "part": "a-singleline",
+                                    "property": "width",
+                                    "lead": false
+                                },
+                                {
+                                    "key": "size:el:Error icon:inline",
+                                    "kind": "size",
+                                    "axis": "inline",
+                                    "start": 176,
+                                    "size": 16,
+                                    "token": null,
+                                    "tokenless": false,
+                                    "part": "Error icon",
+                                    "property": "width",
+                                    "lead": true
+                                }
+                            ],
+                            "rows": [
+                                {
+                                    "key": "box|width",
+                                    "part": "a-singleline",
+                                    "property": "width",
+                                    "px": [200],
+                                    "token": "input-width",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:box:inline",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "box|height",
+                                    "part": "a-singleline",
+                                    "property": "height",
+                                    "px": [32],
+                                    "token": null,
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:box:block",
+                                    "kind": "other"
+                                },
+                                {
+                                    "key": "space:inline-start|padding-inline-start",
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-start",
+                                    "px": [8],
+                                    "token": "space-sm",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "space:inline-start",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "gap:inline:0|column-gap",
+                                    "part": "a-singleline",
+                                    "property": "column-gap",
+                                    "px": [8],
+                                    "token": "space-sm",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "gap:inline:0",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "space:inline-end|padding-inline-end",
+                                    "part": "a-singleline",
+                                    "property": "padding-inline-end",
+                                    "px": [8],
+                                    "token": "space-sm",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "space:inline-end",
+                                    "kind": "space"
+                                },
+                                {
+                                    "key": "el:Error icon|width, height",
+                                    "part": "Error icon",
+                                    "property": "width, height",
+                                    "px": [16, 16],
+                                    "token": "size-sm",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "size:el:Error icon:inline",
+                                    "kind": "size"
+                                },
+                                {
+                                    "key": "box|border-block-end-width",
+                                    "part": "a-singleline",
+                                    "property": "border-block-end-width",
+                                    "px": [2],
+                                    "token": "border-width-default",
+                                    "formula": null,
+                                    "tokenless": false,
+                                    "ref": "box",
+                                    "kind": "other"
+                                }
+                            ],
+                            "components": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
