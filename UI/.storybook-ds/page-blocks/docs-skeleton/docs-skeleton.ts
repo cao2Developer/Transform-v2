@@ -130,6 +130,13 @@ type Item = {
     peers: string[];
 };
 
+/** What drawPart and drawMark give back to drawCanvas. */
+type Drawn = {
+    key: string; // the ref of the item
+    nodes: HTMLElement[]; // in the order they go into the cell
+    item: Omit<Item, 'canvas' | 'end'>; // drawCanvas adds canvas and end
+};
+
 /* ------------------------------------------------------------------ */
 /* Small helpers                                                       */
 /* ------------------------------------------------------------------ */
@@ -311,6 +318,222 @@ function drawZoomSwitch(): HTMLElement {
     });
 }
 
+/* ------------------------------------------------------------------ */
+/* One canvas                                                          */
+/* ------------------------------------------------------------------ */
+
+/**
+ * The head of a canvas: the variant and the states in a canvas info
+ * (docs-canvas-info), as the cells of docs-cells, then the switches.
+ */
+function drawHead(label: string | null, states: string[]): HTMLElement {
+    const title = makeNode('p', 'docs-canvas-info');
+    if (label) {
+        const separator = makeNode('span', 'docs-canvas-info-separator', '·');
+        separator.setAttribute('aria-hidden', 'true');
+        title.append(
+            makeNode('span', 'docs-canvas-info-variant', label),
+            ' ',
+            separator,
+            ' ',
+        );
+    }
+    title.append(states.join(', '));
+    const controls = makeNode('div', 'docs-skeleton-controls');
+    controls.append(drawZoomSwitch(), drawUnitSwitch());
+    const head = makeNode('div', 'docs-skeleton-head');
+    head.append(title, controls);
+    return head;
+}
+
+/**
+ * The rulers, on the edges of the canvas: top, side and the corner between
+ * them. The 0 is at the top start corner of the component: --_origin (CSS)
+ * moves the ticks to that corner. The side ruler is outside the drawing, so
+ * it reaches the bottom of the canvas and stays in place when the drawing
+ * scrolls.
+ */
+function drawRulers(): [HTMLElement, HTMLElement, HTMLElement] {
+    const top = makeNode(
+        'div',
+        'docs-skeleton-ruler docs-skeleton-ruler--inline',
+    );
+    const side = makeNode(
+        'div',
+        'docs-skeleton-ruler docs-skeleton-ruler--block',
+    );
+    const corner = makeNode('div', 'docs-skeleton-corner');
+    top.append(makeNode('div', 'docs-skeleton-range'));
+    side.append(makeNode('div', 'docs-skeleton-range'));
+    side.setAttribute('aria-hidden', 'true');
+    corner.setAttribute('aria-hidden', 'true');
+    return [top, side, corner];
+}
+
+/**
+ * The faint guides: one from each edge of the component, of its parts and
+ * of its marks, across the whole cell. They hide on hover.
+ */
+function drawFaintGuides(layout: Layout): HTMLElement {
+    const faint = makeNode('div', 'docs-skeleton-faint-guides');
+    const xs = new Set<number>([0, round(layout.width)]);
+    const ys = new Set<number>([0, round(layout.height)]);
+    for (const part of layout.parts) {
+        if (!part.box || part.key === 'box') continue;
+        xs.add(round(part.box.x));
+        xs.add(round(part.box.x + part.box.w));
+        ys.add(round(part.box.y));
+        ys.add(round(part.box.y + part.box.h));
+    }
+    for (const mark of layout.marks) {
+        const set = mark.axis === 'inline' ? xs : ys;
+        set.add(round(mark.start));
+        set.add(round(mark.start + mark.size));
+    }
+    for (const x of xs) faint.append(guideAt('inline', x));
+    for (const y of ys) faint.append(guideAt('block', y));
+    return faint;
+}
+
+/** One part: the component box, a visible or hidden element, or dead space. */
+function drawPart(part: Part, box: Box, ref: (key: string) => string): Drawn {
+    const key = ref(part.key);
+    const node = place(
+        makeNode('div', `docs-skeleton-part docs-skeleton-part--${part.kind}`),
+        inlineAt(box.x),
+        blockAt(box.y),
+        zoomed(box.w),
+        zoomed(box.h),
+    );
+    node.dataset.ref = key;
+    return {
+        key,
+        nodes: [node],
+        item: {
+            inline: [box.x, box.x + box.w],
+            block: [box.y, box.y + box.h],
+            name: part.label,
+            peers: [],
+        },
+    };
+}
+
+/**
+ * One mark. A space: its hatched area, its measure line and its number,
+ * which show on hover. A size: its measure line and its number, in gray.
+ */
+function drawMark(
+    mark: Mark,
+    layout: Layout,
+    ref: (key: string) => string,
+): Drawn {
+    const { width, height } = layout;
+    const key = ref(mark.key);
+    const { start, size } = mark;
+    const end = start + size;
+    const alongInline = mark.axis === 'inline';
+    const inline: [number, number] = alongInline
+        ? [start, end]
+        : (mark.cross ?? [0, width]);
+    const block: [number, number] = alongInline
+        ? (mark.cross ?? [0, height])
+        : [start, end];
+    // Spaces only: every space of the canvas with the same size, this one
+    // included.
+    const peers: string[] = [];
+    if (mark.kind === 'space')
+        for (const item of layout.marks)
+            if (item.kind === 'space' && same(item.size, mark.size))
+                peers.push(ref(item.key));
+
+    const nodes: HTMLElement[] = [];
+    if (mark.kind === 'space') {
+        const area = place(
+            makeNode('div', 'docs-skeleton-space'),
+            inlineAt(inline[0]),
+            blockAt(block[0]),
+            zoomed(inline[1] - inline[0]),
+            zoomed(block[1] - block[0]),
+        );
+        area.dataset.token = tokenAttribute(mark);
+        area.dataset.ref = key;
+        nodes.push(area);
+    }
+    const lead = mark.kind === 'space' || mark.lead;
+    const measureNode = makeNode(
+        'div',
+        `docs-skeleton-measure-line docs-skeleton-measure-line--${mark.axis}`,
+    );
+    const number = setAmount(
+        makeNode('span', 'docs-skeleton-number'),
+        [mark.size],
+        false,
+    );
+    // The numbers of the spaces show on hover. The legend shows them all
+    // the time.
+    if (mark.kind === 'space') {
+        measureNode.classList.add('docs-skeleton-on-hover');
+        number.classList.add('docs-skeleton-on-hover');
+    }
+    measureNode.dataset.token =
+        mark.kind === 'size' ? 'size' : tokenAttribute(mark);
+    number.dataset.token = measureNode.dataset.token;
+    measureNode.dataset.ref = key;
+    number.dataset.ref = key;
+    if (alongInline) {
+        place(
+            measureNode,
+            inlineAt(start),
+            lead ? blockAt(0, -MEASURE_GAP) : blockAt(height, SIZE_GAP),
+            zoomed(size),
+            MEASURE_TICK,
+        );
+        place(
+            number,
+            inlineAt(start + size / 2),
+            lead
+                ? blockAt(0, -NUMBER_ABOVE)
+                : blockAt(height, SIZE_GAP + NUMBER_BELOW),
+        );
+        number.classList.add('docs-skeleton-number--center');
+    } else {
+        place(
+            measureNode,
+            lead ? inlineAt(0, -MEASURE_GAP) : inlineAt(width, SIZE_GAP),
+            blockAt(start),
+            MEASURE_TICK,
+            zoomed(size),
+        );
+        place(
+            number,
+            lead
+                ? inlineAt(0, -NUMBER_BEFORE)
+                : inlineAt(width, SIZE_GAP + NUMBER_AFTER),
+            blockAt(start + size / 2),
+        );
+        number.classList.add(
+            lead
+                ? 'docs-skeleton-number--before'
+                : 'docs-skeleton-number--after',
+        );
+    }
+    nodes.push(measureNode, number);
+    return { key, nodes, item: { inline, block, name: null, peers } };
+}
+
+/** A space item of the legend: the swatch of the token, then its text. */
+function legendSpaceItem(token: string, text: HTMLElement): HTMLElement {
+    const item = makeNode(
+        'li',
+        'docs-skeleton-legend-item docs-skeleton-legend-item--space',
+    );
+    item.dataset.token = token;
+    const swatch = makeNode('span', 'docs-skeleton-swatch docs-skeleton-space');
+    swatch.dataset.token = token;
+    item.append(swatch, text);
+    return item;
+}
+
 /** The legend of one canvas: the element types it shows, then its tokens. */
 function drawLegend(group: Group): HTMLElement {
     const { parts, marks, rows } = group.layouts[0];
@@ -340,16 +563,6 @@ function drawLegend(group: Group): HTMLElement {
     }
     const tokenList = makeNode('ul', 'docs-skeleton-legend-list');
     for (const [token, px] of tokens) {
-        const item = makeNode(
-            'li',
-            'docs-skeleton-legend-item docs-skeleton-legend-item--space',
-        );
-        item.dataset.token = token;
-        const swatch = makeNode(
-            'span',
-            'docs-skeleton-swatch docs-skeleton-space',
-        );
-        swatch.dataset.token = token;
         const text = makeNode('span', '');
         text.append(
             `${token} `,
@@ -359,8 +572,7 @@ function drawLegend(group: Group): HTMLElement {
                 false,
             ),
         );
-        item.append(swatch, text);
-        tokenList.append(item);
+        tokenList.append(legendSpaceItem(token, text));
     }
     const formula = rows.some((row) => row.kind === 'space' && row.formula);
     for (const [shown, token, text] of [
@@ -368,18 +580,7 @@ function drawLegend(group: Group): HTMLElement {
         [tokenless, 'none', 'No token'],
     ] as const) {
         if (!shown) continue;
-        const item = makeNode(
-            'li',
-            'docs-skeleton-legend-item docs-skeleton-legend-item--space',
-        );
-        item.dataset.token = token;
-        const swatch = makeNode(
-            'span',
-            'docs-skeleton-swatch docs-skeleton-space',
-        );
-        swatch.dataset.token = token;
-        item.append(swatch, makeNode('span', '', text));
-        tokenList.append(item);
+        tokenList.append(legendSpaceItem(token, makeNode('span', '', text)));
     }
     const legend = makeNode('div', 'docs-skeleton-legend');
     legend.append(typeList, tokenList);
@@ -503,9 +704,9 @@ export class DocsSkeleton extends HTMLElement {
     }
 
     /**
-     * One canvas: the title, the switches, the rulers, the drawing and the
-     * legend of one group of states. Positions are calc() over the zoom, so
-     * the CSS can animate them (see inlineAt).
+     * One canvas: the head, the rulers, the drawing and the legend of one
+     * group of states. Positions are calc() over the zoom, so the CSS can
+     * animate them (see inlineAt).
      */
     private drawCanvas(group: Group, index: number): HTMLElement {
         const layout = group.layouts[0];
@@ -513,219 +714,32 @@ export class DocsSkeleton extends HTMLElement {
         const canvas = makeNode('div', 'docs-skeleton-canvas');
         canvas.style.setProperty('--_width', `${width}px`);
         canvas.style.setProperty('--_height', `${height}px`);
-
-        // Variant · states, in a canvas info (docs-canvas-info), as the cells of docs-cells.
-        const title = makeNode('p', 'docs-canvas-info');
-        const label = this.getAttribute('label');
-        if (label) {
-            const separator = makeNode(
-                'span',
-                'docs-canvas-info-separator',
-                '·',
-            );
-            separator.setAttribute('aria-hidden', 'true');
-            title.append(
-                makeNode('span', 'docs-canvas-info-variant', label),
-                ' ',
-                separator,
-                ' ',
-            );
-        }
-        title.append(group.states.join(', '));
-        const head = makeNode('div', 'docs-skeleton-head');
-        const controls = makeNode('div', 'docs-skeleton-controls');
-        controls.append(drawZoomSwitch(), drawUnitSwitch());
-        head.append(title, controls);
+        const head = drawHead(this.getAttribute('label'), group.states);
 
         // The size of the cell and the place of the component are in the
         // CSS (.docs-skeleton-canvas): the rulers fill the canvas, the component
         // sits in the middle of the area next to them, and a component wider
         // than the canvas scrolls with the drawing, at real size.
         const cell = makeNode('div', 'docs-skeleton-cell');
-
         const ref = (key: string): string => `g${index}-${key}`;
+        // Puts the nodes of a part or a mark in the cell, and remembers its
+        // item for the highlight.
+        const keep = ({ key, nodes, item }: Drawn): void => {
+            cell.append(...nodes);
+            this.remember(key, { canvas, end: height, ...item });
+        };
 
-        // Rulers, on the edges of the canvas. The 0 is at the top start corner
-        // of the component: --_origin (CSS) moves the ticks to that corner.
-        // The side ruler is outside the drawing, so it reaches the bottom
-        // of the canvas and stays in place when the drawing scrolls.
-        const top = makeNode(
-            'div',
-            'docs-skeleton-ruler docs-skeleton-ruler--inline',
+        const [top, side, corner] = drawRulers();
+        cell.append(
+            top,
+            drawFaintGuides(layout),
+            makeNode('div', 'docs-skeleton-guides'),
         );
-        const side = makeNode(
-            'div',
-            'docs-skeleton-ruler docs-skeleton-ruler--block',
-        );
-        const corner = makeNode('div', 'docs-skeleton-corner');
-        top.append(makeNode('div', 'docs-skeleton-range'));
-        side.append(makeNode('div', 'docs-skeleton-range'));
-        side.setAttribute('aria-hidden', 'true');
-        corner.setAttribute('aria-hidden', 'true');
-        cell.append(top);
-
-        // Faint guides from each edge, across the whole cell. They hide on
-        // hover.
-        const faint = makeNode('div', 'docs-skeleton-faint-guides');
-        const xs = new Set<number>([0, round(width)]);
-        const ys = new Set<number>([0, round(height)]);
-        for (const part of layout.parts) {
-            if (!part.box || part.key === 'box') continue;
-            xs.add(round(part.box.x));
-            xs.add(round(part.box.x + part.box.w));
-            ys.add(round(part.box.y));
-            ys.add(round(part.box.y + part.box.h));
-        }
-        for (const mark of layout.marks) {
-            const set = mark.axis === 'inline' ? xs : ys;
-            set.add(round(mark.start));
-            set.add(round(mark.start + mark.size));
-        }
-        for (const x of xs) faint.append(guideAt('inline', x));
-        for (const y of ys) faint.append(guideAt('block', y));
-        cell.append(faint, makeNode('div', 'docs-skeleton-guides'));
-
-        // Parts: the component box, visible, hidden and dead space.
-        for (const part of layout.parts) {
-            if (!part.box) continue;
-            const node = place(
-                makeNode(
-                    'div',
-                    `docs-skeleton-part docs-skeleton-part--${part.kind}`,
-                ),
-                inlineAt(part.box.x),
-                blockAt(part.box.y),
-                zoomed(part.box.w),
-                zoomed(part.box.h),
-            );
-            node.dataset.ref = ref(part.key);
-            cell.append(node);
-            this.remember(ref(part.key), {
-                canvas,
-                end: height,
-                inline: [part.box.x, part.box.x + part.box.w],
-                block: [part.box.y, part.box.y + part.box.h],
-                name: part.label,
-                peers: [],
-            });
-        }
-
-        // Marks. Spacing: hatched area, measure line and number. Sizes: gray.
-        for (const mark of layout.marks) {
-            const key = ref(mark.key);
-            const { start, size } = mark;
-            const end = start + size;
-            const alongInline = mark.axis === 'inline';
-            const inline: [number, number] = alongInline
-                ? [start, end]
-                : (mark.cross ?? [0, width]);
-            const block: [number, number] = alongInline
-                ? (mark.cross ?? [0, height])
-                : [start, end];
-            const peers =
-                mark.kind === 'space'
-                    ? layout.marks
-                          .filter(
-                              (item) =>
-                                  item.kind === 'space' &&
-                                  same(item.size, mark.size),
-                          )
-                          .map((item) => ref(item.key))
-                    : [];
-            this.remember(key, {
-                canvas,
-                end: height,
-                inline,
-                block,
-                name: null,
-                peers,
-            });
-            if (mark.kind === 'space') {
-                const area = place(
-                    makeNode('div', 'docs-skeleton-space'),
-                    inlineAt(inline[0]),
-                    blockAt(block[0]),
-                    zoomed(inline[1] - inline[0]),
-                    zoomed(block[1] - block[0]),
-                );
-                area.dataset.token = tokenAttribute(mark);
-                area.dataset.ref = key;
-                cell.append(area);
-            }
-            const lead = mark.kind === 'space' || mark.lead;
-            const measureNode = makeNode(
-                'div',
-                `docs-skeleton-measure-line docs-skeleton-measure-line--${mark.axis}`,
-            );
-            const number = setAmount(
-                makeNode('span', 'docs-skeleton-number'),
-                [mark.size],
-                false,
-            );
-            // The numbers of the spaces show on hover. The legend shows
-            // them all the time.
-            if (mark.kind === 'space') {
-                measureNode.classList.add('docs-skeleton-on-hover');
-                number.classList.add('docs-skeleton-on-hover');
-            }
-            measureNode.dataset.token =
-                mark.kind === 'size' ? 'size' : tokenAttribute(mark);
-            number.dataset.token = measureNode.dataset.token;
-            measureNode.dataset.ref = key;
-            number.dataset.ref = key;
-            if (alongInline) {
-                place(
-                    measureNode,
-                    inlineAt(start),
-                    lead ? blockAt(0, -MEASURE_GAP) : blockAt(height, SIZE_GAP),
-                    zoomed(size),
-                    MEASURE_TICK,
-                );
-                place(
-                    number,
-                    inlineAt(start + size / 2),
-                    lead
-                        ? blockAt(0, -NUMBER_ABOVE)
-                        : blockAt(height, SIZE_GAP + NUMBER_BELOW),
-                );
-                number.classList.add('docs-skeleton-number--center');
-            } else {
-                place(
-                    measureNode,
-                    lead
-                        ? inlineAt(0, -MEASURE_GAP)
-                        : inlineAt(width, SIZE_GAP),
-                    blockAt(start),
-                    MEASURE_TICK,
-                    zoomed(size),
-                );
-                place(
-                    number,
-                    lead
-                        ? inlineAt(0, -NUMBER_BEFORE)
-                        : inlineAt(width, SIZE_GAP + NUMBER_AFTER),
-                    blockAt(start + size / 2),
-                );
-                number.classList.add(
-                    lead
-                        ? 'docs-skeleton-number--before'
-                        : 'docs-skeleton-number--after',
-                );
-            }
-            cell.append(measureNode, number);
-        }
-
+        for (const part of layout.parts)
+            if (part.box) keep(drawPart(part, part.box, ref));
+        for (const mark of layout.marks) keep(drawMark(mark, layout, ref));
         cell.append(makeNode('div', 'docs-skeleton-tag'));
-
-        // Hover on the drawing highlights the item, and sends
-        // HIGHLIGHT_EVENT.
-        cell.addEventListener('pointerover', (event) => {
-            const target = event.target as HTMLElement;
-            this.highlight(
-                target.closest('[data-ref]')?.getAttribute('data-ref') ?? null,
-            );
-        });
-        cell.addEventListener('pointerleave', () => this.settle());
+        this.wireDrawing(cell);
 
         // The drawing is hidden from screen readers. The legend is the
         // accessible content: the element types, and the tokens with their
@@ -734,8 +748,28 @@ export class DocsSkeleton extends HTMLElement {
         drawing.setAttribute('aria-hidden', 'true');
         drawing.append(cell);
         const legend = drawLegend(group);
-        // Hover on a space in the legend lights the spaces of that token,
-        // as hover on the drawing does.
+        this.wireLegend(legend, cell);
+        canvas.append(head, drawing, legend, side, corner);
+        return canvas;
+    }
+
+    /** Hover on the drawing highlights the item, and sends HIGHLIGHT_EVENT. */
+    private wireDrawing(cell: HTMLElement): void {
+        cell.addEventListener('pointerover', (event) => {
+            const target = event.target as HTMLElement;
+            this.highlight(
+                target.closest('[data-ref]')?.getAttribute('data-ref') ?? null,
+            );
+        });
+        cell.addEventListener('pointerleave', () => this.settle());
+    }
+
+    /**
+     * Hover on a space in the legend lights the spaces of that token, as
+     * hover on the drawing does. A click pins the token. Click again, click
+     * elsewhere or press Escape to release it.
+     */
+    private wireLegend(legend: HTMLElement, cell: HTMLElement): void {
         for (const item of legend.querySelectorAll<HTMLElement>(
             '.docs-skeleton-legend-item--space',
         )) {
@@ -745,8 +779,6 @@ export class DocsSkeleton extends HTMLElement {
                 this.lightToken(cell, token),
             );
             item.addEventListener('pointerleave', () => this.settle());
-            // A click pins the token. Click again, click elsewhere or press
-            // Escape to release it.
             item.addEventListener('click', () => {
                 const again = this.pinned?.item === item;
                 this.unpin(false);
@@ -756,8 +788,6 @@ export class DocsSkeleton extends HTMLElement {
                 this.lightToken(cell, token);
             });
         }
-        canvas.append(head, drawing, legend, side, corner);
-        return canvas;
     }
 
     /** Lights every space of one token in a canvas, as hover on one does. */
