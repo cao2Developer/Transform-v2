@@ -1,0 +1,639 @@
+/*
+ * Skeleton canvas (page block): <docs-skeleton>
+ *
+ * Styles of the canvases that docs-skeleton.ts draws. Like the other page
+ * blocks (docs-header, docs-table), it uses only base tokens. Values with
+ * no base token are custom properties at the top of .docs-skeleton, each
+ * with a comment.
+ *
+ * The hover styles are allowed here: the "no hover" rule applies only to
+ * design system components, not to documentation components.
+ */
+
+/* The zoom of the drawing. Registered as a number, so it can be animated.
+   Every position of the drawing is a calc() over it. */
+@property --docs-skeleton-scale {
+    inherits: true;
+    initial-value: 1;
+    syntax: '<number>';
+}
+
+.docs-skeleton {
+    /* Documentation colors. Figma: Ipsos Healthcare Foundation, collection
+       Color Primitives, Documentation/*. No base token has these values. */
+    --docs-skeleton-indigo: #6c01f4; /* Documentation/Indigo */
+    --docs-skeleton-teal: #00c7ba; /* Documentation/Teal */
+    --docs-skeleton-pink: #ff2acd; /* Documentation/Pink */
+    --docs-skeleton-cyan: #00b7ff; /* Documentation/Cyan */
+    --docs-skeleton-green: #00de3b; /* Documentation/Green */
+    --docs-skeleton-orange: #ffa812; /* Documentation/Orange */
+    --docs-skeleton-red: #f24822; /* Documentation/Red */
+
+    /* Element types. Visible: Documentation/Red, hatched. Hidden: Figma
+       "light gray", same value. Dead space: Figma "dark gray", no base
+       token. */
+    --docs-skeleton-visible: var(--docs-skeleton-red);
+    --docs-skeleton-hidden: var(--base-color-neutral-50);
+    --docs-skeleton-dead: #5c6170;
+
+    /* Size measures, as the Measure Lines / Size of Figma */
+    --docs-skeleton-size-line: var(--base-color-neutral-50);
+    --docs-skeleton-size-number: var(--base-color-neutral-70);
+
+    /* Values with no base token */
+    --docs-skeleton-border-width: 1px;
+    --docs-skeleton-dash: 4px; /* dash and gap of the faint guides */
+    --docs-skeleton-ruler-font-size: 0.625rem; /* 10px, fits the 20px ruler */
+    --docs-skeleton-tick: 4px; /* real px: the ruler measures real size */
+    --docs-skeleton-tick-major: 16px;
+    --docs-skeleton-number-mix: 60%; /* the color of a token, darkened for text: 4.78:1 or more on white */
+    --docs-skeleton-ruler: 20px; /* thickness of each ruler */
+    --docs-skeleton-zoom-duration: 240ms;
+    /* Distance between two hatch lines. Figma has 5px. 7px / √2 is 7 whole
+       pixels on the horizontal, so every line lands on the same pixels. */
+    --docs-skeleton-hatch-gap: 4.9497px;
+    /* Soft edge of a hatch line, one pixel diagonal (1px / √2). It keeps the
+       lines even on screens with a fractional pixel ratio. */
+    --docs-skeleton-hatch-soft: 0.7071px;
+    --docs-skeleton-hatch-line: 1.25px; /* thickness of a hatch line. Figma has 1px */
+    --docs-skeleton-fill: 15%; /* fill of a hatched area, as in Figma */
+
+    /* Same value as --shadow-inactive, kept here so a change in the effect
+       tokens does not change the docs pages */
+    --docs-skeleton-shadow: 0 1px 2px 0 rgb(33 44 76 / 12%);
+}
+
+.docs-skeleton {
+    color: var(--base-color-neutral-80);
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-sm);
+    gap: var(--base-unit-16);
+    line-height: var(--line-height);
+    position: relative;
+    transition: --docs-skeleton-scale var(--docs-skeleton-zoom-duration) ease;
+}
+
+/* Canvas: one per group of states. --docs-skeleton-ruler keeps the title and
+   the legend clear of the side ruler. */
+
+.docs-skeleton-canvas {
+    /* Geometry of the drawing. --_width, --_height (the real size of the
+       component) and --_legend (the height of the legend) come from the
+       script. 100cqi is the width of the canvas. */
+    --_pad-start: 24px; /* least space between the side ruler and the component */
+    --_pad-end: 80px; /* least room for the height measure */
+    --_pad-top: 72px; /* room for the title and the spacing numbers */
+    --_pad-bottom: 72px; /* room for the width measure and the hover tag */
+    --_drawn-width: calc(var(--_width) * var(--docs-skeleton-scale));
+    --_drawn-height: calc(var(--_height) * var(--docs-skeleton-scale));
+    --_cell: max(
+        100cqi,
+        calc(
+            var(--docs-skeleton-ruler) + var(--_pad-start) +
+                var(--_drawn-width) + var(--_pad-end)
+        )
+    );
+    --_ox: calc(
+        var(--docs-skeleton-ruler) +
+            max(
+                var(--_pad-start),
+                round(
+                    (
+                            var(--_cell) - var(--docs-skeleton-ruler) -
+                                var(--_drawn-width)
+                        ) /
+                        2,
+                    1px
+                )
+            )
+    );
+    --_oy: calc(var(--docs-skeleton-ruler) + var(--_pad-top));
+
+    background: var(--base-color-neutral-10);
+    border: var(--docs-skeleton-border-width) solid var(--base-color-neutral-40);
+    border-radius: var(--base-unit-8);
+    box-shadow: var(--docs-skeleton-shadow);
+    container-type: inline-size;
+    overflow: clip;
+    position: relative;
+}
+
+.docs-skeleton-head {
+    align-items: center;
+    display: flex;
+    gap: var(--base-unit-16);
+    inset-block-start: calc(var(--docs-skeleton-ruler) + var(--base-unit-12));
+    inset-inline: calc(var(--docs-skeleton-ruler) + var(--base-unit-16))
+        var(--base-unit-16);
+    justify-content: space-between;
+    pointer-events: none;
+    position: absolute;
+    z-index: 2;
+}
+
+.docs-skeleton-controls {
+    display: flex;
+    gap: var(--base-unit-8);
+    pointer-events: auto;
+}
+
+/* With no data: one line, in place of the canvases. */
+.docs-skeleton-empty {
+    color: var(--base-color-neutral-70);
+    margin: 0;
+}
+
+/* Drawing */
+
+.docs-skeleton-drawing {
+    overflow-x: auto;
+}
+
+.docs-skeleton-cell {
+    block-size: calc(
+        var(--_oy) + var(--_drawn-height) + var(--_pad-bottom) + var(--_legend)
+    );
+    inline-size: var(--_cell);
+    position: relative;
+}
+
+.docs-skeleton-cell > *,
+.docs-skeleton-ruler > *,
+.docs-skeleton-guides > *,
+.docs-skeleton-faint-guides > * {
+    box-sizing: border-box;
+    position: absolute;
+}
+
+/* Rulers, on the top and the start edge of the canvas. The ticks are two
+   repeating backgrounds, so they fill any width. --_origin is the position
+   of the component. */
+
+.docs-skeleton-ruler,
+.docs-skeleton-corner {
+    background-color: var(--base-color-neutral-20);
+}
+
+.docs-skeleton-corner {
+    block-size: var(--docs-skeleton-ruler);
+    border-block-end: var(--docs-skeleton-border-width) solid
+        var(--base-color-neutral-40);
+    border-inline-end: var(--docs-skeleton-border-width) solid
+        var(--base-color-neutral-40);
+    box-sizing: border-box;
+    inline-size: var(--docs-skeleton-ruler);
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    position: absolute;
+    z-index: 2;
+}
+
+.docs-skeleton-ruler {
+    --_tick: linear-gradient(
+        var(--_direction),
+        var(--base-color-neutral-50) 1px,
+        transparent 1px
+    );
+
+    background-image: var(--_tick), var(--_tick);
+}
+
+.docs-skeleton-ruler--inline {
+    --_direction: to right;
+    --_origin: calc(var(--_ox) - var(--docs-skeleton-ruler));
+
+    background-position:
+        var(--_origin) 100%,
+        var(--_origin) 100%;
+    background-repeat: repeat-x;
+    background-size:
+        calc(var(--docs-skeleton-tick-major) * var(--docs-skeleton-scale))
+            var(--base-unit-8),
+        calc(var(--docs-skeleton-tick) * var(--docs-skeleton-scale))
+            var(--base-unit-4);
+    block-size: var(--docs-skeleton-ruler);
+    border-block-end: var(--docs-skeleton-border-width) solid
+        var(--base-color-neutral-40);
+    inline-size: calc(var(--_cell) - var(--docs-skeleton-ruler));
+    inset-block-start: 0;
+    inset-inline-start: var(--docs-skeleton-ruler);
+}
+
+.docs-skeleton-ruler--block {
+    --_direction: to bottom;
+    --_origin: var(--_oy);
+
+    background-position:
+        100% var(--_origin),
+        100% var(--_origin);
+    background-repeat: repeat-y;
+    background-size:
+        var(--base-unit-8)
+            calc(var(--docs-skeleton-tick-major) * var(--docs-skeleton-scale)),
+        var(--base-unit-4)
+            calc(var(--docs-skeleton-tick) * var(--docs-skeleton-scale));
+    block-size: 100%;
+    border-inline-end: var(--docs-skeleton-border-width) solid
+        var(--base-color-neutral-40);
+    box-sizing: border-box;
+    inline-size: var(--docs-skeleton-ruler);
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    position: absolute;
+    z-index: 1;
+}
+
+/* The range of the hovered item, with its start and end */
+
+.docs-skeleton-range {
+    background: rgb(50 67 113 / 25%); /* --base-color-neutral-80 at 25% */
+    display: none;
+}
+
+.docs-skeleton-range.is-shown {
+    display: block;
+}
+
+.docs-skeleton-range-start,
+.docs-skeleton-range-end {
+    background: var(--base-color-neutral-80);
+    border-radius: var(--base-unit-2);
+    color: var(--base-color-neutral-10);
+    font-family: var(--font-family-secondary);
+    font-size: var(--docs-skeleton-ruler-font-size);
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+    padding: var(--base-unit-2) var(--base-unit-4);
+    position: absolute;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+.docs-skeleton-ruler--inline .docs-skeleton-range-start {
+    inset-block-start: var(--base-unit-2);
+    inset-inline-end: 100%;
+}
+
+.docs-skeleton-ruler--inline .docs-skeleton-range-end {
+    inset-block-start: var(--base-unit-2);
+    inset-inline-start: 100%;
+}
+
+.docs-skeleton-ruler--block .docs-skeleton-range-start {
+    inset-block-end: 100%;
+    inset-inline-start: var(--base-unit-2);
+}
+
+.docs-skeleton-ruler--block .docs-skeleton-range-end {
+    inset-block-start: 100%;
+    inset-inline-start: var(--base-unit-2);
+}
+
+/* Guides. Faint: from each edge to the rulers, hidden on hover. Strong: from
+   the hovered element to the rulers. */
+
+.docs-skeleton-guides,
+.docs-skeleton-faint-guides {
+    inset: 0;
+    pointer-events: none;
+}
+
+.docs-skeleton-canvas.is-active .docs-skeleton-faint-guides {
+    visibility: hidden;
+}
+
+.docs-skeleton-guide {
+    background: rgb(50 67 113 / 70%); /* --base-color-neutral-80 at 70% */
+    z-index: 2;
+}
+
+.docs-skeleton-guide--inline {
+    inline-size: 1px;
+    inset-block-end: 0;
+}
+
+.docs-skeleton-guide--block {
+    block-size: 1px;
+    inset-inline-end: 0;
+}
+
+/* The faint guides are dashed, so they read apart from the strong ones.
+   Color: --base-color-neutral-80 at 10%. */
+.docs-skeleton-faint-guides .docs-skeleton-guide {
+    background: repeating-linear-gradient(
+        var(--_along),
+        rgb(50 67 113 / 10%) 0 var(--docs-skeleton-dash),
+        transparent 0 calc(var(--docs-skeleton-dash) * 2)
+    );
+    z-index: auto;
+}
+
+.docs-skeleton-faint-guides .docs-skeleton-guide--inline {
+    --_along: to bottom;
+}
+
+.docs-skeleton-faint-guides .docs-skeleton-guide--block {
+    --_along: to right;
+}
+
+/* Hatched areas. --_color is the color of the token or the element type. */
+
+.docs-skeleton-space,
+.docs-skeleton-part--visible,
+.docs-skeleton-part--hidden,
+.docs-skeleton-part--dead {
+    --_fill: var(--docs-skeleton-fill);
+
+    background-color: color-mix(
+        in srgb,
+        var(--_color) var(--_fill),
+        transparent
+    );
+}
+
+/* Only the element types are hatched. A space is a flat fill. */
+.docs-skeleton-part--visible,
+.docs-skeleton-part--hidden,
+.docs-skeleton-part--dead {
+    --_lines: var(--_color);
+
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent 0,
+        var(--_lines) var(--docs-skeleton-hatch-soft),
+        var(--_lines) var(--docs-skeleton-hatch-line),
+        transparent
+            calc(
+                var(--docs-skeleton-hatch-line) +
+                    var(--docs-skeleton-hatch-soft)
+            ),
+        transparent var(--docs-skeleton-hatch-gap)
+    );
+}
+
+/* Before the [data-token] rules, so a token can change it. */
+.docs-skeleton-space,
+.docs-skeleton-measure-line,
+.docs-skeleton-number {
+    --_color: var(--base-color-neutral-70);
+}
+
+/* The color follows the token, never the value. */
+[data-token='space-xs'] {
+    --_color: var(--docs-skeleton-indigo);
+}
+
+[data-token='space-sm'] {
+    --_color: var(--docs-skeleton-teal);
+}
+
+[data-token='space-md'] {
+    --_color: var(--docs-skeleton-pink);
+}
+
+[data-token='space-lg'] {
+    --_color: var(--docs-skeleton-cyan);
+}
+
+[data-token='space-xl'] {
+    --_color: var(--docs-skeleton-green);
+}
+
+[data-token='column-gap'] {
+    --_color: var(--docs-skeleton-orange);
+}
+
+[data-token='none'] {
+    --_color: var(--docs-skeleton-red);
+}
+
+[data-token='size'] {
+    --_color: var(--docs-skeleton-size-line);
+}
+
+/* No token is solid, so it does not read as a visible element, which uses
+   the same red with a hatch. */
+.docs-skeleton-space[data-token='none'] {
+    background-color: var(--_color);
+    background-image: none;
+}
+
+/* The border of the component is drawn above the spaces. */
+.docs-skeleton-part--box::after {
+    border: var(--docs-skeleton-border-width) solid var(--docs-skeleton-visible);
+    content: '';
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Visible element: an outline and a light hatch, as in Figma */
+.docs-skeleton-part--visible {
+    --_color: var(--docs-skeleton-visible);
+    --_lines: color-mix(in srgb, var(--_color) 40%, transparent);
+
+    border: var(--docs-skeleton-border-width) solid var(--_color);
+}
+
+.docs-skeleton-part--hidden {
+    --_color: var(--docs-skeleton-hidden);
+}
+
+.docs-skeleton-part--dead {
+    --_color: var(--docs-skeleton-dead);
+}
+
+.docs-skeleton-cell .is-highlighted {
+    outline: 2px solid var(--_color, var(--base-color-neutral-80));
+    z-index: 1;
+}
+
+/* The box stays below the parts, or it would catch the pointer. */
+.docs-skeleton-cell .docs-skeleton-part--box.is-highlighted {
+    outline: none;
+    z-index: auto;
+}
+
+.docs-skeleton-part--box.is-highlighted::after {
+    outline: 2px solid var(--docs-skeleton-visible);
+}
+
+/* Measure lines and numbers */
+
+/* The measures do not react to the pointer. Only the parts of the component
+   and its spaces do. */
+.docs-skeleton-measure-line,
+.docs-skeleton-number {
+    pointer-events: none;
+}
+
+.docs-skeleton-on-hover:not(.is-highlighted, .is-peer) {
+    visibility: hidden;
+}
+
+.docs-skeleton-measure-line--inline {
+    background: linear-gradient(var(--_color), var(--_color)) center / 100% 1px
+        no-repeat;
+    border-inline: 1px solid var(--_color);
+}
+
+.docs-skeleton-measure-line--block {
+    background: linear-gradient(var(--_color), var(--_color)) center / 1px 100%
+        no-repeat;
+    border-block: 1px solid var(--_color);
+}
+
+.docs-skeleton-measure-line.is-highlighted {
+    outline: none;
+}
+
+.docs-skeleton-number {
+    color: color-mix(
+        in srgb,
+        var(--_color) var(--docs-skeleton-number-mix),
+        black
+    );
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.docs-skeleton-number[data-token='size'] {
+    color: var(--docs-skeleton-size-number);
+}
+
+.docs-skeleton-number.is-highlighted {
+    outline: none;
+}
+
+.docs-skeleton-number--center {
+    translate: -50% 0;
+}
+
+.docs-skeleton-number--before {
+    translate: -100% -50%;
+}
+
+.docs-skeleton-number--after {
+    translate: 0 -50%;
+}
+
+/* Hover tag: the name of the item */
+
+.docs-skeleton-tag {
+    background: var(--base-color-neutral-80);
+    border-radius: var(--base-unit-4);
+    box-shadow: var(--docs-skeleton-shadow);
+    color: var(--base-color-neutral-10);
+    display: none;
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.3;
+    padding: var(--base-unit-2) var(--base-unit-8);
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 3;
+}
+
+.docs-skeleton-tag.is-shown {
+    display: block;
+}
+
+/* RTL: the drawing uses logical positions. Only the translations and the
+   tick side need a mirror. Not checked yet. */
+.docs-skeleton:dir(rtl) .docs-skeleton-ruler--inline {
+    --_direction: to left;
+
+    background-position:
+        right var(--_origin) bottom,
+        right var(--_origin) bottom;
+}
+
+.docs-skeleton:dir(rtl) .docs-skeleton-ruler--block {
+    background-position:
+        0 var(--_origin),
+        0 var(--_origin);
+}
+
+.docs-skeleton:dir(rtl) .docs-skeleton-number--center {
+    translate: 50% 0;
+}
+
+.docs-skeleton:dir(rtl) .docs-skeleton-number--before {
+    translate: 100% -50%;
+}
+
+/* Legend */
+
+.docs-skeleton-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--base-unit-8) var(--base-unit-24);
+    inset-block-end: 0;
+    inset-inline: 0;
+    justify-content: space-between;
+    padding: 0 var(--base-unit-16) var(--base-unit-16)
+        calc(var(--docs-skeleton-ruler) + var(--base-unit-16));
+    pointer-events: none;
+    position: absolute;
+}
+
+.docs-skeleton-legend-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--base-unit-8) var(--base-unit-16);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.docs-skeleton-legend-item {
+    align-items: center;
+    color: var(--base-color-neutral-70);
+    display: flex;
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-xs);
+    gap: var(--base-unit-8);
+}
+
+/* The legend ignores the pointer, except the spaces: they light the spaces
+   of the drawing. */
+.docs-skeleton-legend-item--space {
+    cursor: pointer;
+    pointer-events: auto;
+    user-select: none;
+}
+
+/* Hover or pinned by a click: the whole text goes to blue, as the titles. */
+.docs-skeleton-legend-item--space:is(:hover, .is-pinned),
+.docs-skeleton-legend-item--space:is(:hover, .is-pinned)
+    .docs-skeleton-legend-value {
+    color: var(--base-color-primary-blue-75);
+}
+
+.docs-skeleton-legend-value {
+    color: var(--base-color-neutral-80);
+    font-weight: var(--font-weight-semibold);
+}
+
+.docs-skeleton-swatch {
+    block-size: var(--base-unit-12);
+    border: var(--docs-skeleton-border-width) solid var(--_color);
+    border-radius: var(--base-unit-2);
+    box-sizing: border-box;
+    display: inline-block;
+    flex: none;
+    inline-size: var(--base-unit-12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .docs-skeleton {
+        transition: none;
+    }
+}

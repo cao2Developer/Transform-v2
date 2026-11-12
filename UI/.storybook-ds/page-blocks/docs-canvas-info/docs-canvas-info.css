@@ -1,0 +1,44 @@
+/*
+ * Canvas info (page block): .docs-canvas-info
+ *
+ * The title of a canvas, at its top left: the variant in Variations
+ * ("Default"), the variant and the states in States and Skeleton
+ * ("Default · Error"). Shown in lowercase. The same title as
+ * Documentation / Canvas Info in Figma: the variant in medium, the states
+ * in regular, the separator lighter. Figma can also show the component
+ * and the dir. The docs pages do not show them. Used by docs-cells and
+ * <docs-skeleton>, so a change here changes every canvas.
+ *
+ *     <p class="docs-canvas-info">
+ *         <span class="docs-canvas-info-variant">Default</span>
+ *         <span class="docs-canvas-info-separator" aria-hidden="true">·</span>
+ *         Error
+ *     </p>
+ *
+ * The parts are flex items, 4px apart as in Figma. The spaces between
+ * them in the markup do not count.
+ *
+ * It uses only base tokens, so a change in a semantic token does not
+ * change the docs pages.
+ */
+
+.docs-canvas-info {
+    color: var(--base-color-neutral-80);
+    display: flex;
+    flex-wrap: wrap;
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-regular);
+    gap: var(--base-unit-4);
+    line-height: var(--line-height);
+    margin: 0;
+    text-transform: lowercase;
+}
+
+.docs-canvas-info-variant {
+    font-weight: var(--font-weight-medium);
+}
+
+.docs-canvas-info-separator {
+    color: var(--base-color-neutral-60);
+}

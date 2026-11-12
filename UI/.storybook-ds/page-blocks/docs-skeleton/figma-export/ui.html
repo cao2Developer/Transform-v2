@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Docs skeleton export</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 12px;
+                font:
+                    12px/1.5 Inter,
+                    system-ui,
+                    sans-serif;
+                color: var(--figma-color-text);
+                background: var(--figma-color-bg);
+            }
+            .actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            button {
+                padding: 4px 10px;
+                border: 1px solid var(--figma-color-border);
+                border-radius: 6px;
+                font: inherit;
+                color: inherit;
+                background: var(--figma-color-bg);
+                cursor: pointer;
+            }
+            button.primary {
+                border-color: transparent;
+                color: var(--figma-color-text-onbrand);
+                background: var(--figma-color-bg-brand);
+            }
+            button:disabled {
+                opacity: 0.4;
+                cursor: default;
+            }
+            h2 {
+                margin: 16px 0 4px;
+                font-size: 12px;
+            }
+            ol,
+            ul {
+                margin: 0;
+                padding-inline-start: 20px;
+            }
+            li {
+                margin: 4px 0;
+            }
+            li button {
+                margin-inline-start: 6px;
+                padding: 0 6px;
+            }
+            .error {
+                color: var(--figma-color-text-danger);
+            }
+            .warning {
+                color: var(--figma-color-text-warning);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="actions">
+            <button id="selection" type="button">Use selection</button>
+            <button id="run" type="button">Run again</button>
+            <button id="save" class="primary" type="button" disabled>
+                Save JSON
+            </button>
+        </div>
+        <p id="status" role="status"></p>
+        <h2>Canvases, in order</h2>
+        <ol id="canvases"></ol>
+        <h2>Errors</h2>
+        <ul id="errors"></ul>
+        <h2>Warnings</h2>
+        <ul id="warnings"></ul>
+        <script>
+            const $ = (id) => document.getElementById(id);
+            const send = (pluginMessage) =>
+                parent.postMessage({ pluginMessage }, '*');
+            let figmaWarnings = [];
+
+            $('selection').onclick = () => send({ type: 'selection' });
+            $('run').onclick = () => send({ type: 'run' });
+            $('save').onclick = () => {
+                $('save').disabled = true;
+                $('status').textContent = 'Saving...';
+                send({ type: 'save' });
+            };
+
+            function item(text, kind, id) {
+                const li = document.createElement('li');
+                li.className = kind;
+                li.textContent = text;
+                if (id) {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.textContent = 'Show';
+                    button.setAttribute('aria-label', `Show ${id}`);
+                    button.onclick = () => send({ type: 'show', id });
+                    li.append(button);
+                }
+                return li;
+            }
+
+            function list(target, entries, kind) {
+                const label = kind === 'error' ? 'Check' : 'Warning';
+                target.replaceChildren(
+                    ...(entries.length
+                        ? entries.map((entry) =>
+                              item(
+                                  `${entry.check ? `${label} ${entry.check}: ` : ''}${entry.message}`,
+                                  kind,
+                                  entry.node || entry.canvas,
+                              ),
+                          )
+                        : [item('None.', '')]),
+                );
+            }
+
+            onmessage = (event) => {
+                const message = event.data.pluginMessage;
+                if (!message) return;
+                if (message.type === 'result') {
+                    figmaWarnings = message.warnings;
+                    $('canvases').replaceChildren(
+                        ...message.canvases.map((canvas) =>
+                            item(canvas.name, '', canvas.id),
+                        ),
+                    );
+                    list($('errors'), message.errors, 'error');
+                    list($('warnings'), message.warnings, 'warning');
+                    const ready =
+                        message.canvases.length && !message.errors.length;
+                    $('save').disabled = !ready;
+                    $('status').textContent = !message.canvases.length
+                        ? 'Select the canvas frames of the skeleton, then click Use selection.'
+                        : ready
+                          ? 'No errors in Figma. Save the JSON to check it against the code.'
+                          : 'Fix the errors in Figma, then click Run again.';
+                } else if (message.type === 'saved') {
+                    list($('errors'), message.errors, 'error');
+                    list(
+                        $('warnings'),
+                        figmaWarnings.concat(message.warnings),
+                        'warning',
+                    );
+                    $('save').disabled = false;
+                    $('status').textContent = message.saved.length
+                        ? `Saved: ${message.saved.join(', ')}`
+                        : 'Not saved. See the errors.';
+                }
+            };
+        </script>
+    </body>
+</html>
