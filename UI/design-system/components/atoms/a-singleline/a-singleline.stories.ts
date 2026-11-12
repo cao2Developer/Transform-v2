@@ -245,11 +245,12 @@ function cells(
     const field = states ? staticField : docField;
     const items = rows.flatMap((row, index) =>
         variants.map((variant) => {
+            const variantName = `<span class="docs-canvas-info-variant">${variantNames[variant]}</span>`;
             const name = row.state
-                ? `${variantNames[variant]} <span class="docs-cells-separator" aria-hidden="true">·</span> ${row.state}`
-                : variantNames[variant];
+                ? `${variantName} <span class="docs-canvas-info-separator" aria-hidden="true">·</span> ${row.state}`
+                : variantName;
             return `<div class="docs-cells-item">
-  <p class="docs-cells-label">${name}</p>
+  <p class="docs-canvas-info">${name}</p>
   <div class="docs-cells-stage">
     ${field({ ...args, ...row.args, variant }, `${id}-${index}-${variant}`)}
   </div>

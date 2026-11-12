@@ -2,18 +2,18 @@
  * Cells (page block): .docs-cells
  *
  * A Storybook canvas split into cells, one instance of the component per
- * cell, each with its name at the top left: the variant in Variations
- * ("Default"), the variant and the state in States ("Default · Error").
- * The names are shown in lowercase.
+ * cell, each with its name at the top left, in a canvas info
+ * (docs-canvas-info): the variant in Variations ("Default"), the variant
+ * and the state in States ("Default · Error").
  * One column per variant, set by --docs-cells-columns on the root. One
  * story renders every cell with the same args, so one Controls block
  * changes all of them.
  *
  *     <div class="docs-cells sb-unstyled" style="--docs-cells-columns: 2">
  *         <div class="docs-cells-item">
- *             <p class="docs-cells-label">
- *                 Default
- *                 <span class="docs-cells-separator" aria-hidden="true">·</span>
+ *             <p class="docs-canvas-info">
+ *                 <span class="docs-canvas-info-variant">Default</span>
+ *                 <span class="docs-canvas-info-separator" aria-hidden="true">·</span>
  *                 Error
  *             </p>
  *             <div class="docs-cells-stage">...the component...</div>
@@ -58,20 +58,6 @@
     display: grid;
     grid-template-rows: auto 1fr;
     padding: var(--base-unit-16);
-}
-
-.docs-cells-label {
-    color: var(--base-color-neutral-80);
-    font-family: var(--font-family-secondary);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-    line-height: var(--line-height);
-    margin: 0;
-    text-transform: lowercase;
-}
-
-.docs-cells-separator {
-    color: var(--base-color-neutral-60);
 }
 
 /* The component in the center of the space under the name */
