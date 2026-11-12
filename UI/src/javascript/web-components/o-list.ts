@@ -958,10 +958,25 @@ export default class OList extends Component implements Observer {
             attributeFilter: ['style', 'class'],
         };
 
+        let wasFocused = this.control.classList.contains('focus');
+
         const mutationObserver = (): void => {
+            const isFocused =
+                this.control?.classList.contains('focus') ?? false;
+            const reopened = !wasFocused && isFocused;
+            wasFocused = isFocused;
+
             requestAnimationFrame(() => {
                 this.setDropListDirection();
                 this.schedulePositionUpdate(document);
+
+                if (
+                    reopened &&
+                    this.isConnected &&
+                    this.control?.classList.contains('focus')
+                ) {
+                    this.updateScrollPosition();
+                }
             });
         };
 
