@@ -221,6 +221,7 @@ export default class OPalette extends Component implements Subject {
 
         this.updateDeleteButtonVisibility();
         this.setState('inprogress');
+        this.notifyControlsChanged();
     }
 
     private clearBlock(): void {
@@ -228,6 +229,13 @@ export default class OPalette extends Component implements Subject {
             (element) => {
                 element.replaceChildren();
             },
+        );
+        this.notifyControlsChanged();
+    }
+
+    private notifyControlsChanged(): void {
+        this.dispatchEvent(
+            new CustomEvent('paletteControlsChanged', { bubbles: true }),
         );
     }
 
