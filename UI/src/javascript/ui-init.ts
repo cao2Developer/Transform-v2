@@ -32,6 +32,7 @@ import OPalette from './web-components/o-palette';
 import OPaletteLoop from './web-components/o-palette-loop';
 import OHistory from './web-components/o-history';
 import OPaletteHistoryEntry from './web-components/o-palette-history-entry';
+import AFTD from './web-components/a-ftd';
 
 export const uiInit = (): void => {
     // DEMO web component for Storybook introduction.
@@ -79,6 +80,7 @@ export const uiInit = (): void => {
         customElements.define('o-history', OHistory);
     !customElements.get('o-palette-history-entry') &&
         customElements.define('o-palette-history-entry', OPaletteHistoryEntry);
+    !customElements.get('a-ftd') && customElements.define('a-ftd', AFTD);
 
     // Inner components.
     !customElements.get('a-scale-unit') &&
