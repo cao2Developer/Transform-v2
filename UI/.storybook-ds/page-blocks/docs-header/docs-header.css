@@ -204,7 +204,9 @@
 
 /*
  * Description. The space on the right keeps long text out from under the
- * Figma link (90px wide), with 30px between them.
+ * Figma link (90px wide), with 30px between them. With a docs-nav after
+ * the header, the Figma link is lower, and docs-nav.css removes this
+ * space.
  */
 
 .docs-header-description {
@@ -220,8 +222,10 @@
 
 /*
  * Figma link. It sits in the bottom right corner, out of the flow, as in
- * Figma, so its bottom lines up with the bottom of the description. The
- * Figma logo is its ::before.
+ * Figma, 32px from the bottom and from the right. With no docs-nav after
+ * the header, its bottom lines up with the bottom of the description.
+ * With a docs-nav, it sits over the right end of the bar (docs-nav.css).
+ * The Figma logo is its ::before.
  */
 
 .docs-header-source {

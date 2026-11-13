@@ -70,8 +70,8 @@ docs-nav {
 
     /*
      * The side margins cancel the 16px of the page, so the background
-     * uses the whole width while the bar is stuck. 32px of padding plus
-     * the 16px of each link puts the text at 48px, in line with the
+     * uses the whole width while the bar is stuck. 40px of padding plus
+     * the 8px of each link puts the text at 48px, in line with the
      * header title and the section titles. The top margin pulls the bar
      * up into the room that the header keeps for it, so its bottom sits
      * on the bottom border of the header. No bottom margin: the first
@@ -81,7 +81,7 @@ docs-nav {
     margin-top: calc(
         -1 * (var(--base-unit-56) + var(--docs-nav-header-border))
     );
-    padding-inline: var(--base-unit-32);
+    padding-inline: var(--base-unit-40);
     position: sticky;
     top: 0;
     transition:
@@ -106,39 +106,57 @@ docs-nav[data-stuck] {
 }
 
 /*
+ * Before the bar is stuck, it lies over the bottom of the header and over
+ * the Figma link. Clicks pass through the bar, so the Figma link still
+ * works. The row of links takes clicks again (pointer-events: auto).
+ */
+
+docs-nav:not([data-stuck]) {
+    pointer-events: none;
+}
+
+/*
  * The docs header right before the bar keeps room for it at its bottom:
  * 24px, the gap of the header, then the 56px of the bar. A header with
- * no bar after it keeps its 32px. The Figma link moves up by the same
- * amount, so its bottom still lines up with the bottom of the
- * description. On narrow screens the Figma link is in the flow, and
- * bottom has no effect.
+ * no bar after it keeps its 32px. The Figma link stays 32px from the
+ * bottom, over the right end of the bar. It is then lower than the
+ * description, so the description uses the whole width. On narrow
+ * screens the Figma link is in the flow, under the description.
  */
 
 .docs-header:has(+ docs-nav) {
     padding-bottom: calc(var(--base-unit-24) + var(--base-unit-56));
 }
 
-.docs-header:has(+ docs-nav) .docs-header-source {
-    bottom: calc(var(--base-unit-24) + var(--base-unit-56));
+.docs-header:has(+ docs-nav) .docs-header-description {
+    padding-right: 0;
 }
 
 /*
- * Row of links. On narrow screens it scrolls sideways, with no
- * scrollbar.
+ * Row of links. It ends 120px before the right edge, so the links do not
+ * pass under the Figma link. On narrow screens it scrolls sideways, with
+ * no scrollbar.
  */
 
 docs-nav > nav {
     display: flex;
+    gap: var(--base-unit-8);
+    margin-inline-end: var(--base-unit-120);
     overflow-x: auto;
+    pointer-events: auto;
     position: relative;
     scrollbar-width: none;
 }
 
-/* The blue line. One line for the whole row, so it can slide. */
+/*
+ * The blue line. One line for the whole row, so it can slide. Its top
+ * corners are round, and its bottom stays flat on the border under it.
+ */
 
 docs-nav > nav::after {
     background: var(--base-color-primary-blue-50);
     block-size: var(--docs-nav-indicator);
+    border-radius: var(--docs-nav-indicator) var(--docs-nav-indicator) 0 0;
     bottom: 0;
     content: '';
     inline-size: var(--docs-nav-width);
@@ -171,7 +189,7 @@ docs-nav a {
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-regular);
     line-height: var(--line-height);
-    padding: var(--base-unit-16);
+    padding: var(--base-unit-16) var(--base-unit-8);
     text-decoration: none;
     transition: color var(--docs-nav-fast) ease;
     white-space: nowrap;
@@ -223,10 +241,17 @@ docs-nav a:focus-visible {
     scroll-margin-top: var(--base-unit-56);
 }
 
-/* Same side padding as the sections on narrow screens (24px + 16px) */
+/*
+ * Narrow screens: the same side padding as the sections (32px + 8px).
+ * The Figma link is in the flow, so the row uses the whole width.
+ */
 
 @media (width <= 600px) {
     docs-nav {
-        padding-inline: var(--base-unit-24);
+        padding-inline: var(--base-unit-32);
+    }
+
+    docs-nav > nav {
+        margin-inline-end: 0;
     }
 }
