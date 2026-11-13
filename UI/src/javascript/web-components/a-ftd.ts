@@ -50,7 +50,10 @@ export default class AFTD extends Component {
     }
 
     private render(): void {
-        if (!this.shadowRoot || !this.Ftd) return;
+        if (!this.shadowRoot || !this.Ftd) {
+            this.setAttribute('data-empty', '');
+            return;
+        }
 
         this.renderer.render(
             this.shadowRoot,
@@ -58,6 +61,27 @@ export default class AFTD extends Component {
             (associateControl) => this.getControlValue(associateControl),
             (element) => this.parsePropertiesFrom(element),
         );
+
+        if (this.hasVisibleText(this.Ftd)) {
+            this.removeAttribute('data-empty');
+        } else {
+            this.setAttribute('data-empty', '');
+        }
+    }
+
+    private hasVisibleText(element: HTMLElement): boolean {
+        if (element.classList.contains('unavailable')) return false;
+
+        return Array.from(element.childNodes).some((child) => {
+            if (child.nodeType === Node.TEXT_NODE) {
+                return Boolean(child.textContent?.trim());
+            }
+
+            return (
+                child.nodeType === Node.ELEMENT_NODE &&
+                this.hasVisibleText(child as HTMLElement)
+            );
+        });
     }
 
     private configurePreview(): void {
