@@ -111,57 +111,6 @@ export default class OPaletteHistoryEntry extends Component {
         );
     }
 
-    private processVisibility(ftd: Element): void {
-        const properties = this.parsePropertiesFrom(ftd as HTMLElement);
-        const rules =
-            Object.keys(properties).length > 0
-                ? (properties as ReturnType<typeof this.getVisibilityRules>)
-                : this.getVisibilityRules(ftd.getAttribute('data-properties'));
-        const visibleRule = rules.visible?.rules ?? '';
-        const invisibleRule = rules.invisible?.rules ?? '';
-
-        ftd.classList.remove('unavailable', 'do-not-collapse');
-        if (!visibleRule && !invisibleRule) return;
-
-        let available = true;
-        let collapse = true;
-        const valueScope = this.getVisibilityValueScope();
-        if (!valueScope) return;
-        if (visibleRule) {
-            const parsedRule =
-                this.visibilityRulesProcessor.parseVisibilityRules(visibleRule);
-            this.visibilityRulesProcessor.getQuestionValues(valueScope);
-            available = this.visibilityRulesProcessor.evaluateRule(
-                this.visibilityRulesProcessor.insertQuestionValuesIntoRule(
-                    parsedRule,
-                ),
-            );
-            collapse = rules.visible?.collapse ?? true;
-        }
-        if (invisibleRule) {
-            const parsedRule =
-                this.visibilityRulesProcessor.parseVisibilityRules(
-                    invisibleRule,
-                );
-            this.visibilityRulesProcessor.getQuestionValues(valueScope);
-            if (
-                this.visibilityRulesProcessor.evaluateRule(
-                    this.visibilityRulesProcessor.insertQuestionValuesIntoRule(
-                        parsedRule,
-                    ),
-                )
-            ) {
-                available = false;
-            }
-            collapse = rules.invisible?.collapse ?? collapse;
-        }
-
-        if (!available) {
-            ftd.classList.add('unavailable');
-            if (!collapse) ftd.classList.add('do-not-collapse');
-        }
-    }
-
     private getVisibilityValueScope(): HTMLTableRowElement | null {
         const rowIndex = Number(this.getAttribute('data-index'));
         const loop = this.closest('o-block')?.querySelector('o-palette-loop');
