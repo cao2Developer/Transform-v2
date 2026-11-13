@@ -44,21 +44,29 @@ export default class OPaletteHistoryEntry extends Component {
             .complexquestion-delete {
                 display: none !important;
             }
+            :host(.active) .complexquestion-delete {
+                display: inline-flex !important;
+                pointer-events: auto;
+            }
             .l-col-history {
                 display: flex;
             }
-            ftd {
+            ftd-rule {
                 color: var(--color-secondary);
                 cursor: pointer;
             }
-            ftd.unavailable {
+            ftd-rule.unavailable {
                 display: none;
             }
-            ftd.unavailable.do-not-collapse {
+            ftd-rule.unavailable.do-not-collapse {
                 display: initial;
                 visibility: hidden;
             }
-            :is(.complexquestion-edit, .complexquestion-reset) {
+            :is(
+                .complexquestion-edit,
+                .complexquestion-reset,
+                .complexquestion-delete
+            ) {
                 align-items: center;
                 border: 1px solid var(--color-primary, #1f1f1f);
                 display: inline-flex;
@@ -72,6 +80,12 @@ export default class OPaletteHistoryEntry extends Component {
                 background-position: center;
                 background-repeat: no-repeat;
             }
+            .complexquestion-delete {
+                background-color: var(--color-bg-neutral-primary, #ffffff);
+                background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2224px%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224px%22%20fill%3D%22%231f1f1f%22%3E%3Cpath%20d%3D%22M16%209V19H8V9H16ZM14.5%203H9.5L8.5%204H5V6H19V4H15.5L14.5%203ZM18%207H6V19C6%2020.1%206.9%2021%208%2021H16C17.1%2021%2018%2020.1%2018%2019V7Z%22%2F%3E%3C%2Fsvg%3E");
+                background-position: center;
+                background-repeat: no-repeat;
+            }
             .l-col-history {
                 justify-content: end;
             }`;
@@ -82,7 +96,7 @@ export default class OPaletteHistoryEntry extends Component {
     }
 
     render(): void {
-        this.shadowRoot?.querySelectorAll('ftd').forEach((ftd) => {
+        this.shadowRoot?.querySelectorAll('ftd-rule').forEach((ftd) => {
             this.processVisibility(ftd);
 
             if (ftd.getAttribute('type') !== 'variable') return;
@@ -214,9 +228,24 @@ export default class OPaletteHistoryEntry extends Component {
         });
     }
 
+    private configureDeleteButton(): void {
+        this.shadowRoot
+            ?.querySelector('.complexquestion-delete')
+            ?.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                this.dispatchEvent(
+                    new CustomEvent('paletteRecordDeleteRequest', {
+                        bubbles: true,
+                    }),
+                );
+            });
+    }
+
     public connectedCallback(): void {
         super.connectedCallback();
         this.initializeShadowRoot();
+        this.configureDeleteButton();
         this.Block = this.closest('o-block');
         this.Block?.addEventListener('questionChange', this);
         this.render();

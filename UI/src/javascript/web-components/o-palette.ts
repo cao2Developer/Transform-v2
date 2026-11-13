@@ -42,7 +42,35 @@ export default class OPalette extends Component implements Subject {
                 }
                 this.handleAnswerCountChange(e);
                 break;
+            case 'paletteRecordDeleteRequest':
+                this.handleRecordDeleteRequest(e);
+                break;
         }
+    }
+
+    private handleRecordDeleteRequest(event: Event): void {
+        const target = event.target as Element | null;
+        if (
+            !target ||
+            !this.OwnerBlock ||
+            target.closest('o-block') !== this.OwnerBlock
+        ) {
+            return;
+        }
+
+        const entry = target.closest(
+            'o-palette-history-entry',
+        ) as HTMLElement | null;
+        if (
+            !entry ||
+            !this.editingRow ||
+            !entry.classList.contains('active') ||
+            entry !== this.getEditingHistoryEntry()
+        ) {
+            return;
+        }
+
+        this.handleDeleteClick();
     }
 
     private handleRecordEdit = (event: Event): void => {
@@ -556,6 +584,7 @@ export default class OPalette extends Component implements Subject {
         this.configureLoop();
         this.OwnerBlock = this.closest('o-block');
         this.OwnerBlock?.addEventListener('answerCountChange', this);
+        this.OwnerBlock?.addEventListener('paletteRecordDeleteRequest', this);
         this.OwnerBlock?.addEventListener(
             'paletteRecordEdit',
             this.handleRecordEdit,
@@ -610,6 +639,10 @@ export default class OPalette extends Component implements Subject {
     public disconnectedCallback(): void {
         this.removeEventListener('cloneQuestion', this);
         this.OwnerBlock?.removeEventListener('answerCountChange', this);
+        this.OwnerBlock?.removeEventListener(
+            'paletteRecordDeleteRequest',
+            this,
+        );
         this.OwnerBlock?.removeEventListener(
             'paletteRecordEdit',
             this.handleRecordEdit,
