@@ -216,8 +216,11 @@
 }
 
 /*
- * Inline code (text between backticks in MDX): token names, attributes
- * and keys. It reads as part of the text, with a dotted underline.
+ * Inline code (text between backticks in MDX): token names, attributes,
+ * classes and keys. It reads as part of the text, with a dotted underline.
+ * Tabular numbers and a little letter spacing bring it closer to code
+ * without changing the font. The spacing also keeps the two hyphens of
+ * "--" apart, so a class does not read as a long dash.
  */
 :is(.docs-section-notes, .docs-section-body) > :is(p, ul, ol) code {
     background: none;
@@ -226,7 +229,9 @@
     color: inherit;
     font-family: inherit;
     font-size: inherit;
+    font-variant-numeric: tabular-nums;
     font-weight: var(--font-weight-medium);
+    letter-spacing: 0.05em;
     line-height: inherit;
     margin: 0;
     padding: 0;

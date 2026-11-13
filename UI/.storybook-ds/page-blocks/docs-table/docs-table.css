@@ -110,7 +110,9 @@
     color: inherit;
     font-family: inherit;
     font-size: inherit;
+    font-variant-numeric: tabular-nums;
     font-weight: var(--font-weight-medium);
+    letter-spacing: 0.05em;
     line-height: inherit;
     margin: 0;
     padding: 0;
