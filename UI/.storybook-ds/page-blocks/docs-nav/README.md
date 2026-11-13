@@ -89,7 +89,6 @@ Measured on `--base-color-neutral-10` (`#fafafa`), the color of the bar. The lin
 ## Points to review
 
 - **Focus after a click.** The focus stays on the link. To move it to the section, each section needs `tabindex="-1"`, and the CSS needs a rule for the focus of a section.
-- **Other doc pages.** For now, only the Summary page of a-singleline has the bar.
 - **Links and sections.** The links are written by hand. When a section is added, removed or renamed, its link must change too: the `href` is the id of the section title (lowercase, spaces become hyphens). `npm run check` compares the links with the sections of each page.
 
 ## Scope
