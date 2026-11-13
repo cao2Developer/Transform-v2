@@ -2,14 +2,14 @@ The component is a single text field. In the error state, the field shows an err
 
 ### Dimensions and spacing
 
-40px (`--size-xl`) fixed height, 16px (`--space-lg`) horizontal padding and 2px corner radius (`--radius-xs`). The text is vertically centered.
+40px (`size-xl`) fixed height, 16px (`space-lg`) horizontal padding and 2px corner radius (`radius-xs`). The text is vertically centered.
 
-The border is 2px (`--border-width-default`) in the inactive, active and error states and 1px (`--border-width-thin`) in the read only state.
+The border is 2px (`border-width-default`) in the inactive, active and error states and 1px (`border-width-thin`) in the read only state.
 
 ### Error icon
 
-The icon is 16px × 16px (`--size-sm`) and vertically centered. It is 12px (`--space-md`) from the end edge of the field. There are 8px (`--space-sm`) between the text and the icon. The field reserves this space, so the text never overlaps the icon.
+The icon is 16px × 16px (`size-sm`) and vertically centered. It is 12px (`space-md`) from the end edge of the field. There are 8px (`space-sm`) between the text and the icon. The field reserves this space, so the text never overlaps the icon.
 
 ### Responsive behavior
 
-The default width is 200px (`--input-width`). It can be changed per question. The text stays on one line and scrolls horizontally when it is longer than the field.
+The default width is 200px (`input-width`). It can be changed per question. The text stays on one line and scrolls horizontally when it is longer than the field.
