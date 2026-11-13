@@ -2,11 +2,13 @@
         <o-history data-order="ascending">
         <template class="l-row-template">
                 <div class="l-col-history-ftd">
-                    <ftd type="variable" data-associate-control="cb__drugtest"><!-- cb_drugtest Value --></ftd>
-                    <ftd type="span" data-properties="{&quot;visible&quot;:{&quot;collapse&quot;:true,&quot;rules&quot;:&quot;cb__drugtest.containsAny('_1_1128_1128','_1_7126_7126','_1_5020_5020')&quot;}}">
-                            <ftd type="static" data-translate="other" data-translate-purpose="content"><!-- string --></ftd>
-                            <span>:&#160;</span>
-                        <ftd type="variable" data-associate-control="otherdrug"><!-- Otherdrug Value --></ftd>
+                    <ftd data-name="historyentry">
+                        <ftd-rule type="variable" data-associate-control="cb__drugtest"><!-- cb_drugtest Value --></ftd-rule>
+                        <ftd-rule type="span" data-properties="{&quot;visible&quot;:{&quot;collapse&quot;:true,&quot;rules&quot;:&quot;cb__drugtest.containsAny('_1_1128_1128','_1_7126_7126','_1_5020_5020')&quot;}}">
+                                <ftd-rule type="static" data-translate="other" data-translate-purpose="content"><!-- string --></ftd-rule>
+                                <span>:&#160;</span>
+                            <ftd-rule type="variable" data-associate-control="otherdrug"><!-- Otherdrug Value --></ftd-rule>
+                        </ftd-rule>
                     </ftd>
                 </div>
                 <div class="l-col-history">
@@ -98,15 +100,17 @@
                 </div>
 
                 <div class="palette-actions">
-                    <a-button-icon class="complexbutton-delete">
-                        <!-- delete -->
-                    </a-button-icon>
+                <div class="l-col-history-ftd">
+                    <label>
+                        <a-ftd data-associate-control="historyentry" data-associate-type="ftd" >
+                    </label>
+                </div>
 
                     <a-button-icon class="complexbutton-cancel">
                         <!-- cancel -->
                     </a-button-icon>
 
-                    <a-button-icon class="complexbutton-submit">
+                    <a-button-icon class="complexbutton-submit" data-properties="{'enable':{'rules':{}}}">
                         <!-- submit -->
                     </a-button-icon>
                 </div>
