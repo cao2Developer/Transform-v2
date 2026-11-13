@@ -116,6 +116,7 @@
     border-radius: var(--base-unit-8);
     box-shadow: var(--docs-skeleton-shadow);
     container-type: inline-size;
+    isolation: isolate;
     overflow: clip;
     position: relative;
 }
