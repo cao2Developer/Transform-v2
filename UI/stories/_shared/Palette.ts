@@ -38,6 +38,7 @@ export const PaletteBlockHtml = (options?: { order?: string }): string => `
             <div class="label-otherdrug" data-associate-type="label" data-associate-question="otherdrug"></div>
             <div class="control-otherdrug" data-associate-type="control" data-associate-question="otherdrug"></div>
             <div class="palette-button-row">
+                <a-ftd data-associate-control="historyentry"></a-ftd>
                 <a-button-icon class="complexbutton-cancel"></a-button-icon>
                 <a-button-icon class="complexbutton-submit"></a-button-icon>
             </div>
