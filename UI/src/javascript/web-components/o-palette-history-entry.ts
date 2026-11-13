@@ -1,9 +1,11 @@
 import Component from './component';
+import FtdRenderer from './ftd-renderer';
 import VisibilityRulesProcessor from './visibility-rules-processor';
 
 export default class OPaletteHistoryEntry extends Component {
     private Block: HTMLElement | null = null;
     private visibilityRulesProcessor = new VisibilityRulesProcessor();
+    private ftdRenderer = new FtdRenderer();
 
     private initializeShadowRoot(): void {
         if (this.shadowRoot) return;
@@ -96,18 +98,17 @@ export default class OPaletteHistoryEntry extends Component {
     }
 
     render(): void {
-        this.shadowRoot?.querySelectorAll('ftd-rule').forEach((ftd) => {
-            this.processVisibility(ftd);
+        if (!this.shadowRoot) return;
 
-            if (ftd.getAttribute('type') !== 'variable') return;
-            const associateControl = ftd.getAttribute('data-associate-control');
-            if (!associateControl) return;
-
-            ftd.textContent =
-                this.getAttribute(`data-label-${associateControl}`) ||
-                this.getAttribute(`data-${associateControl}`) ||
-                '';
-        });
+        this.ftdRenderer.render(
+            this.shadowRoot,
+            this.getVisibilityValueScope(),
+            (associateControl) => ({
+                label: this.getAttribute(`data-label-${associateControl}`),
+                value: this.getAttribute(`data-${associateControl}`),
+            }),
+            (element) => this.parsePropertiesFrom(element),
+        );
     }
 
     private processVisibility(ftd: Element): void {
