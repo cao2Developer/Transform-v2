@@ -53,6 +53,14 @@
 }
 
 /*
+ * Storybook controls: no margin under the table, so a section that ends
+ * with controls has the same space at its bottom as any other section.
+ */
+.docs-section-body .docblock-argstable {
+    margin-bottom: 0;
+}
+
+/*
  * Sections
  *
  * The section title sits on top, across the whole width. Below it, the
@@ -61,10 +69,10 @@
  * full-width section has no notes column: its body uses the whole width.
  * Below 1024px wide, the notes go under the body.
  *
- * A section has 32px of padding on every side. Sections touch, with no
- * space and no line between them, so two sections are 64px apart. The
- * title has 24px under it, and the body and the notes have 48px between
- * them.
+ * A section has 48px of padding at the top and the bottom, and 32px at
+ * the sides. Sections touch, with no space and no line between them, so
+ * two sections are 96px apart. The title has 24px under it, and the body
+ * and the notes have 48px between them.
  */
 
 .docs-section {
@@ -74,21 +82,21 @@
     column-gap: var(--base-unit-48);
     display: grid;
     grid-template-columns: minmax(0, 1fr) var(--docs-notes-width);
-    padding: var(--base-unit-32);
+    padding: var(--base-unit-48) var(--base-unit-32);
     row-gap: var(--base-unit-24);
 }
 
 /*
  * Section title: the text, then a line from the text to the right edge,
  * centered on the text, 24px after it. The line fades into the color of
- * the page. A grid, so the variant label has its own row above the text.
+ * the page. In a section of one variant, the variant label sits between
+ * the text and the line, 8px after the text.
  */
 .docs-section > h2 {
     align-items: center;
-    column-gap: var(--base-unit-24);
-    display: grid;
+    column-gap: var(--base-unit-8);
+    display: flex;
     grid-column: 1 / -1;
-    grid-template-columns: auto minmax(0, 1fr);
     position: relative;
 }
 
@@ -99,10 +107,14 @@
         var(--base-color-neutral-10)
     );
     content: '';
+    flex: 1;
     height: 1px;
+    /* With the 8px gap: 24px after the text or the label */
+    margin-left: var(--base-unit-16);
+    order: 2;
 }
 
-/* The anchor link of Storybook stays out of the grid, left of the text. */
+/* The anchor link of Storybook stays out of the row, left of the text. */
 .docs-section > h2 > a {
     left: 0;
     position: absolute;
@@ -198,21 +210,30 @@
 }
 
 /*
- * Variant label: a short label above the section title, inside the title,
- * when the Docs page shows a section of one variant (States of Default,
- * then States of Inline). Inside the title, it gives each title its own
- * text and its own id.
+ * Variant label: a short label after the section title, inside the title,
+ * when the Summary page shows a section of one variant (Skeleton of
+ * Default, then Skeleton of Inline). Inside the title, it gives each title
+ * its own text and its own id. It comes first in the markup, so the id
+ * stays "default-skeleton", and order shows it after the text. The same
+ * chip as the token in the docs header, 24px high.
  */
 .docs-section > h2 > .docs-section-variant {
-    color: var(--base-color-neutral-70);
-    display: block;
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-bold);
-    grid-column: 1 / -1;
-    letter-spacing: 0.1em; /* uppercase label, as in the docs header */
+    align-items: center;
+    background: var(--base-color-neutral-0);
+    border: 1px solid var(--base-color-neutral-40);
+    border-radius: var(--base-unit-4);
+    box-shadow: 0.5px 0.5px 1px 0 rgb(0 0 0 / 6%); /* same value as the token in the docs header */
+    box-sizing: border-box;
+    color: var(--base-color-primary-blue-75);
+    display: inline-flex;
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    height: var(--base-unit-24);
     line-height: 1;
-    margin-bottom: var(--base-unit-8);
-    text-transform: uppercase;
+    order: 1;
+    padding: 0 var(--base-unit-8);
+    text-transform: lowercase;
 }
 
 /*

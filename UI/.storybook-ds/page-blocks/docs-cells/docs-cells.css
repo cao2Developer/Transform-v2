@@ -9,6 +9,10 @@
  * story renders every cell with the same args, so one Controls block
  * changes all of them.
  *
+ * The canvas is a gray tray (--base-color-neutral-20) with 4px around and
+ * between the cells. Each cell is a white card with a 4px corner and its
+ * name 16px from the top left.
+ *
  *     <div class="docs-cells sb-unstyled" style="--docs-cells-columns: 2">
  *         <div class="docs-cells-item">
  *             <p class="docs-canvas-info">
@@ -32,40 +36,56 @@
  */
 
 .docs-cells {
+    --docs-cells-cell-radius: var(--base-unit-4); /* the corner of each cell */
+
     /* Values with no base token */
-    --docs-cells-line: var(--base-color-neutral-40);
     --docs-cells-min-height: 10rem; /* 160px, the min-height of every canvas in docs.css */
 
+    background: var(--base-color-neutral-20);
     display: grid;
+    gap: var(--base-unit-4);
     grid-template-columns: repeat(
         var(--docs-cells-columns, 1),
         minmax(max-content, 1fr)
     );
     min-height: var(--docs-cells-min-height);
     overflow-x: auto; /* a wide Width scrolls inside the canvas */
+    padding: var(--base-unit-4);
 }
 
 /*
- * Lines between the cells: each cell draws one on its right and one at
- * its bottom. The lines of the last column and the last row fall on the
- * edge of the canvas, where overflow cuts them. The cells have no
- * background, so no cell covers the line of its neighbor.
+ * The Storybook frame around the canvas, with the corner and the shadow of
+ * the Skeleton canvas. The border (--base-color-neutral-40) comes from the
+ * theme in preview.ts. Only the canvases with cells change.
  */
-.docs-cells-item {
-    box-shadow:
-        1px 0 0 var(--docs-cells-line),
-        0 1px 0 var(--docs-cells-line);
-    display: grid;
-    grid-template-rows: auto 1fr;
-    padding: var(--base-unit-16);
+.sbdocs-preview:has(.docs-cells) {
+    border-radius: var(--base-unit-8);
+    box-shadow: 0 1px 2px 0 rgb(33 44 76 / 12%); /* same value as --shadow-inactive */
+    overflow: clip;
 }
 
-/* The component in the center of the space under the name */
+/* Each cell: a white card on the gray canvas */
+.docs-cells-item {
+    background: var(--base-color-neutral-0);
+    border: 1px solid var(--base-color-neutral-30);
+    border-radius: var(--docs-cells-cell-radius);
+    display: grid;
+    padding: var(--base-unit-64) var(--base-unit-16);
+    position: relative;
+}
+
+/* The name of the cell at its top left, out of the flow, as in Figma */
+.docs-cells-item > .docs-canvas-info {
+    inset-block-start: var(--base-unit-16);
+    inset-inline-start: var(--base-unit-16);
+    position: absolute;
+}
+
+/* The component in the center of the cell */
 .docs-cells-stage {
     align-items: center;
     display: flex;
     justify-content: center;
-    padding: var(--base-unit-16) var(--base-unit-32);
 }
 
 .docs-cells--static .docs-cells-stage {
