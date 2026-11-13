@@ -194,9 +194,9 @@ export const Inline: Story = {
 
 // The cells canvas of the Variations and States sections: one cell per variant
 // and state, each with its name at the top left, and the same args in every
-// cell, so one Controls block changes all of them. The docs-cells classes come
-// from the page block of the same name, which the docs Storybook loads on every
-// page. id keeps the ids of each section apart.
+// cell, so the Controls block of States changes all of them. The docs-cells
+// classes come from the page block of the same name, which the docs Storybook
+// loads on every page. id keeps the ids of each section apart.
 const variations: SinglelineArgs['variant'][] = ['default', 'inline'];
 
 const variantNames = { default: 'Default', inline: 'Inline' };
@@ -210,11 +210,33 @@ const variationRows: Row[] = [{}];
 
 // States: Inactive, Error and Read only, in the order of the notes. Active is
 // a control, so it combines with each of them.
-const stateRows: Row[] = [
+const stateRows: (Row & { state: string })[] = [
     { state: 'Inactive' },
     { state: 'Error', args: { error: true } },
     { state: 'Read only', args: { readOnly: true } },
 ];
+
+// The code canvas of States (DocsCode reads it in parameters.code): one tab
+// per state, with the HTML of the field for the current args. Active has no
+// tab, because it does not change the HTML. With more than one variant, each
+// tab shows every variant, each after a comment with its name.
+function statesCode(variants: SinglelineArgs['variant'][]) {
+    return (args: SinglelineArgs): { label: string; code: string }[] =>
+        stateRows.map((row) => ({
+            label: row.state,
+            code: variants
+                .map((variant) => {
+                    const html = singleline(
+                        { ...args, ...row.args, variant },
+                        'answer',
+                    );
+                    return variants.length > 1
+                        ? `<!-- ${variantNames[variant]} -->\n${html}`
+                        : html;
+                })
+                .join('\n\n'),
+        }));
+}
 
 // The States stories show the Active control, hidden in the meta. The name is
 // repeated: without it, Storybook names the argType by its key ("active"), and
@@ -271,58 +293,27 @@ ${items.join('\n')}
 // The cells fill the canvas, with no padding around them.
 const fullscreen = { layout: 'fullscreen' };
 
-// The Variations story has one more arg: State, one of the states of the
-// States section, set on every cell.
-type VariationsArgs = SinglelineArgs & { state?: string };
-
-function withState(args: VariationsArgs): VariationsArgs {
-    const row = stateRows.find((item) => item.state === args.state);
-    return { ...args, ...row?.args };
-}
-
-// Variations section. Shown only on the Summary and Common pages. Its
-// Controls block has only State.
-export const Variations: StoryObj<VariationsArgs> = {
-    tags: ['!dev'],
-    args: { state: 'Inactive' },
-    argTypes: {
-        ...fixedVariant,
-        state: {
-            name: 'State',
-            control: 'select',
-            options: stateRows.map((row) => row.state),
-            table: { defaultValue: { summary: 'Inactive' } },
-        },
-    },
-    parameters: fullscreen,
-    render: (args) =>
-        cells(
-            withState(args),
-            'a-singleline-variations',
-            variations,
-            variationRows,
-        ),
-};
-
-// Attributes section. Shown only on the Summary and Common pages: the same
-// cells as Variations, in the inactive state, with the attribute controls.
-export const Attributes: Story = {
+// Variations section. Shown only on the Summary and Common pages, with no
+// Controls block: the cells stay interactive, and each variant has its own
+// page in the sidebar.
+export const Variations: Story = {
     tags: ['!dev'],
     argTypes: fixedVariant,
     parameters: fullscreen,
     render: (args) =>
-        cells(args, 'a-singleline-attributes', variations, variationRows),
+        cells(args, 'a-singleline-variations', variations, variationRows),
 };
 
 // States section. Shown only on the doc pages: States has both variants
 // (Summary page), and StatesDefault and StatesInline have one variant each
 // (variant pages). The rows set Error and Read only, so the controls of the
-// section change only what every cell shares, and Active.
+// section are Active and the attributes, which every cell shares. They also
+// change the HTML of the code canvas (parameters.code).
 export const States: StoryObj<StatesArgs> = {
     tags: ['!dev'],
     args: { value: 'Answer' },
     argTypes: { ...fixedVariant, ...showActive },
-    parameters: fullscreen,
+    parameters: { ...fullscreen, code: statesCode(variations) },
     render: (args) => cells(args, 'a-singleline-states', variations, stateRows),
 };
 
@@ -330,7 +321,7 @@ export const StatesDefault: StoryObj<StatesArgs> = {
     tags: ['!dev'],
     args: { value: 'Answer' },
     argTypes: { ...fixedVariant, ...showActive },
-    parameters: fullscreen,
+    parameters: { ...fullscreen, code: statesCode(['default']) },
     render: (args) =>
         cells(args, 'a-singleline-states-default', ['default'], stateRows),
 };
@@ -339,7 +330,7 @@ export const StatesInline: StoryObj<StatesArgs> = {
     tags: ['!dev'],
     args: { value: 'Answer' },
     argTypes: { ...fixedVariant, ...showActive },
-    parameters: fullscreen,
+    parameters: { ...fullscreen, code: statesCode(['inline']) },
     render: (args) =>
         cells(args, 'a-singleline-states-inline', ['inline'], stateRows),
 };
@@ -399,9 +390,17 @@ if (variationCells.includes('tabindex')) {
     throw new Error('a Variations cell cannot be focused');
 }
 
-const readOnlyState = withState({ ...defaultArgs, state: 'Read only' });
-if (!readOnlyState.readOnly || readOnlyState.error) {
-    throw new Error('the State control of Variations does not set read only');
+const codeTabs = statesCode(['default'])(defaultArgs);
+const tabCode = (label: string): string =>
+    codeTabs.find((tab) => tab.label === label)?.code ?? '';
+if (
+    codeTabs.length !== stateRows.length ||
+    /readonly|aria-invalid/.test(tabCode('Inactive')) ||
+    !tabCode('Error').includes('aria-invalid="true"') ||
+    !tabCode('Read only').includes('readonly') ||
+    tabCode('Read only').includes('aria-invalid')
+) {
+    throw new Error('a code tab does not show the HTML of its state');
 }
 
 if (

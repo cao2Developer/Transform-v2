@@ -1,8 +1,6 @@
-import { Meta, Canvas, Controls, Markdown } from '@storybook/addon-docs/blocks';
+import { Meta, Canvas, Markdown } from '@storybook/addon-docs/blocks';
 import * as Stories from './a-singleline.stories';
 import variations from './content/variations.md?raw';
-import attributes from './content/attributes.md?raw';
-import HtmlStructure from './sections/html.mdx';
 import accessibility from './content/accessibility.md?raw';
 
 <Meta title="Atoms/Singleline/Common" />
@@ -23,7 +21,7 @@ import accessibility from './content/accessibility.md?raw';
     </div>
     <p className="docs-header-description">
         {
-            'The parts of the component that are the same in both variants: variations, attributes, HTML structure and accessibility.'
+            'The parts of the component that are the same in both variants: variations and accessibility.'
         }
     </p>
     <a
@@ -42,8 +40,6 @@ import accessibility from './content/accessibility.md?raw';
 <docs-nav className="sb-unstyled">
     <nav aria-label="On this page">
         <a href="#variations">Variations</a>
-        <a href="#attributes">Attributes</a>
-        <a href="#html-structure">HTML Structure</a>
         <a href="#accessibility">Accessibility</a>
     </nav>
 </docs-nav>
@@ -58,46 +54,10 @@ import accessibility from './content/accessibility.md?raw';
 
 <Canvas of={Stories.Variations} sourceState="none" />
 
-<Controls of={Stories.Variations} include={['State']} />
-
 </div>
 <Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
     {variations}
 </Markdown>
-</div>
-
-{/* Section: Attributes */}
-
-<div className="docs-section">
-
-## Attributes
-
-<div className="docs-section-body">
-
-<Canvas of={Stories.Attributes} sourceState="none" />
-
-<Controls
-    of={Stories.Attributes}
-    include={['Value', 'Placeholder', 'Text alignment', 'Width', 'Max length']}
-/>
-
-</div>
-<Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
-    {attributes}
-</Markdown>
-</div>
-
-{/* Section: HTML Structure */}
-
-<div className="docs-section docs-section--full">
-
-## HTML Structure
-
-<div className="docs-section-body">
-
-<HtmlStructure />
-
-</div>
 </div>
 
 {/* Section: Accessibility */}

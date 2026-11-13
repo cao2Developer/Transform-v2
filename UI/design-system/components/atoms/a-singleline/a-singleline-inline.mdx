@@ -1,6 +1,8 @@
 import { Meta, Canvas, Controls, Markdown } from '@storybook/addon-docs/blocks';
+import { DocsCode } from '../../../../.storybook-ds/page-blocks/docs-code/docs-code';
 import * as Stories from './a-singleline.stories';
 import states from './content/states.md?raw';
+import attributes from './content/attributes.md?raw';
 import skeletonNotes from './content/skeleton-inline.md?raw';
 import skeleton from './sections/skeleton.json';
 
@@ -59,12 +61,21 @@ import skeleton from './sections/skeleton.json';
 
 <Controls
     of={Stories.StatesInline}
-    include={['Active', 'Text alignment', 'Value', 'Placeholder', 'Width']}
+    include={[
+        'Active',
+        'Value',
+        'Placeholder',
+        'Text alignment',
+        'Width',
+        'Max length',
+    ]}
 />
+
+<DocsCode of={Stories.StatesInline} />
 
 </div>
 <Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
-    {states}
+    {`${states}\n${attributes}`}
 </Markdown>
 </div>
 

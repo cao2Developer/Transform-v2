@@ -193,6 +193,18 @@
 }
 
 /*
+ * An h2 in the notes starts a second group of notes, such as the
+ * attributes after the states. It looks like a subtitle (h3): 20px, with
+ * no line under it and 40px above it.
+ */
+.docs-section .docs-section-notes > h2 {
+    border-bottom: none;
+    font-size: var(--font-size-lg);
+    margin-top: var(--base-unit-40);
+    padding-bottom: 0;
+}
+
+/*
  * The paragraphs of the notes have no margin: only the 8px under each
  * subtitle, and 8px between two paragraphs.
  */

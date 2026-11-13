@@ -5,9 +5,14 @@
  *
  * The structure and the Copy button of the code canvas. docs-code.css has
  * the look and the rest of the behavior (tabs, height, Expand). A doc page
- * shows the HTML and the CSS of a component:
+ * passes a story:
  *
- *     <DocsCode html={...} css={css} />
+ *     <DocsCode of={Stories.States} />
+ *
+ * The story gives the tabs in parameters.code, a function of its args that
+ * returns one { label, code } per tab, with HTML code. DocsCode reads the
+ * current args of the story and follows them, as the Controls block does,
+ * so the code changes with the controls.
  *
  * The code blocks are the SyntaxHighlighter of Storybook, the code block
  * inside the Source block: the Source block does not pass on
@@ -20,9 +25,12 @@
  * plugin, so without it the JSX would need React in scope.
  */
 
-import { useEffect, useId, useState } from 'react';
+import { useContext, useEffect, useId, useState } from 'react';
 import type { JSX } from 'react';
+import { DocsContext, useOf } from '@storybook/addon-docs/blocks';
 import { SyntaxHighlighter } from 'storybook/internal/components';
+import { STORY_ARGS_UPDATED } from 'storybook/internal/core-events';
+import type { Args } from 'storybook/internal/types';
 
 // How long the check shows, the same as the Copy button of Storybook
 const COPIED_TIME = 1500;
@@ -39,21 +47,35 @@ const codeProps = {
     showLineNumbers: true,
 };
 
-type Tab = { label: string; language: 'html' | 'css'; code: string };
+type Tab = { label: string; code: string };
 
-type DocsCodeProps = { html: string; css: string };
+type DocsCodeProps = { of: Parameters<typeof useOf>[0] };
 
-export const DocsCode = ({ html, css }: DocsCodeProps): JSX.Element => {
+export const DocsCode = ({ of }: DocsCodeProps): JSX.Element => {
+    const { story } = useOf(of, ['story']);
+    const context = useContext(DocsContext);
     // One radio group per code canvas, so two canvases on a page do not
     // share it
     const name = useId();
     const [current, setCurrent] = useState(0);
     const [copied, setCopied] = useState(false);
+    const [args, setArgs] = useState<Args>(
+        () => context.getStoryContext(story).args,
+    );
 
-    const tabs: Tab[] = [
-        { label: 'HTML', language: 'html', code: html },
-        { label: 'CSS', language: 'css', code: css },
-    ];
+    // The same event the Controls block listens to
+    useEffect(() => {
+        const update = (changed: { storyId: string; args: Args }): void => {
+            if (changed.storyId === story.id) setArgs(changed.args);
+        };
+        context.channel.on(STORY_ARGS_UPDATED, update);
+        return (): void => {
+            context.channel.off(STORY_ARGS_UPDATED, update);
+        };
+    }, [story.id, context.channel]);
+
+    const code = story.parameters.code as (args: Args) => Tab[];
+    const tabs = code(args);
 
     useEffect(() => {
         if (!copied) return undefined;
@@ -110,10 +132,7 @@ export const DocsCode = ({ html, css }: DocsCodeProps): JSX.Element => {
             <div className="docs-code-panels">
                 {tabs.map((tab) => (
                     <div className="docs-code-panel" key={tab.label}>
-                        <SyntaxHighlighter
-                            {...codeProps}
-                            language={tab.language}
-                        >
+                        <SyntaxHighlighter {...codeProps} language="html">
                             {tab.code}
                         </SyntaxHighlighter>
                     </div>

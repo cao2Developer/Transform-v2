@@ -1,11 +1,11 @@
 import { Meta, Canvas, Controls, Markdown } from '@storybook/addon-docs/blocks';
+import { DocsCode } from '../../../../.storybook-ds/page-blocks/docs-code/docs-code';
 import * as Stories from './a-singleline.stories';
 import overview from './content/overview.md?raw';
 import variations from './content/variations.md?raw';
-import attributes from './content/attributes.md?raw';
-import HtmlStructure from './sections/html.mdx';
-import accessibility from './content/accessibility.md?raw';
 import states from './content/states.md?raw';
+import attributes from './content/attributes.md?raw';
+import accessibility from './content/accessibility.md?raw';
 import skeletonDefault from './content/skeleton-default.md?raw';
 import skeletonInline from './content/skeleton-inline.md?raw';
 import skeleton from './sections/skeleton.json';
@@ -48,9 +48,7 @@ import skeleton from './sections/skeleton.json';
     <nav aria-label="On this page">
         <a href="#overview">Overview</a>
         <a href="#variations">Variations</a>
-        <a href="#attributes">Attributes</a>
         <a href="#states">States</a>
-        <a href="#html-structure">HTML Structure</a>
         <a href="#accessibility">Accessibility</a>
         <a href="#default-skeleton">Skeleton</a>
     </nav>
@@ -77,32 +75,9 @@ import skeleton from './sections/skeleton.json';
 
 <Canvas of={Stories.Variations} sourceState="none" />
 
-<Controls of={Stories.Variations} include={['State']} />
-
 </div>
 <Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
     {variations}
-</Markdown>
-</div>
-
-{/* Section: Attributes */}
-
-<div className="docs-section">
-
-## Attributes
-
-<div className="docs-section-body">
-
-<Canvas of={Stories.Attributes} sourceState="none" />
-
-<Controls
-    of={Stories.Attributes}
-    include={['Value', 'Placeholder', 'Text alignment', 'Width', 'Max length']}
-/>
-
-</div>
-<Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
-    {attributes}
 </Markdown>
 </div>
 
@@ -118,26 +93,22 @@ import skeleton from './sections/skeleton.json';
 
 <Controls
     of={Stories.States}
-    include={['Active', 'Text alignment', 'Value', 'Placeholder', 'Width']}
+    include={[
+        'Active',
+        'Value',
+        'Placeholder',
+        'Text alignment',
+        'Width',
+        'Max length',
+    ]}
 />
+
+<DocsCode of={Stories.States} />
 
 </div>
 <Markdown className="docs-section-notes" options={{ forceWrapper: true }}>
-    {states}
+    {`${states}\n${attributes}`}
 </Markdown>
-</div>
-
-{/* Section: HTML Structure */}
-
-<div className="docs-section docs-section--full">
-
-## HTML Structure
-
-<div className="docs-section-body">
-
-<HtmlStructure />
-
-</div>
 </div>
 
 {/* Section: Accessibility */}

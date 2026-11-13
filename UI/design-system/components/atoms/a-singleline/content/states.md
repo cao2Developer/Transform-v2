@@ -1,4 +1,4 @@
-The component has four states: inactive, active, error and read only.
+The component has four states: inactive, active, error and read only. The controls set the attributes, and the canvas and the HTML show the result.
 
 Active can be combined with Error, and with Read only when the field receives keyboard focus. Read only is never combined with Error.
 

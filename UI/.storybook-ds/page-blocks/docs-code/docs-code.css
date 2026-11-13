@@ -4,14 +4,14 @@
  * The look of the code canvas. The structure and the Copy button come
  * from the DocsCode component (docs-code.tsx), so a doc page writes only:
  *
- *     <DocsCode html={...} css={css} />
+ *     <DocsCode of={Stories.States} />
  *
  * A muted box with a header row and a white code box. The header has the
- * tabs (HTML, CSS) on the left and two icon buttons on the right: Expand
- * and Copy.
+ * tabs (one per state: Inactive, Error, Read only) on the left and two
+ * icon buttons on the right: Expand and Copy.
  *
  * The tabs are native radio buttons: the arrow keys move between them and
- * screen readers announce "radio button, 1 of 2". The checked radio shows
+ * screen readers announce "radio button, 1 of 3". The checked radio shows
  * its panel: tab 1 shows the first panel, tab 2 the second, up to 3 tabs.
  *
  * The selected tab sits on a white pill, as a segmented control. The tabs
@@ -19,7 +19,7 @@
  *
  * Height: the panels sit on top of each other in one grid cell, and only
  * the checked one is visible. So the box always has the height of the
- * tallest panel (usually the CSS), and it does not jump when the tab
+ * tallest panel, and it does not jump when the tab
  * changes. The code shows up to --docs-code-height, then it scrolls.
  * Expand (a native checkbox, with no JavaScript) raises the limit to
  * --docs-code-height-expanded.
