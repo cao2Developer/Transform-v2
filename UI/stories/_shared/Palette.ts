@@ -40,21 +40,23 @@ export const PaletteBlockHtml = (options?: { order?: string }): string => `
             <div class="palette-button-row">
                 <a-button-icon class="complexbutton-cancel"></a-button-icon>
                 <a-button-icon class="complexbutton-submit"></a-button-icon>
-                <a-button-icon class="complexbutton-delete"></a-button-icon>
             </div>
         </div>
     </o-palette>
     <o-history${options?.order ? ` data-order="${options.order}"` : ''}>
         <template class="l-row-template">
             <div class="l-col-history-ftd">
-                <ftd type="variable" data-associate-control="cb__drugtest"></ftd>
-                <ftd type="span" data-properties="{&quot;visible&quot;:{&quot;collapse&quot;:true,&quot;rules&quot;:&quot;cb__drugtest.containsAny('__1__7126__7126','__1__5020__5020')&quot;}}">
-                    <ftd type="static" data-translate="other"><span>: </span></ftd>
-                    <ftd type="variable" data-associate-control="otherdrug"></ftd>
+                <ftd data-name="historyentry">
+                    <ftd-rule type="variable" data-associate-control="cb__drugtest"></ftd-rule>
+                    <ftd-rule type="span" data-properties="{&quot;visible&quot;:{&quot;collapse&quot;:true,&quot;rules&quot;:&quot;cb__drugtest.containsAny('__1__7126__7126','__1__5020__5020')&quot;}}">
+                        <ftd-rule type="static" data-translate="other"><span>: </span></ftd-rule>
+                        <ftd-rule type="variable" data-associate-control="otherdrug"></ftd-rule>
+                    </ftd-rule>
                 </ftd>
             </div>
             <div class="l-col-history">
                 <a-button-icon class="complexquestion-edit"></a-button-icon>
+                <a-button-icon class="complexquestion-delete"></a-button-icon>
             </div>
         </template>
         <div class="history-empty"><span class="a-label-history" data-translate="history-empty"></span></div>
