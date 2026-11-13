@@ -1,31 +1,11 @@
-import { Meta, Source } from '@storybook/addon-docs/blocks';
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DocsCode } from '../../../../../.storybook-ds/page-blocks/docs-code/docs-code';
 import { singleline, defaultArgs } from '../a-singleline.stories';
 import css from '../a-singleline.css?raw';
 
 <Meta isTemplate />
 
-{/* The tab names are string expressions, so MDX does not wrap them in a paragraph. */}
-
-<div className="docs-code sb-unstyled">
-    <div className="docs-code-titlebar">
-        <div className="docs-code-tabs" role="radiogroup" aria-label="Code">
-            <label className="docs-code-tab">
-                <input type="radio" name="a-singleline-code" defaultChecked />
-                {'HTML'}
-            </label>
-            <label className="docs-code-tab">
-                <input type="radio" name="a-singleline-code" />
-                {'CSS'}
-            </label>
-        </div>
-    </div>
-    <div className="docs-code-panel">
-        <Source
-            code={singleline({ ...defaultArgs, value: 'Answer' }, 'answer')}
-            language="html"
-        />
-    </div>
-    <div className="docs-code-panel">
-        <Source code={css} language="css" />
-    </div>
-</div>
+<DocsCode
+    html={singleline({ ...defaultArgs, value: 'Answer' }, 'answer')}
+    css={css}
+/>
